@@ -160,6 +160,9 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
         File dir = ctx.getExternalFilesDir(null);
         //mcs_path = dir.getPath();// + "/IRP.mcs";
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_video);
 
         // Asking for permissions
@@ -193,11 +196,12 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableView();
 
+
+
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
 
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -228,6 +232,9 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
         txt_two = (TextView) findViewById(R.id.txt_two);
         txt_three = (TextView) findViewById(R.id.txt_three);
         txt_four = (TextView) findViewById(R.id.txt_four);
+
+        findViewById(R.id.incluse_layout).setRotation(-90);
+        panel.setRotation(-90);
 
     }
 
