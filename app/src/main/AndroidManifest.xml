@@ -333,8 +333,7 @@
         <activity android:name="com.gap.sino.activity.checklist.FullScreenActivity" />
         <activity android:name="com.gap.sino.activity.report.ShowMapActivity" />
         <activity android:name="com.gap.sino.activity.PhotoActivity" />
-        <activity android:name="com.gap.sino.activity.VideoActivity"
-            android:screenOrientation="landscape"/>
+        <activity android:name="com.gap.sino.activity.VideoActivity" />
 
         <activity android:name="com.gap.sino.SatpaLicense" />
         <activity android:name="com.gap.sino.filechooser.permissions.PermissionActivity" />
