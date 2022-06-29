@@ -65,6 +65,7 @@ public class DriverDailyEventListAdapter extends RecyclerView.Adapter<DriverDail
                                 bytes[i] = Integer.valueOf(pictureBytesJsonArray.getInt(i)).byteValue();
                             }
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
                             holder.img_driver.setImageBitmap(bitmap);
                         }
 

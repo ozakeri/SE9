@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import com.gap.sino.app.AppController;
@@ -16,7 +17,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
 import java.net.NetworkInterface;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -153,6 +158,21 @@ public class Util {
         DateFormat dateFormat = dateFormatThreadLocal.get();
         System.out.println("compareDates=" + dateFormat.format(date1).compareTo(dateFormat.format(date2)));
         return dateFormat.format(date1).compareTo(dateFormat.format(date2));
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void getFileSize(String FILE_NAME){
+        Path filePath = Paths.get(FILE_NAME);
+        FileChannel fileChannel;
+        try {
+            fileChannel = FileChannel.open(filePath);
+            long fileSize = fileChannel.size();
+            System.out.println(fileSize + " bytes");
+            fileChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

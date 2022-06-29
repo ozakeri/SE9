@@ -77,30 +77,11 @@ public class RecordFragment extends DialogFragment {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    if (ContextCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale
-                                (getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        } else {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(
-                                        new String[]{Manifest.permission
-                                                .WRITE_EXTERNAL_STORAGE},
-                                        MY_PERMISSIONS_REQUEST);
-                            }
-                        }
-
-                    } else {
-                        if (isNotRecording && checkAudioPermission()) {
-                            // Start rec
-                            startRecording();
-                            ((ImageButton) v).setImageDrawable(getResources().getDrawable(R.drawable.record_btn_stop, null));
-                            isNotRecording = false;
-                        } else {
-                            // Stop rec
-
-                        }
+                    if (checkAudioPermission()) {
+                        // Start rec
+                        startRecording();
+                        ((ImageButton) v).setImageDrawable(getResources().getDrawable(R.drawable.record_btn_stop, null));
+                        isNotRecording = false;
                     }
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -121,45 +102,12 @@ public class RecordFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    //@OnClick(R.id.record_btn)
-    public void recordBtnClicked(View v) {
-
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale
-                    (getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                return;
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(
-                            new String[]{Manifest.permission
-                                    .WRITE_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST);
-                }
-            }
-
-        } else {
-            if (isNotRecording && checkAudioPermission()) {
-                // Start rec
-                startRecording();
-                ((ImageButton) v).setImageDrawable(getResources().getDrawable(R.drawable.record_btn_stop, null));
-                isNotRecording = false;
-            } else {
-                // Stop rec
-                stopRecording();
-                ((ImageButton) v).setImageDrawable(getResources().getDrawable(R.drawable.record_btn_start, null));
-                isNotRecording = true;
-            }
-        }
-
-    }
 
     private void startRecording() {
         recordTimer.setBase(SystemClock.elapsedRealtime());
         recordTimer.start();
 
-        String path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/imagesss";
+        String path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/audio";
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();

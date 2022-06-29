@@ -26,6 +26,7 @@
                 android:layout_gravity="center_horizontal"/>
 
             <com.gap.sino.widget.CustomEditText
+                android:id="@+id/txt_shasi"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"

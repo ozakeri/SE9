@@ -32,11 +32,11 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="40dp"
-                        android:hint="31"
-                        android:textColor="@color/black"
-                        android:textSize="30sp"
+                        android:hint="**"
+                        android:inputType="number"
                         android:maxLength="2"
-                        android:inputType="number"/>
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
 
                 </RelativeLayout>
 
@@ -46,15 +46,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
 
-                    <com.gap.sino.widget.CustomEditText
+                    <com.gap.sino.util.CustomTextView
                         android:id="@+id/txt_three"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:hint="ج"
                         android:textColor="@color/black"
-                        android:textSize="35sp"
-                        android:inputType="text"/>
+                        android:textSize="35sp" />
 
                 </RelativeLayout>
 
@@ -70,11 +69,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:hint="654"
-                        android:textColor="@color/black"
-                        android:textSize="30sp"
+                        android:hint="***"
+                        android:inputType="number"
                         android:maxLength="3"
-                        android:inputType="number"/>
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
 
                 </RelativeLayout>
 
@@ -97,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:hint="11"
+                    android:hint="**"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textColor="@color/black"

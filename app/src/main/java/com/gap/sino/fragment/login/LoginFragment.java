@@ -57,7 +57,7 @@ public class LoginFragment extends Fragment {
         AppController application = (AppController) Objects.requireNonNull(getActivity()).getApplication();
         User user = application.getCurrentUser();
 
-        username_txt = (EditText) view.findViewById(R.id.username);
+        username_txt = view.findViewById(R.id.username);
         username_txt.setText(user.getUsername());
         username_txt.setEnabled(false);
 

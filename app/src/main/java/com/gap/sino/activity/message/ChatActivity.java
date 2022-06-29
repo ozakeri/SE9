@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -67,6 +68,7 @@ import com.gap.sino.fragment.RecordFragment;
 import com.gap.sino.service.CoreService;
 import com.gap.sino.service.Services;
 import com.gap.sino.util.EventBusModel;
+import com.gap.sino.util.Util;
 import com.jaiselrahman.filepicker.activity.DirSelectActivity;
 import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.activity.PickFile;
@@ -83,6 +85,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -607,6 +612,19 @@ public class ChatActivity extends AppCompatActivity {
         chatMessage.setCreateNewPvChatGroup(isPrivateChatMessage);
         chatMessage.setFileType(fileType);
         chatMessage.setAttachFileSize((int) file.length());
+
+        System.out.println("file.length=====" + file.length());
+
+        try {
+            long bytes = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                bytes = Files.size(Paths.get(filePath));
+                System.out.println("bytes=====" + bytes);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("file_size=====" + file.length());
 

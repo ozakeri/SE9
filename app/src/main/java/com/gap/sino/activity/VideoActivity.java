@@ -41,6 +41,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.ViewCompat;
 
 import com.gap.sino.R;
+import com.gap.sino.common.CommonUtil;
 import com.shahaabco.satpa.SatpaLicense;
 import com.shahaabco.satpa.SatpaSDK;
 
@@ -64,6 +65,7 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
 
     static final String TAG = "SATPA-Demo-Video";
     private TextView txt_one, txt_two, txt_three, txt_four;
+    private String plateText;
 
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -79,7 +81,7 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 1;
     ///// GUI elements ///////////////////
     //RelativeLayout  main_layout;
-    Button btnPlay,btn_finish;
+    Button btnPlay, btn_finish;
     TextView tvPlate;
     LinearLayout panel;
     SurfaceView mSurfaceView;
@@ -161,7 +163,7 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
         //mcs_path = dir.getPath();// + "/IRP.mcs";
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_video);
 
@@ -195,7 +197,6 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.enableView();
-
 
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -304,7 +305,10 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
     private View.OnClickListener goBack = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-           finish();
+            Intent intent = new Intent();
+            intent.putExtra("plateText", plateText);
+            setResult(2, intent);
+            finish();//finishing activity
         }
     };
 
@@ -462,6 +466,23 @@ public class VideoActivity extends CameraActivity implements CameraBridgeViewBas
                         System.out.println("index6===========" + index6);
                         System.out.println("index7===========" + index7);
                         System.out.println("index8===========" + index8);
+
+                        plateText = " ایران "
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index7))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index8))
+                                + "-"
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index4))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index5))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index6))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index3))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index1))
+                                + ""
+                                + CommonUtil.farsiNumberReplacement(String.valueOf(index2));
 
                     } catch (IndexOutOfBoundsException e) {
                         Log.e(TAG, "IndexOutOfBoundsException: " + e.getMessage());
