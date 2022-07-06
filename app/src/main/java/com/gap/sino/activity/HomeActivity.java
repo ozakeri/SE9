@@ -708,6 +708,7 @@ public class HomeActivity extends AppCompatActivity {
                                                 }
                                             }
                                         }
+
                                         ChatGroupMember tmpChatGroupMemberFS = new ChatGroupMember();
                                         tmpChatGroupMemberFS.setChatGroupId(chatGroup.getId());
                                         tmpChatGroupMemberFS.setNotAppUserIdList(userIdList);

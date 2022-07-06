@@ -46,9 +46,9 @@
         android:layout_height="50dp"
         android:layout_below="@+id/relativeLayoutToolbar"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:background="@drawable/border"
         android:gravity="center"
-        android:layout_marginTop="15dp"
         android:hint="@string/car_plateText_Search_label"
         android:imeOptions="actionSearch"
         android:inputType="number"
@@ -79,12 +79,12 @@
         android:id="@+id/searchAdvert"
         android:layout_width="226dp"
         android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="420dp"
+        android:layout_marginBottom="15dp"
         android:background="@color/fav"
         android:text="جستجوی پیشرفته تبلیغات"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"/>
+        android:textColor="@color/white" />
 
 </RelativeLayout>

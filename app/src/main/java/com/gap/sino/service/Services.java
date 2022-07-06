@@ -1069,6 +1069,7 @@ public class Services {
                                         }
                                     }
                                 }
+
                                 ChatGroup tmpChatGroupFS = new ChatGroup();
                                 tmpChatGroupFS.setNotServerGroupIdList(serverGroupIdList);
                                 List<ChatGroup> chatGroupUserRemovedList = coreService.getChatGroupListByParam(tmpChatGroupFS);

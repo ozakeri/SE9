@@ -35,6 +35,7 @@
                 android:background="@drawable/bg_text_request"
                 android:textColorHint="@color/mdtp_done_disabled_dark"
                 android:gravity="center"
+                android:inputType="number"
                 android:hint="شماره شاسی"/>
 
             <LinearLayout
