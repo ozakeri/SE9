@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".view.fragment.reception.SearchFragment">
+
+
+            <RadioGroup
+                android:id="@+id/selected_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:checkedButton="@+id/r_btn_day"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radioButtonTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="15dp"
+                    android:text="اشخاص مالک حقوقی"
+                    android:theme="@style/MyRadioButtonReport" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="15dp"
+                    android:checked="true"
+                    android:text="اشخاص مالک حقیقی"
+                    android:theme="@style/MyRadioButtonReport" />
+
+            </RadioGroup>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp"
+                app:cardMaxElevation="10dp"
+                android:layout_gravity = "center"
+                app:cardPreventCornerOverlap="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selected_type">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    tools:layout_editor_absoluteY="170dp">
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="مشخصات اشخاص حقیقی" />
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_nationalCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="کد ملی"
+                        android:inputType="number"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_model"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="نام"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_family"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="نام خانوادگی"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="موبایل"
+                        android:inputType="number"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="تلفن ثابت"
+                        android:inputType="number"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="آدرس"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:layout_gravity = "center"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp"
+                app:cardMaxElevation="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView1">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:orientation="vertical"
+                    android:padding="2dp"
+                    tools:layout_editor_absoluteY="410dp">
+
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="مشخصات اشخاص حقوقی" />
+
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_companyName"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="نام شرکت"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_companyId"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="شناسه شرکت"
+                        android:inputType="number"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_companyPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="تلفن ثابت"
+                        android:inputType="number"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                    <com.example.sino.utils.textwidget.CustomEditText
+                        android:id="@+id/txt_companyAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_text_request"
+                        android:gravity="center"
+                        android:hint="آدرس شرکت"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/toolbar_home"
+                        android:textColorHint="#398adc"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <com.github.rahatarmanahmed.cpv.CircularProgressView
+                android:id="@+id/waitProgress"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                app:cpv_animAutostart="true"
+                app:cpv_color="@color/purple_700"
+                app:cpv_indeterminate="true"
+                android:layout_gravity = "center"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.example.sino.utils.textwidget.CustomTextView
+                android:id="@+id/send_btn"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:text="بعدی"
+                android:textColor="@color/toolbar_home"
+                android:layout_gravity = "center"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</layout>

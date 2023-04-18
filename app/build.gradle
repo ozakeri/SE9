@@ -1,0 +1,142 @@
+plugins {
+    id 'com.android.application'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+
+    compileSdkVersion 33
+    buildToolsVersion '30.0.3'
+
+    defaultConfig {
+        applicationId "com.example.sino"
+        minSdkVersion 23
+        targetSdkVersion 32
+        versionCode 18
+        versionName '4.2'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_64'
+            universalApk true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs
+            {
+        satpa_release {
+            storeFile file('D:\\Projects\\Android\\khosravi-970614.jks')
+            storePassword '846722003'
+            keyAlias 'ANPR_KeyStore'
+            keyPassword '846722003'
+        }
+    }
+    compileSdk 33
+
+
+    buildFeatures {
+        dataBinding true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    namespace 'com.example.sino'
+
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(path: ':library')
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    //Rxjava and RxAndroid
+    implementation "io.reactivex.rxjava3:rxjava:3.0.13"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+
+    //Room database
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+    
+    //Dagger Hilt
+    implementation 'com.google.dagger:hilt-android:2.38.1'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.38.1'
+
+
+    implementation 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
+
+    implementation 'androidx.navigation:navigation-fragment:2.5.0-rc02'
+    implementation'androidx.navigation:navigation-ui:2.5.0-rc02'
+
+    implementation project(path: ':opencv')
+    implementation files('libs/satpa-release.aar')
+
+    // Lottie dependency
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    implementation 'com.github.ahmmedrejowan.CuteToast:CuteToast-Custom:1.2'
+
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+
+    //Neshan sdk library
+    implementation 'neshan-android-sdk:mobile-sdk:1.0.1'
+    implementation 'neshan-android-sdk:services-sdk:1.0.0'
+    implementation 'neshan-android-sdk:common-sdk:0.0.2'
+
+    //Play Services
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    implementation 'com.karumi:dexter:4.2.0'
+
+    implementation 'com.github.gcacace:signature-pad:1.3.1'
+
+    //Get Location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
+    //material-spinner
+    implementation 'com.jaredrummler:material-spinner:1.3.1'
+
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:3.0.3'
+
+    implementation "com.airbnb.android:lottie:3.4.0"
+
+}

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/fragmentRegistration"
+        android:name="com.example.sino.view.fragment.login.FragmentRegistration"
+        android:label="FragmentRegistration"
+        tools:layout="@layout/fragment_registration">
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentActivation"
+        android:name="com.example.sino.view.fragment.login.FragmentActivation"
+        android:label="FragmentActivation"
+        tools:layout="@layout/fragment_activation">
+    </fragment>
+    <fragment
+        android:id="@+id/createPasswordFragment"
+        android:name="com.example.sino.view.fragment.login.CreatePasswordFragment"
+        android:label="fragment_create_password"
+        tools:layout="@layout/fragment_create_password" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.sino.view.fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detectPlateFragment"
+            app:destination="@id/detectPlateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detectPlateFragment"
+        android:name="com.example.sino.view.fragment.reception.DetectPlateFragment"
+        android:label="fragment_detect_plate"
+        tools:layout="@layout/fragment_detect_plate" >
+        <action
+            android:id="@+id/action_detectPlateFragment_to_proSerListFragment"
+            app:destination="@id/proSerListFragment" />
+        <action
+            android:id="@+id/action_detectPlateFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatGroupFragment"
+        android:name="com.example.sino.view.fragment.chatmessage.ChatGroupFragment"
+        android:label="fragment_caht_group"
+        tools:layout="@layout/fragment_caht_group" />
+    <fragment
+        android:id="@+id/chatMessageFragment"
+        android:name="com.example.sino.view.fragment.chatmessage.ChatMessageFragment"
+        android:label="fragment_chat_message"
+        tools:layout="@layout/fragment_chat_message" />
+    <fragment
+        android:id="@+id/memberFragment"
+        android:name="com.example.sino.view.fragment.chatmessage.MemberFragment"
+        android:label="fragment_member"
+        tools:layout="@layout/fragment_member" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.sino.view.fragment.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.sino.view.fragment.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash"/>
+    <fragment
+        android:id="@+id/startServiceFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.StartServiceFragment"
+        android:label="StartServiceFragment" />
+    <fragment
+        android:id="@+id/requestFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.RequestFragment"
+        android:label="RequestFragment" />
+    <fragment
+        android:id="@+id/acceptFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.AcceptFragment"
+        android:label="AcceptFragment" />
+    <fragment
+        android:id="@+id/givingServiceFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.GivingServiceFragment"
+        android:label="GivingServiceFragment" />
+    <fragment
+        android:id="@+id/customerProfileFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.CustomerProfileFragment"
+        android:label="CustomerProfileFragment" />
+    <fragment
+        android:id="@+id/endRequestFragment"
+        android:name="com.example.sino.view.fragment.Emdadgar.EndRequestFragment"
+        android:label="EndRequestFragment" />
+    <fragment
+        android:id="@+id/fieldInspectionFragment"
+        android:name="com.example.sino.view.fragment.inspection.FieldInspectionFragment"
+        android:label="FieldInspectionFragment"
+        tools:layout="@layout/fragment_field_inspection" />
+    <fragment
+        android:id="@+id/searchCarFragment"
+        android:name="com.example.sino.view.fragment.car.SearchCarFragment"
+        android:label="SearchCarFragment" />
+    <fragment
+        android:id="@+id/representationsDetailFragment"
+        android:name="com.example.sino.view.fragment.representation.RepresentationsDetailFragment"
+        android:label="RepresentationsDetailFragment" />
+    <fragment
+        android:id="@+id/representationsFragment"
+        android:name="com.example.sino.view.fragment.representation.RepresentationsFragment"
+        android:label="RepresentationsFragment" />
+    <fragment
+        android:id="@+id/formFragment"
+        android:name="com.example.sino.view.fragment.forms.FormFragment"
+        android:label="FormFragment" />
+    <fragment
+        android:id="@+id/formQuestionFragment"
+        android:name="com.example.sino.view.fragment.forms.FormQuestionFragment"
+        android:label="FormQuestionFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.sino.view.fragment.watch.SearchWatchingFragment"
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/detailWatchingFragment"
+        android:name="com.example.sino.view.fragment.watch.DetailWatchingFragment"
+        android:label="DetailWatchingFragment" />
+    <fragment
+        android:id="@+id/addNewOwnerFragment"
+        android:name="com.example.sino.view.fragment.reception.AddNewOwnerFragment"
+        android:label="AddNewOwnerFragment" />
+    <fragment
+        android:id="@+id/changePlateFragment"
+        android:name="com.example.sino.view.fragment.reception.ChangePlateFragment"
+        android:label="AddNewCarFragment" />
+    <fragment
+        android:id="@+id/carDetailFragment"
+        android:name="com.example.sino.view.fragment.reception.CarDetailFragment"
+        android:label="CarDetailFragment" />
+    <fragment
+        android:id="@+id/ownerDetailFragment"
+        android:name="com.example.sino.view.fragment.reception.OwnerDetailFragment"
+        android:label="OwnerDetailFragment" />
+
+    <activity
+        android:id="@+id/captureActivity"
+        android:name="com.example.sino.view.activity.VideoActivity"
+        android:label="CaptureActivity" />
+
+    <activity
+        android:id="@+id/takePicActivity"
+        android:name="com.example.sino.view.activity.CaptureActivity"
+        android:label="takePicActivity" />
+
+    <activity
+        android:id="@+id/saptaActivity"
+        android:name="com.shahaabco.satpa.SatpaLicense"
+        android:label="SaptaActivity" />
+    <fragment
+        android:id="@+id/takePictureFragment"
+        android:name="com.example.sino.view.fragment.reception.TakePictureFragment"
+        android:label="TakePictureFragment" />
+    <fragment
+        android:id="@+id/carAccessoriesFragment"
+        android:name="com.example.sino.view.fragment.reception.CarAccessoriesFragment"
+        android:label="CarAccessoriesFragment" />
+    <fragment
+        android:id="@+id/addCustomerDataFragment"
+        android:name="com.example.sino.view.fragment.reception.AddCustomerDataFragment"
+        android:label="AddCustomerDataFragment"
+        tools:layout="@layout/fragment_add_customer_data">
+        <action
+            android:id="@+id/action_addCustomerDataFragment_to_recognizePlateFragment"
+            app:destination="@id/recognizePlateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpertDataFragment"
+        android:name="com.example.sino.view.fragment.reception.AddExpertDataFragment"
+        android:label="AddExpertDataFragment" />
+    <dialog
+        android:id="@+id/recordFragment"
+        android:name="com.example.sino.view.fragment.reception.RecordFragment"
+        android:label="RecordFragment" />
+    <fragment
+        android:id="@+id/searchCustomerFragment"
+        android:name="com.example.sino.view.fragment.reception.SearchFragment"
+        android:label="fragment_customer_search"
+        tools:layout="@layout/fragment_customer_search" />
+    <fragment
+        android:id="@+id/recognizePlateFragment"
+        android:name="com.example.sino.view.fragment.reception.RecognizePlateFragment"
+        android:label="RecognizePlateFragment"
+        tools:layout="@layout/fragment_recognize_plate" >
+        <action
+            android:id="@+id/action_recognizePlateFragment_to_addCustomerDataFragment"
+            app:destination="@id/addCustomerDataFragment" />
+        <action
+            android:id="@+id/action_recognizePlateFragment_to_proSerListFragment"
+            app:destination="@id/proSerListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/proSerListFragment"
+        android:name="com.example.sino.view.fragment.reception.ProSerListFragment"
+        android:label="fragment_pro_ser_list"
+        tools:layout="@layout/fragment_pro_ser_list" >
+        <action
+            android:id="@+id/action_proSerListFragment_to_recognizePlateFragment"
+            app:destination="@id/recognizePlateFragment" />
+        <action
+            android:id="@+id/action_proSerListFragment_to_detectPlateFragment"
+            app:destination="@id/detectPlateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageEEFragment"
+        android:name="com.example.sino.view.fragment.enterexit.ManageEEFragment"
+        android:label="ManageEEFragment"
+        tools:layout="@layout/fragment_manage_e_e"/>
+    <fragment
+        android:id="@+id/resultManageEEFragment"
+        android:name="com.example.sino.view.fragment.enterexit.ResultManageEEFragment"
+        android:label="fragment_result_manage_e_e"
+        tools:layout="@layout/fragment_result_manage_e_e" />
+    <fragment
+        android:id="@+id/enterHandPlateFragment"
+        android:name="com.example.sino.view.fragment.enterexit.EnterHandPlateFragment"
+        android:label="EnterHandPlateFragment" />
+</navigation>

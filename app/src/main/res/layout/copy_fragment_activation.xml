@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/menu_background">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/pino_four" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+
+                android:src="@drawable/login" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+
+                <com.example.sino.utils.textwidget.CustomTextViewTitle
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/enter_activationcode"
+                    android:textColor="@color/mdtp_transparent_black"
+                    android:textSize="18sp" />
+
+                <com.example.sino.utils.textwidget.CustomEditText
+                    android:id="@+id/activationCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/textView"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="@color/toolbar_home"
+                    android:textColorHint="#398adc"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_text_request"/>
+
+
+                <com.example.sino.utils.textwidget.CustomTextViewTitle
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="30dp"
+                    android:background="@drawable/bg_button"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="تایید"
+                    android:textColor="@color/mdtp_transparent_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/my_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/royal_blue"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_above="@+id/txt_site"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/sinoempty" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_site"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="24dp"
+                android:text="gapcom.ir"
+                android:textColor="@color/mdtp_transparent_black"
+                android:textSize="18sp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_main"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="loading-yellow.json"
+                app:lottie_loop="true"
+                app:lottie_speed="1" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

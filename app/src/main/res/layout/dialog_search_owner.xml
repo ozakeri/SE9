@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardCornerRadius="5dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:padding="2dp">
+
+            <com.example.sino.utils.textwidget.CustomTextViewTitleLight
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text=" مالک خودرو " />
+
+            <RadioGroup
+                android:id="@+id/selected_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:checkedButton="@+id/r_btn_day"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/radioButtonTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="15dp"
+                    android:text="اشخاص حقوقی"
+                    android:theme="@style/MyRadioButtonReport" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="15dp"
+                    android:checked="true"
+                    android:text="اشخاص حقیقی"
+                    android:theme="@style/MyRadioButtonReport" />
+
+            </RadioGroup>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:padding="2dp">
+
+            <com.example.sino.utils.textwidget.CustomEditText
+                android:id="@+id/txt_nationalCode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_text_request"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="@color/toolbar_home"
+                android:textColorHint="#398adc"
+                android:hint = "کد ملی"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+            <com.github.rahatarmanahmed.cpv.CircularProgressView
+                android:id="@+id/waitProgress"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:cpv_animAutostart="true"
+                app:cpv_color="@color/purple_700"
+                app:cpv_indeterminate="true" />
+
+
+
+
+            <com.example.sino.utils.textwidget.CustomTextViewTitle
+                android:id="@+id/btn_confirm"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="30dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="نمایش"
+                android:textColor="@color/mdtp_transparent_black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="179dp">
+
+        <RelativeLayout
+            android:id="@+id/layout_activate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="26dp">
+
+            <ImageView
+                android:id="@+id/img_activate"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/ic_lock_lock" />
+
+            <Button
+                android:id="@+id/btn_activate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/img_activate"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Activate"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_photo_demo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="26dp">
+
+            <ImageView
+                android:id="@+id/img_photo_demo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/ic_menu_camera" />
+
+            <Button
+                android:id="@+id/btn_photo_demo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/img_photo_demo"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Photo Demo"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_video_demo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="26dp">
+
+
+            <com.example.sino.utils.textwidget.CustomTextViewTitle
+                android:id="@+id/btn_camera_demo"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="خواندن پلاک خودرو بصورت اتوماتیک"
+                android:textColor="@color/mdtp_red_focused"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <com.example.sino.utils.textwidget.CustomTextViewTitle
+                android:id="@+id/btn_custom"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/btn_camera_demo"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="وارد کردن اطلاعات بصورت دستی"
+                android:textColor="@color/mdtp_red_focused"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.example.sino.utils.textwidget.CustomTextViewTitle
+                android:id="@+id/btn_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/btn_custom"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="لیست خودروهای در حال پذیرش"
+                android:textColor="@color/mdtp_red_focused"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.github.rahatarmanahmed.cpv.CircularProgressView
+                android:id="@+id/waitProgress"
+                android:layout_width="53dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                app:cpv_animAutostart="true"
+                app:cpv_color="@color/colorAccent"
+                app:cpv_indeterminate="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

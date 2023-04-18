@@ -1,0 +1,4 @@
+rootProject.name = "Sino"
+include ':app'
+include ':opencv'
+include ':library'

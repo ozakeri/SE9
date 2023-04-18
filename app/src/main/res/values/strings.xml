@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SE9</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_enterphonenumber">شماره موبایل خود را وارد کنید</string>
+    <string name="confirm">تایید</string>
+    <string name="closed">بستن</string>
+    <string name="enter_activationcode">کد فعالسازی را وارد کنید</string>
+    <string name="enter_compelete_data">اطلاعات را کامل وارد کنید</string>
+    <string name="create_password">ساخت رمز عبور</string>
+    <string name="confirmpassword">تعریف مجدد رمز عبور</string>
+    <string name="password">رمز عبور</string>
+    <string name="mistake_enter_data">اطلاعات وارد شده اشتباه است</string>
+    <string name="www_gapcom_ir">www.gapcom.ir</string>
+    <string name="my_text"><u>ویرایش شماره تلفن همراه</u></string>
+</resources>

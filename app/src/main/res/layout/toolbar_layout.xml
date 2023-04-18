@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/img_menu"
+              android:layout_width="35dp"
+              android:layout_height="50dp"
+              android:background="@drawable/drawer_menu_24"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              android:layout_margin="10dp"/>
+
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/img_back"
+              android:layout_width="40dp"
+              android:layout_height="40dp"
+              android:background="@drawable/arrow_back_24"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/img_user"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:background="@drawable/sinoempty"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              android:layout_marginLeft="10dp"/>
+
+          <com.example.sino.utils.textwidget.CustomTextViewTitle
+              android:id="@+id/txtCode"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/img_menu"
+              app:layout_constraintStart_toEndOf="@+id/img_user"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          <com.example.sino.utils.textwidget.CustomTextViewTitle
+              android:id="@+id/txtEnterExit"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/img_menu"
+              app:layout_constraintStart_toEndOf="@+id/img_user"
+              app:layout_constraintTop_toTopOf="parent"
+              android:text="فرایند ورود و خروج"/>
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</layout>

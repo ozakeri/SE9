@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".view.fragment.reception.RecognizePlateFragment">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardMaxElevation="15dp"
+                    android:visibility="visible"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="4dp"
+                            android:text="رنگ"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_model"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_type"
+                            android:visibility="gone"/>
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_chassis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_plate" />
+
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_model"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_type" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_plate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_permission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_model" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_chassis" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_permissionDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_permission"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_model" />
+
+                        <com.example.sino.utils.textwidget.CustomTextViewTitleRed
+                            android:id="@+id/txt_remind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:text="-"
+                            android:textSize="14sp"
+                            android:textColor="@color/red"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_permission"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_permission" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="نوع خودرو"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_tip"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardMaxElevation="10dp"
+                    android:visibility="gone"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView1">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:orientation="vertical"
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        tools:layout_editor_absoluteY="410dp">
+
+
+                        <com.example.sino.utils.textwidget.CustomTextViewTitleLight
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:text="مشخصات اشخاص حقوقی" />
+
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_companyName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="right"
+                            android:hint="نام شرکت : اتوبوسرانی"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/toolbar_home"
+                            android:textColorHint="#398adc"
+                            android:textSize="14sp" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_companyId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="right"
+                            android:hint="شناسه شرکت : 0125988"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/toolbar_home"
+                            android:textColorHint="#398adc"
+                            android:textSize="14sp" />
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_companyCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="right"
+                            android:hint="کد اقتصادی : 5666588"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/toolbar_home"
+                            android:textColorHint="#398adc"
+                            android:textSize="14sp" />
+
+
+                        <com.example.sino.utils.textwidget.CustomTextView
+                            android:id="@+id/txt_companyAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="right"
+                            android:hint="آدرس شرکت : تهران - خیابان آزادی"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/toolbar_home"
+                            android:textColorHint="#398adc"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:orientation="vertical"
+                        android:padding="2dp"
+                        tools:layout_editor_absoluteY="410dp">
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <com.example.sino.utils.textwidget.CustomTextView
+                    android:id="@+id/btn_change"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="56dp"
+                    android:background="@drawable/bg_button"
+                    android:gravity="center"
+                    android:text="تغییر پلاک"
+                    android:textColor="@color/toolbar_home"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                    android:visibility="gone"/>
+
+                <com.example.sino.utils.textwidget.CustomTextView
+                    android:id="@+id/btn_add"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_button"
+                    android:gravity="center"
+                    android:text="ثبت پلاک"
+                    android:textColor="@color/toolbar_home"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/service_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView1" />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/btn_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            android:id="@+id/waitProgress"
+            android:layout_width="53dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:cpv_animAutostart="true"
+            app:cpv_color="@color/colorAccent"
+            app:cpv_indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</layout>
