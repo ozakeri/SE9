@@ -342,9 +342,9 @@ public class AddCustomerDataFragment extends Fragment {
         String path;
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
-             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/BisInspection" + "/audio";
+             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
         }else {
-             path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/audio";
+             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
 
         File dir = new File(path);

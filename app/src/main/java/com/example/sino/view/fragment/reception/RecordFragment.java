@@ -110,7 +110,7 @@ public class RecordFragment extends DialogFragment {
         recordTimer.setBase(SystemClock.elapsedRealtime());
         recordTimer.start();
 
-        String path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/audio";
+        String path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();

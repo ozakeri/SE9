@@ -110,7 +110,7 @@ public class AddExpertDataFragment extends Fragment {
     private Bitmap bitmap;
     private String description;
     private boolean confirm = false;
-    private boolean isConfirm = false;
+    //private boolean isConfirm = false;
     private boolean signPathIsChanged = false;
     private boolean audioPathIsChanged = false;
     private MainActivity mainActivity;
@@ -145,7 +145,7 @@ public class AddExpertDataFragment extends Fragment {
             //prcSetId = getArguments().getString("prcSetId");
             description = getArguments().getString("description");
             //isEdit = getArguments().getBoolean("isEdit");
-            isConfirm = getArguments().getBoolean("isConfirm");
+            //isConfirm = getArguments().getBoolean("isConfirm");
 
             binding.editTextTextPersonName.setText(description);
 
@@ -274,7 +274,7 @@ public class AddExpertDataFragment extends Fragment {
             binding.btnEdit.setVisibility(View.GONE);
         }*/
 
-        if (isConfirm){
+        if (GlobalValue.isConfirm){
             binding.btnConfirm.setVisibility(View.GONE);
             binding.btnNonConfirm.setVisibility(View.GONE);
             binding.btnEdit.setVisibility(View.GONE);
@@ -369,9 +369,9 @@ public class AddExpertDataFragment extends Fragment {
         String path;
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
-            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/BisInspection" + "/audio";
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
         }else {
-            path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/audio";
+            path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
 
         File dir = new File(path);
@@ -725,7 +725,7 @@ public class AddExpertDataFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDelete.setVisibility(View.VISIBLE);
                                         }
 
@@ -802,7 +802,7 @@ public class AddExpertDataFragment extends Fragment {
                                 public void run() {
                                     dialog.dismiss();
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
                                         }
 
@@ -988,7 +988,7 @@ public class AddExpertDataFragment extends Fragment {
         super.onResume();
 
         if (GlobalValue.prcDataId != null) {
-            if (GlobalValue.isConfirm){
+            if (!GlobalValue.isConfirm){
                 binding.btnEdit.setText("ویرایش");
                 binding.btnConfirm.setVisibility(View.VISIBLE);
                 binding.btnNonConfirm.setVisibility(View.VISIBLE);

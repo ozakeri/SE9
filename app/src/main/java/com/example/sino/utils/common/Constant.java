@@ -3,15 +3,15 @@ package com.example.sino.utils.common;
 public class Constant {
 
     //public static final String SITE = "https://ikg.se9.ir/rfServices/";
-   //public static final String SITE = "http://192.168.14.193:8080/rfServices/";
+   public static final String SITE = "http://192.168.14.193:8080/rfServices/";
     //public static final String SITE = "http://192.168.190.186:8080/rfServices/";
-    public static final String SITE = "http://192.168.8.20/rfServices/";
+    //public static final String SITE = "http://192.168.8.20/rfServices/";
 
     public static final String SITE_NESHAN = "https://api.neshan.org";
 
     public static final String WS = SITE + "/rfServices/";
 
-    public static final String DEFAULT_OUT_PUT_DIR = "/BisInspection";
+    public static final String DEFAULT_OUT_PUT_DIR = "/Sino";
     public static final String DEFAULT_IMG_OUT_PUT_DIR = "/images";
     public static final String DEFAULT_SIGN_OUT_PUT_DIR = "/sign";
     public static final String DEFAULT_AUDIO_OUT_PUT_DIR = "/audio";

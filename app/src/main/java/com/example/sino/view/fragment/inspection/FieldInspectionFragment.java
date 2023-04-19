@@ -636,7 +636,7 @@ public class FieldInspectionFragment extends Fragment {
         binding.recordTimer.start();
         binding.txtFileName.setText("");
 
-        String path = Environment.getExternalStorageDirectory().toString() + "/BisInspection" + "/audio";
+        String path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();
