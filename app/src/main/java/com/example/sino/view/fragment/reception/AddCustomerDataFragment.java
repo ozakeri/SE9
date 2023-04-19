@@ -15,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +95,7 @@ public class AddCustomerDataFragment extends Fragment {
     private String audioPath = null;
     private boolean signPathIsChanged = false;
     private boolean audioPathIsChanged = false;
+    private boolean editTextIsChanged = false;
     private String inputParam = "";
     private MainViewModel viewModel;
     private SharedPreferences sharedPreferences;
@@ -104,7 +107,7 @@ public class AddCustomerDataFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private String attachFileSignId;
     private String attachFileAudioId;
-    private String description;
+    //private String description;
     public List<JsonArrayAttach> jsonArrayAttachCopy = null;
     private CompositeDisposable disposable;
     private Bitmap bitmap;
@@ -135,12 +138,26 @@ public class AddCustomerDataFragment extends Fragment {
         myEdit.putInt(Constant.STATE_Reception, 3);
         myEdit.commit();
 
-        if (getArguments() != null) {
-            description = getArguments().getString("description");
-            binding.editTextTextPersonName.setText(description);
-
+        if (GlobalValue.description != null) {
+            binding.editTextTextPersonName.setText(GlobalValue.description);
         }
 
+        binding.editTextTextPersonName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    editTextIsChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -288,7 +305,7 @@ public class AddCustomerDataFragment extends Fragment {
                     }
                 }
 
-                if (audioPathIsChanged || signPathIsChanged){
+                if (audioPathIsChanged || signPathIsChanged || editTextIsChanged){
                     saveOrEdit();
                 }
             }
@@ -656,6 +673,7 @@ public class AddCustomerDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
+            editTextIsChanged = false;
             GlobalValue.isEdit = true;
             if (confirm){
                 confirmPrcData();

@@ -183,7 +183,7 @@ public class RecognizePlateFragment extends Fragment {
                     }
                     if (proSrv.prcDataList.get(position).prcDataVO != null) {
                         prcDataId = proSrv.prcDataList.get(position).prcDataVO.prcDataId;
-                        description = proSrv.prcDataList.get(position).prcDataVO.description;
+                        GlobalValue.description = proSrv.prcDataList.get(position).prcDataVO.description;
                         prcSetId = proSrv.prcDataList.get(position).prcDataVO.ProcessStrucSettingId;
 
                         if (prcSetId.equals("21921")) {

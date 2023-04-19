@@ -15,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,11 +110,11 @@ public class AddExpertDataFragment extends Fragment {
     //private String prcSetId;
     private byte[] bytes;
     private Bitmap bitmap;
-    private String description;
     private boolean confirm = false;
     //private boolean isConfirm = false;
     private boolean signPathIsChanged = false;
     private boolean audioPathIsChanged = false;
+    private boolean editTextIsChanged = false;
     private MainActivity mainActivity;
 
     @Override
@@ -139,17 +141,36 @@ public class AddExpertDataFragment extends Fragment {
         navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
-        if (getArguments() != null) {
+        if (GlobalValue.description != null) {
             //proSrvId = getArguments().getString("proSrvId");
            // prcDataId = getArguments().getString("prcDataId");
             //prcSetId = getArguments().getString("prcSetId");
-            description = getArguments().getString("description");
+            //description = getArguments().getString("description");
             //isEdit = getArguments().getBoolean("isEdit");
             //isConfirm = getArguments().getBoolean("isConfirm");
 
-            binding.editTextTextPersonName.setText(description);
+            binding.editTextTextPersonName.setText(GlobalValue.description);
 
         }
+
+        binding.editTextTextPersonName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                editTextIsChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -338,7 +359,7 @@ public class AddExpertDataFragment extends Fragment {
                 }
 
 
-                if (audioPathIsChanged || signPathIsChanged){
+                if (audioPathIsChanged || signPathIsChanged || editTextIsChanged){
                     saveOrEdit();
                 }
             }
@@ -611,6 +632,7 @@ public class AddExpertDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
+            editTextIsChanged = false;
             GlobalValue.isEdit = true;
             if (confirm){
                 confirmPrcData();

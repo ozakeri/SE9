@@ -27,6 +27,7 @@ public class GlobalValue {
     public static ProSrv proSrv;
     public static String proSrvId;
     public static String prcSetId;
+    public static String description;
     public static boolean isEdit;
     public static boolean isConfirm;
 }
