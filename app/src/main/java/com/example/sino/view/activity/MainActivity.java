@@ -301,6 +301,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (navHostFragment.getNavController().getCurrentDestination().getLabel().equals("TakePictureFragment")) {
+            navController.navigateUp();
+            navController.navigate(R.id.addExpertDataFragment, null, navBuilder.build());
+            return;
+        }
+
         if (navHostFragment.getNavController().getCurrentDestination().getLabel().equals("RecognizePlateFragment")) {
             navController.navigateUp();
             navController.navigate(R.id.proSerListFragment, null, navBuilder.build());

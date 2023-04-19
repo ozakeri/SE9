@@ -42,6 +42,7 @@ import com.example.sino.model.enumType.EntityNameEn;
 import com.example.sino.model.reception.JsonArrayAttach;
 import com.example.sino.model.reception.PrcSet;
 import com.example.sino.model.reception.ProServiceResponse;
+import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
 import com.example.sino.utils.services.ApiServiceAsync;
@@ -96,11 +97,10 @@ public class AddCustomerDataFragment extends Fragment {
     private MainViewModel viewModel;
     private SharedPreferences sharedPreferences;
     private MainViewModel mainViewModel;
-    private PrcSet prcSet;
-    private String proSrvId;
-    private String prcDataId;
-    private String prcSetId;
-    private boolean isEdit;
+    //private String proSrvId;
+    //private String prcDataId;
+    //private String prcSetId;
+    //private boolean isEdit;
     private MediaPlayer mediaPlayer;
     private String attachFileSignId;
     private String attachFileAudioId;
@@ -111,7 +111,7 @@ public class AddCustomerDataFragment extends Fragment {
     private byte[] bytes;
     private boolean confirm = false;
 
-    private boolean isConfirm = false;
+    //private boolean isConfirm = false;
 
     @Override
     public View onCreateView(@androidx.annotation.NonNull LayoutInflater inflater, ViewGroup container,
@@ -136,16 +136,7 @@ public class AddCustomerDataFragment extends Fragment {
         myEdit.commit();
 
         if (getArguments() != null) {
-            prcSet = getArguments().getParcelable("prcSet");
-
-            proSrvId = getArguments().getString("proSrvId");
-            System.out.println("proSrvId======" + proSrvId);
-            prcDataId = getArguments().getString("prcDataId");
-            prcSetId = getArguments().getString("prcSetId");
-            isEdit = getArguments().getBoolean("isEdit");
             description = getArguments().getString("description");
-            isConfirm = getArguments().getBoolean("isConfirm");
-
             binding.editTextTextPersonName.setText(description);
 
         }
@@ -241,7 +232,7 @@ public class AddCustomerDataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 confirm = true;
-                confirmPrcData();
+                saveOrEdit();
             }
         });
 
@@ -253,7 +244,7 @@ public class AddCustomerDataFragment extends Fragment {
             }
         });
 
-        if (isEdit) {
+        if (GlobalValue.isEdit) {
             binding.btnEdit.setText("ویرایش");
 
             if (getActivity() != null) {
@@ -273,7 +264,7 @@ public class AddCustomerDataFragment extends Fragment {
             binding.cardViewPlayer.setVisibility(View.GONE);
         }
 
-        if (isConfirm) {
+        if (GlobalValue.isConfirm) {
             binding.btnConfirm.setVisibility(View.GONE);
             binding.btnNonConfirm.setVisibility(View.GONE);
             binding.btnEdit.setVisibility(View.GONE);
@@ -290,7 +281,7 @@ public class AddCustomerDataFragment extends Fragment {
                     return;
                 }
 
-                if (!isEdit){
+                if (!GlobalValue.isEdit){
                     if (audioPath == null && signPath == null) {
                         Toast.makeText(getActivity(), "افزودن صدای مشتری و امضاء الزامیست", Toast.LENGTH_SHORT).show();
                         return;
@@ -436,8 +427,8 @@ public class AddCustomerDataFragment extends Fragment {
         attachFile.setSendingStatusEn(SendingStatusEn.Pending.ordinal());
         attachFile.setEntityNameEn(EntityNameEn.ProcessStrucData.ordinal());
         attachFile.setServerAttachFileSettingId(attachFileSettingId);
-        attachFile.setEntityId(Long.valueOf(prcDataId));
-        attachFile.setServerEntityId(Long.valueOf(prcDataId));
+        attachFile.setEntityId(Long.valueOf(GlobalValue.prcDataId));
+        attachFile.setServerEntityId(Long.valueOf(GlobalValue.prcDataId));
         attachFile.setAttachFileLocalPath(filePath);
         databaseViewModel.insertAttachFileRepoVM(attachFile);
 
@@ -665,7 +656,10 @@ public class AddCustomerDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
-            isEdit = true;
+            GlobalValue.isEdit = true;
+            if (confirm){
+                confirmPrcData();
+            }
         }
     }
 
@@ -695,7 +689,7 @@ public class AddCustomerDataFragment extends Fragment {
     public void saveOrEdit() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), prcSetId, "238", proSrvId, binding.editTextTextPersonName.getText().toString(), prcDataId);
+        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -708,8 +702,9 @@ public class AddCustomerDataFragment extends Fragment {
 
                         System.out.println("======onNext=====");
                         if (proServiceResponse.result != null && proServiceResponse.result.prcData.id != null) {
-                            prcDataId = proServiceResponse.result.prcData.id;
-                            System.out.println("======prcDataId=====" + prcDataId);
+                            GlobalValue.prcDataId = proServiceResponse.result.prcData.id;
+                            GlobalValue.isEdit = true;
+                            System.out.println("======prcDataId=====" + GlobalValue.prcDataId);
                         }
                     }
 
@@ -723,12 +718,12 @@ public class AddCustomerDataFragment extends Fragment {
                     public void onComplete() {
                         dialog.dismiss();
                         System.out.println("======onComplete=====");
-                        System.out.println("======isEdit=====" + isEdit);
-                        if (prcDataId != null) {
+                        System.out.println("======isEdit=====" + GlobalValue.isEdit);
+                        if (GlobalValue.prcDataId != null) {
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
                                     public void run() {
-                                        System.out.println("prcDataIdrun=====" + prcDataId);
+                                        System.out.println("prcDataIdrun=====" + GlobalValue.prcDataId);
 
                                         if (statusRecord == 0) {
                                             new UploadFile().execute();
@@ -747,7 +742,7 @@ public class AddCustomerDataFragment extends Fragment {
     public void confirmPrcData() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), prcDataId, confirm);
+        inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId, confirm);
         mainViewModel.confirmPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -798,7 +793,7 @@ public class AddCustomerDataFragment extends Fragment {
     private void getProSrvAttachFileSign() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1075");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1075");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -842,7 +837,7 @@ public class AddCustomerDataFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDelete.setVisibility(View.VISIBLE);
                                         }
 
@@ -871,10 +866,9 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     private void getProSrvAttachFileAudio() {
-        System.out.println("===1074====" + proSrvId);
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1074");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1074");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -919,7 +913,7 @@ public class AddCustomerDataFragment extends Fragment {
                                 public void run() {
                                     dialog.dismiss();
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
                                         }
 

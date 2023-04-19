@@ -125,11 +125,11 @@ public class TakePictureFragment extends Fragment {
     private static final int REQUEST_CODE_CHANGE_SETTING = 1;
     private SharedPreferences sharedPreferences;
     private ProgressDialog pd;
-    private String prcSetId;
-    private String proSrvId;
-    private String prcDataId = null;
+    //private String prcSetId;
+    //private String proSrvId;
+    //private String prcDataId = null;
     private Bundle bundle;
-    private boolean isEdit = false;
+    //private boolean isEdit = false;
     private boolean isConfirm = false;
     private String attachFileIdFront;
     private String attachFileIdRight;
@@ -155,8 +155,6 @@ public class TakePictureFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("proModelId", MODE_PRIVATE);
 
-        //proModelId = sharedPreferences.getString("proModelId", "");
-
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putInt(Constant.STATE_Reception, 2);
         myEdit.commit();
@@ -171,25 +169,6 @@ public class TakePictureFragment extends Fragment {
         disposable = new CompositeDisposable();
         imageItemList = new ArrayList<>();
 
-        if (getArguments() != null) {
-            bundle = new Bundle();
-            prcSetId = getArguments().getString("prcSetId");
-            proSrvId = getArguments().getString("proSrvId");
-            prcDataId = getArguments().getString("prcDataId");
-            isEdit = getArguments().getBoolean("isEdit");
-            isConfirm = getArguments().getBoolean("isConfirm");
-
-           /* if (prcDataId != null) {
-                try {
-                    GlobalValue.prcDataId = Long.valueOf(prcDataId);
-                    //getProSrvAttachFileFront(true);
-                } catch (Exception e) {
-                    System.out.println(e.getLocalizedMessage());
-                }
-            }*/
-
-        }
-
         binding.btnEdit.setText("ذخیره");
 
         binding.cameraFront.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +176,6 @@ public class TakePictureFragment extends Fragment {
             public void onClick(View view) {
                 cameraPosition = 1;
                 startPreview(null);
-
-                // getCamera();
             }
         });
 
@@ -298,7 +275,7 @@ public class TakePictureFragment extends Fragment {
         binding.imgDeleteFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteFront", attachFileIdFront);
                 }
 
@@ -308,7 +285,7 @@ public class TakePictureFragment extends Fragment {
         binding.imgDeleteRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteRight", attachFileIdRight);
                 }
             }
@@ -317,7 +294,7 @@ public class TakePictureFragment extends Fragment {
         binding.imgDeleteBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteBack", attachFileIdBack);
                 }
 
@@ -327,7 +304,7 @@ public class TakePictureFragment extends Fragment {
         binding.imgDeleteLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteLeft", attachFileIdLeft);
                 }
 
@@ -337,20 +314,20 @@ public class TakePictureFragment extends Fragment {
         binding.imgDeleteKm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteKm", attachFileIdKM);
                 }
             }
         });
 
-        if (isEdit) {
+        if (GlobalValue.isEdit) {
             binding.btnEdit.setText("ویرایش");
             getProSrvAttachFileFront(true);
         } else {
             binding.btnEdit.setText("ذخیره");
         }
 
-        if (isConfirm) {
+        if (GlobalValue.isConfirm) {
             binding.btnEdit.setVisibility(View.GONE);
             binding.imgDeleteFront.setVisibility(View.GONE);
             binding.imgDeleteRight.setVisibility(View.GONE);
@@ -362,7 +339,7 @@ public class TakePictureFragment extends Fragment {
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isEdit) {
+                if (!GlobalValue.isEdit) {
                     if (pathLeft.equals("") ||
                             pathRight.equals("") ||
                             pathBack.equals("") ||
@@ -374,9 +351,8 @@ public class TakePictureFragment extends Fragment {
                     }
                 }
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
-                   // saveOrEdit();
+                   //saveOrEdit();
                 }
-
                 saveOrEdit();
             }
         });
@@ -575,8 +551,8 @@ public class TakePictureFragment extends Fragment {
         attachFile.setSendingStatusEn(SendingStatusEn.Pending.ordinal());
         attachFile.setEntityNameEn(EntityNameEn.ProcessStrucData.ordinal());
         attachFile.setServerAttachFileSettingId(attachFileSettingId);
-        attachFile.setEntityId(Long.valueOf(prcDataId));
-        attachFile.setServerEntityId(Long.valueOf(prcDataId));
+        attachFile.setEntityId(Long.valueOf(GlobalValue.prcDataId));
+        attachFile.setServerEntityId(Long.valueOf(GlobalValue.prcDataId));
         attachFile.setAttachFileLocalPath(filePath);
         databaseViewModel.insertAttachFileRepoVM(attachFile);
 
@@ -915,7 +891,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathFront, (long) 1078);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
                 dialog.show();
-                if (isEdit){
+                if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -931,7 +907,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathRight, (long) 1079);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (isEdit){
+                if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -947,7 +923,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathBack, (long) 1080);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (isEdit){
+                if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -963,7 +939,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathLeft, (long) 1081);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (isEdit){
+                if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -979,7 +955,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathKm, (long) 1097);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (isEdit){
+                if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -1021,9 +997,9 @@ public class TakePictureFragment extends Fragment {
             Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
             Bundle bundle = new Bundle();
-            bundle.putString("prcDataId",prcDataId);
-            bundle.putString("prcSetId",prcSetId);
-            bundle.putString("proSrvId",proSrvId);
+           // bundle.putString("prcDataId",prcDataId);
+           // bundle.putString("prcSetId",prcSetId);
+            //bundle.putString("proSrvId",proSrvId);
             NavHostFragment.findNavController(TakePictureFragment.this).navigate(R.id.addExpertDataFragment, bundle, navBuilder.build());
             //NavHostFragment.findNavController(TakePictureFragment.this).navigateUp();
 
@@ -1031,7 +1007,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     public void saveOrEdit() {
-        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), prcSetId, "238", proSrvId, "", prcDataId);
+        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, "", GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1043,9 +1019,9 @@ public class TakePictureFragment extends Fragment {
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
                         System.out.println("=====onNext=====");
                         if (proServiceResponse.result != null && proServiceResponse.result.prcData.id != null) {
-                            prcDataId = proServiceResponse.result.prcData.id;
+                            GlobalValue.prcDataId = proServiceResponse.result.prcData.id;
                             GlobalValue.proSrvId = proServiceResponse.result.prcData.entityId;
-
+                            GlobalValue.isEdit = true;
 
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
@@ -1076,12 +1052,11 @@ public class TakePictureFragment extends Fragment {
         progressDialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         progressDialog.show();
 
-        if (prcDataId == null || prcDataId.equals("null")) {
+        if (GlobalValue.prcDataId == null || GlobalValue.prcDataId.equals("null")) {
             return;
         }
 
-        System.out.println("prcDataId====" + prcDataId);
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1078");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1078");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1125,7 +1100,7 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteFront.setVisibility(View.VISIBLE);
                                         }
 
@@ -1150,7 +1125,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void getProSrvAttachFileRight(boolean isNext) {
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1079");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1079");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1193,7 +1168,7 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteRight.setVisibility(View.VISIBLE);
                                         }
 
@@ -1220,7 +1195,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void getProSrvAttachFileBack(boolean isNext) {
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1080");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1080");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1264,7 +1239,7 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteBack.setVisibility(View.VISIBLE);
                                         }
 
@@ -1290,7 +1265,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void getProSrvAttachFileLeft(boolean isNext) {
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1081");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1081");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1334,7 +1309,7 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteLeft.setVisibility(View.VISIBLE);
                                         }
 
@@ -1361,7 +1336,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void getProSrvAttachFileOther() {
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1108");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1108");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1435,7 +1410,7 @@ public class TakePictureFragment extends Fragment {
 
 
     private void getProSrvAttachFileKM() {
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1097");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1097");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -1480,7 +1455,7 @@ public class TakePictureFragment extends Fragment {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
                                         pathKmIsChanged = false;
-                                        if (!isConfirm){
+                                        if (!GlobalValue.isConfirm){
                                             binding.imgDeleteKm.setVisibility(View.VISIBLE);
                                         }
 

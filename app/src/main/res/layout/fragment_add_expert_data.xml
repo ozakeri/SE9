@@ -282,11 +282,11 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:background="@drawable/bg_button"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="تایید"
+                        android:text="ویرایش و تایید"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

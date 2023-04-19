@@ -96,17 +96,16 @@ public class AddExpertDataFragment extends Fragment {
     private MainViewModel viewModel;
     private String proModelId = "94415";
     private SharedPreferences sharedPreferences;
-    private PrcSet prcSet;
-    private String proSrvId;
-    private String prcDataId;
+    //private String proSrvId;
+    //private String prcDataId;
     private Bundle bundle;
-    private boolean isEdit;
+   // private boolean isEdit;
     private MainViewModel mainViewModel;
     private MediaPlayer mediaPlayer;
     private String attachFileSignId;
     private String attachFileAudioId;
     public List<JsonArrayAttach> jsonArrayAttachCopy = null;
-    private String prcSetId;
+    //private String prcSetId;
     private byte[] bytes;
     private Bitmap bitmap;
     private String description;
@@ -141,12 +140,11 @@ public class AddExpertDataFragment extends Fragment {
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
         if (getArguments() != null) {
-            prcSet = getArguments().getParcelable("prcSet");
-            proSrvId = getArguments().getString("proSrvId");
-            prcDataId = getArguments().getString("prcDataId");
-            prcSetId = getArguments().getString("prcSetId");
+            //proSrvId = getArguments().getString("proSrvId");
+           // prcDataId = getArguments().getString("prcDataId");
+            //prcSetId = getArguments().getString("prcSetId");
             description = getArguments().getString("description");
-            isEdit = getArguments().getBoolean("isEdit");
+            //isEdit = getArguments().getBoolean("isEdit");
             isConfirm = getArguments().getBoolean("isConfirm");
 
             binding.editTextTextPersonName.setText(description);
@@ -238,7 +236,7 @@ public class AddExpertDataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 confirm = true;
-                confirmPrcData();
+                saveOrEdit();
             }
         });
 
@@ -332,7 +330,7 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                if (!isEdit){
+                if (!GlobalValue.isEdit){
                     if (audioPath == null && signPath == null) {
                         Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
                         return;
@@ -355,7 +353,7 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                gotoTakePicFragment(isEdit);
+                gotoTakePicFragment(GlobalValue.isEdit);
             }
         });
 
@@ -501,8 +499,8 @@ public class AddExpertDataFragment extends Fragment {
         attachFile.setSendingStatusEn(SendingStatusEn.Pending.ordinal());
         attachFile.setEntityNameEn(EntityNameEn.ProcessStrucData.ordinal());
         attachFile.setServerAttachFileSettingId(attachFileSettingId);
-        attachFile.setEntityId(Long.valueOf(prcDataId));
-        attachFile.setServerEntityId(Long.valueOf(prcDataId));
+        attachFile.setEntityId(Long.valueOf(GlobalValue.prcDataId));
+        attachFile.setServerEntityId(Long.valueOf(GlobalValue.prcDataId));
         attachFile.setAttachFileLocalPath(filePath);
         databaseViewModel.insertAttachFileRepoVM(attachFile);
 
@@ -613,14 +611,17 @@ public class AddExpertDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
-            isEdit = true;
+            GlobalValue.isEdit = true;
+            if (confirm){
+                confirmPrcData();
+            }
         }
     }
 
     public void saveOrEdit() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), prcSetId, "238", proSrvId, binding.editTextTextPersonName.getText().toString(), prcDataId);
+        inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -632,8 +633,8 @@ public class AddExpertDataFragment extends Fragment {
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
 
                         if (proServiceResponse.result!= null && proServiceResponse.result.prcData.id != null) {
-                            prcDataId = proServiceResponse.result.prcData.id;
-                            isEdit = true;
+                            GlobalValue.prcDataId = proServiceResponse.result.prcData.id;
+                            GlobalValue.isEdit = true;
                         }
                     }
 
@@ -647,12 +648,12 @@ public class AddExpertDataFragment extends Fragment {
                     public void onComplete() {
                         dialog.dismiss();
                         System.out.println("======onComplete=====");
-                        System.out.println("======isEdit=====" + isEdit);
-                        if (prcDataId != null){
+                        System.out.println("======isEdit=====" + GlobalValue.isEdit);
+                        if (GlobalValue.prcDataId != null){
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
                                     public void run() {
-                                        System.out.println("prcDataIdrun=====" + prcDataId);
+                                        System.out.println("GlobalValue.prcDataId=====" + GlobalValue.prcDataId);
                                         Bitmap signatureBitmap = binding.signaturePad.getSignatureBitmap();
                                        // tryToSaveImage(signatureBitmap);
 
@@ -680,7 +681,7 @@ public class AddExpertDataFragment extends Fragment {
     private void getProSrvAttachFileSign() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1077");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1077");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -756,7 +757,7 @@ public class AddExpertDataFragment extends Fragment {
 
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), prcDataId, "1076");
+        inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1076");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -923,18 +924,18 @@ public class AddExpertDataFragment extends Fragment {
 
     private void gotoTakePicFragment(boolean isEdit) {
 
-        bundle.putString("prcSetId", prcSetId);
-        bundle.putString("proSrvId", proSrvId);
-        bundle.putBoolean("isEdit", isEdit);
-        bundle.putBoolean("isConfirm", isConfirm);
-        bundle.putString("prcDataId", prcDataId);
-        NavHostFragment.findNavController(AddExpertDataFragment.this).navigate(R.id.takePictureFragment, bundle, navBuilder.build());
+        //bundle.putString("prcSetId", prcSetId);
+        //bundle.putString("proSrvId", proSrvId);
+        //bundle.putBoolean("isEdit", isEdit);
+        //bundle.putBoolean("isConfirm", isConfirm);
+        //bundle.putString("prcDataId", prcDataId);
+        NavHostFragment.findNavController(AddExpertDataFragment.this).navigate(R.id.takePictureFragment, null, navBuilder.build());
     }
 
     public void confirmPrcData() {
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
         dialog.show();
-        inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), prcDataId,confirm);
+        inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId,confirm);
         mainViewModel.confirmPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override
@@ -950,7 +951,7 @@ public class AddExpertDataFragment extends Fragment {
                                     public void run() {
                                         dialog.dismiss();
                                         Toast.makeText(getActivity(), proServiceResponse.success, Toast.LENGTH_SHORT).show();
-                                        NavHostFragment.findNavController(AddExpertDataFragment.this).navigateUp();
+                                        NavHostFragment.findNavController(AddExpertDataFragment.this).navigate(R.id.recognizePlateFragment, null, navBuilder.build());
                                     }
                                 });
                             }
@@ -986,13 +987,13 @@ public class AddExpertDataFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (prcDataId != null) {
-            binding.btnEdit.setText("ویرایش");
-            isEdit = true;
-            binding.btnConfirm.setVisibility(View.VISIBLE);
-            binding.btnNonConfirm.setVisibility(View.VISIBLE);
-            binding.btnEdit.setVisibility(View.VISIBLE);
-
+        if (GlobalValue.prcDataId != null) {
+            if (GlobalValue.isConfirm){
+                binding.btnEdit.setText("ویرایش");
+                binding.btnConfirm.setVisibility(View.VISIBLE);
+                binding.btnNonConfirm.setVisibility(View.VISIBLE);
+                binding.btnEdit.setVisibility(View.VISIBLE);
+            }
             if (getActivity() != null) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
@@ -1000,7 +1001,6 @@ public class AddExpertDataFragment extends Fragment {
                     }
                 });
             }
-
         } else {
             binding.btnEdit.setText("ذخیره");
             binding.imgDelete.setVisibility(View.GONE);

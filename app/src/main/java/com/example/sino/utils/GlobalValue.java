@@ -10,7 +10,7 @@ public class GlobalValue {
     public static int carId = 0;
     public static String companyCode = null;
     public static Long proServiceId;
-    public static Long prcDataId;
+    public static String prcDataId;
     public static String plateNo;
     public static String txtOne;
     public static String txtTwo;
@@ -26,4 +26,7 @@ public class GlobalValue {
 
     public static ProSrv proSrv;
     public static String proSrvId;
+    public static String prcSetId;
+    public static boolean isEdit;
+    public static boolean isConfirm;
 }

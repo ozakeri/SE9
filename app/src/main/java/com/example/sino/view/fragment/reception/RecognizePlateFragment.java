@@ -178,7 +178,6 @@ public class RecognizePlateFragment extends Fragment {
                 public void onItemClick(int position, View v) {
                     if (proSrv.prcDataList.get(position).prcDataVO.processStatus == 1) {
                         isConfirm = true;
-                        //return;
                     } else {
                         isConfirm = false;
                     }
@@ -200,32 +199,50 @@ public class RecognizePlateFragment extends Fragment {
     }
 
     private void gotoAddCustomerDataFragment(boolean isEdit) {
-        Bundle bundle = new Bundle();
-        bundle.putString("prcSetId", prcSetId);
+
         GlobalValue.proSrvId = proSrv.proSrvId;
         GlobalValue.proSrv = proSrv;
+        GlobalValue.prcDataId = prcDataId;
+        GlobalValue.isEdit = isEdit;
+        GlobalValue.prcSetId = prcSetId;
+        GlobalValue.isConfirm = isConfirm;
+
+       /* Bundle bundle = new Bundle();
+        bundle.putString("prcSetId", prcSetId);
         bundle.putString("proSrvId", proSrv.proSrvId);
         bundle.putBoolean("isEdit", isEdit);
         bundle.putBoolean("isConfirm", isConfirm);
         bundle.putString("prcDataId", prcDataId);
-        bundle.putString("description", description);
+        bundle.putString("description", description);*/
 
-        NavHostFragment.findNavController(RecognizePlateFragment.this).navigate(R.id.addCustomerDataFragment, bundle, navBuilder.build());
+        NavHostFragment.findNavController(RecognizePlateFragment.this).navigate(R.id.addCustomerDataFragment, null, navBuilder.build());
     }
 
     private void gotoExpertDataFragment(boolean isEdit) {
-        Bundle bundle = new Bundle();
+
+        GlobalValue.proSrvId = proSrv.proSrvId;
+        GlobalValue.proSrv = proSrv;
+        GlobalValue.prcDataId = prcDataId;
+        GlobalValue.isEdit = isEdit;
+        GlobalValue.prcSetId = prcSetId;
+        GlobalValue.isConfirm = isConfirm;
+
+    /*    Bundle bundle = new Bundle();
         bundle.putString("prcSetId", prcSetId);
         bundle.putString("proSrvId", proSrv.proSrvId);
         GlobalValue.proSrvId = proSrv.proSrvId;
         GlobalValue.proSrv = proSrv;
+        GlobalValue.prcDataId = prcDataId;
+        GlobalValue.isEdit = isEdit;
         bundle.putBoolean("isEdit", isEdit);
         bundle.putBoolean("isConfirm", isConfirm);
         bundle.putString("prcDataId", prcDataId);
-        bundle.putString("description", description);
-        System.out.println("isConfirm1=====" + isConfirm);
-        NavHostFragment.findNavController(RecognizePlateFragment.this).navigate(R.id.addExpertDataFragment, bundle, navBuilder.build());
-
+        bundle.putString("description", description);*/
+        if (GlobalValue.isConfirm || GlobalValue.isEdit){
+            NavHostFragment.findNavController(RecognizePlateFragment.this).navigate(R.id.addExpertDataFragment, null, navBuilder.build());
+        }else {
+            NavHostFragment.findNavController(RecognizePlateFragment.this).navigate(R.id.takePictureFragment, null, navBuilder.build());
+        }
     }
 
     private void getProSrvById(String id) {
