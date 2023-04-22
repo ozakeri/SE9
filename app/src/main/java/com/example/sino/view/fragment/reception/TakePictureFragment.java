@@ -900,7 +900,7 @@ public class TakePictureFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //dialog.show();
+            dialog.show();
 
             System.out.println("=====onPreExecute====");
         }
@@ -912,7 +912,6 @@ public class TakePictureFragment extends Fragment {
             if (!pathFront.equals("") && pathFrontIsChanged) {
                 saveAttachImageFile(pathFront, (long) 1078);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
-                dialog.show();
                 if (GlobalValue.isEdit){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
@@ -1029,6 +1028,8 @@ public class TakePictureFragment extends Fragment {
     }
 
     public void saveOrEdit() {
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        dialog.show();
         inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, "", GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1059,12 +1060,13 @@ public class TakePictureFragment extends Fragment {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         System.out.println("=====onError=====" + e.getLocalizedMessage());
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onComplete() {
                         System.out.println("=====onComplete=====");
-
+                        dialog.dismiss();
                     }
                 });
     }
