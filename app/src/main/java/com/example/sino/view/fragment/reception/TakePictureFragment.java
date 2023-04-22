@@ -346,17 +346,32 @@ public class TakePictureFragment extends Fragment {
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!GlobalValue.isEdit) {
-                    if (pathLeft.equals("") ||
-                            pathRight.equals("") ||
-                            pathBack.equals("") ||
-                            pathFront.equals("") ||
-                            pathKm.equals("")) {
-                        Toast.makeText(getActivity(), "تعداد تصاویر نادرست است", Toast.LENGTH_LONG).show();
 
-                       // return;
+                    if (pathFront.equals("")){
+                        Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
+                        return;
                     }
-                }
+
+                    if (pathRight.equals("")){
+                        Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (pathBack.equals("")){
+                        Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (pathLeft.equals("")){
+                        Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (pathKm.equals("")){
+                        Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
                    //saveOrEdit();
                 }
@@ -1113,6 +1128,7 @@ public class TakePictureFragment extends Fragment {
 
                                         pathFrontIsChanged = false;
                                         binding.imgFront.setImageBitmap(bitmap);
+                                        pathFront = "pathFront";
                                     } else {
                                         binding.imgDeleteFront.setVisibility(View.GONE);
                                         binding.imgFront.setImageBitmap(null);
@@ -1178,9 +1194,9 @@ public class TakePictureFragment extends Fragment {
                                         if (!GlobalValue.isConfirm){
                                             binding.imgDeleteRight.setVisibility(View.VISIBLE);
                                         }
-
                                         pathRightIsChanged = false;
                                         binding.imgRight.setImageBitmap(bitmap);
+                                        pathRight = "pathRight";
                                     } else {
                                         binding.imgDeleteRight.setVisibility(View.GONE);
                                         binding.imgRight.setImageBitmap(null);
@@ -1249,7 +1265,7 @@ public class TakePictureFragment extends Fragment {
                                         if (!GlobalValue.isConfirm){
                                             binding.imgDeleteBack.setVisibility(View.VISIBLE);
                                         }
-
+                                        pathBack = "pathBack";
                                         pathBackIsChanged = false;
                                         binding.imgBack.setImageBitmap(bitmap);
                                     } else {
@@ -1319,7 +1335,7 @@ public class TakePictureFragment extends Fragment {
                                         if (!GlobalValue.isConfirm){
                                             binding.imgDeleteLeft.setVisibility(View.VISIBLE);
                                         }
-
+                                        pathLeft = "pathLeft";
                                         pathLeftIsChanged = false;
                                         binding.imgLeft.setImageBitmap(bitmap);
                                     } else {
@@ -1465,7 +1481,7 @@ public class TakePictureFragment extends Fragment {
                                         if (!GlobalValue.isConfirm){
                                             binding.imgDeleteKm.setVisibility(View.VISIBLE);
                                         }
-
+                                        pathKm = "pathKm";
                                         binding.imgKm.setImageBitmap(bitmap);
                                     } else {
                                         binding.imgDeleteKm.setVisibility(View.GONE);

@@ -259,7 +259,20 @@ public class AddExpertDataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 confirm = true;
-                saveOrEdit();
+
+                if (statusRecord != 0) {
+                    Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (audioPath == null && signPath == null) {
+                    Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (audioPathIsChanged || signPathIsChanged || editTextIsChanged) {
+                    saveOrEdit();
+                }
             }
         });
 
@@ -357,13 +370,10 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                if (!GlobalValue.isEdit) {
                     if (audioPath == null && signPath == null) {
                         Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                }
-
 
                 if (audioPathIsChanged || signPathIsChanged || editTextIsChanged) {
                     saveOrEdit();
