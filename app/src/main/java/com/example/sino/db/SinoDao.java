@@ -165,4 +165,7 @@ public interface SinoDao {
     @Query("SELECT * FROM attachfile WHERE entityNameEn=:entityNameEn AND entityId=:entityId")
     List<AttachFile> getPendingAttachFileByEntityId(Long entityNameEn, Long entityId);
 
+    @Query("SELECT * FROM attachfile WHERE entityId=:entityId AND serverAttachFileSettingId=:serverAttachFileSettingId")
+    LiveData<AttachFile> getAttachFileByParam(Long entityId, Long serverAttachFileSettingId);
+
 }

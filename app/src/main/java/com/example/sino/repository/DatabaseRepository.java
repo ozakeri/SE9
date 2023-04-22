@@ -80,6 +80,9 @@ public class DatabaseRepository {
     public void insertAttachFileRepo(AttachFile attachFile) {
         sinoDao.insertAttachFile(attachFile);
     }
+    public LiveData<AttachFile> getAttachFileByParam(Long entityId, Long serverAttachFileSettingId) {
+        return sinoDao.getAttachFileByParam(entityId,serverAttachFileSettingId);
+    }
 
     public void updateChatGroupRepo(ChatGroup chatGroup) {
         sinoDao.updateChatGroup(chatGroup);

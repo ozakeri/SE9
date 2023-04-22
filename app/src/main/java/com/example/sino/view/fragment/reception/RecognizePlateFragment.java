@@ -158,6 +158,7 @@ public class RecognizePlateFragment extends Fragment {
                 //getAttachFileSettingItemList(false);
                 prcDataId = null;
                 isConfirm = false;
+                GlobalValue.description = null;
                 if (prcSetId.equals("21921")) {
                     gotoAddCustomerDataFragment(false);
                 } else if (prcSetId.equals("21922")) {
