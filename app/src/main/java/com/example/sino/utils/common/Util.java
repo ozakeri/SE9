@@ -389,4 +389,20 @@ public class Util {
         }
     }
 
+    public static String milliSecondsToTimer(long milliseconds){
+        String secondsString = "";
+
+        // Convert total duration into time
+        int seconds = (int) ((milliseconds % (1000*60*60)) % (1000*60) / 1000);
+
+        // Prepending 0 to seconds if it is one digit
+        if(seconds < 10){
+            secondsString = "0" + seconds;
+        }else{
+            secondsString = "" + seconds;}
+
+        // return timer string
+        return secondsString;
+    }
+
 }

@@ -334,6 +334,13 @@ public class TakePictureFragment extends Fragment {
             binding.imgDeleteBack.setVisibility(View.GONE);
             binding.imgDeleteLeft.setVisibility(View.GONE);
             binding.imgDeleteKm.setVisibility(View.GONE);
+
+            binding.cameraFront.setEnabled(false);
+            binding.cameraRight.setEnabled(false);
+            binding.cameraLeft.setEnabled(false);
+            binding.cameraBack.setEnabled(false);
+            binding.cameraKm.setEnabled(false);
+            binding.appCompatImageOther.setEnabled(false);
         }
 
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {

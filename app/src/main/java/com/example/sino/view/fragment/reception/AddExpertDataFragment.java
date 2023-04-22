@@ -48,6 +48,7 @@ import com.example.sino.model.reception.ProServiceResponse;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
+import com.example.sino.utils.common.Util;
 import com.example.sino.utils.services.ApiServiceAsync;
 import com.example.sino.view.activity.MainActivity;
 import com.example.sino.viewmodel.DatabaseViewModel;
@@ -116,6 +117,7 @@ public class AddExpertDataFragment extends Fragment {
     private boolean audioPathIsChanged = false;
     private boolean editTextIsChanged = false;
     private MainActivity mainActivity;
+    private long elapsedMillis = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,26 +133,18 @@ public class AddExpertDataFragment extends Fragment {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         sharedPreferences = getActivity().getSharedPreferences("proModelId", MODE_PRIVATE);
         // proModelId = sharedPreferences.getString("proModelId", "");
-
+        mediaPlayer = new MediaPlayer();
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putInt(Constant.STATE_Reception, 4);
         myEdit.commit();
 
-        System.out.println("=====proModelId===" + proModelId);
-
         navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
+        binding.editTextTextPersonName.setText("");
+        binding.editTextTextPersonName.setHint("توضیحات");
         if (GlobalValue.description != null) {
-            //proSrvId = getArguments().getString("proSrvId");
-           // prcDataId = getArguments().getString("prcDataId");
-            //prcSetId = getArguments().getString("prcSetId");
-            //description = getArguments().getString("description");
-            //isEdit = getArguments().getBoolean("isEdit");
-            //isConfirm = getArguments().getBoolean("isConfirm");
-
             binding.editTextTextPersonName.setText(GlobalValue.description);
-
         }
 
         binding.editTextTextPersonName.addTextChangedListener(new TextWatcher() {
@@ -238,6 +232,15 @@ public class AddExpertDataFragment extends Fragment {
                     }
 
                 } else if (statusRecord == 1) {
+
+                    elapsedMillis = SystemClock.elapsedRealtime() - binding.recordTimer.getBase();
+                    elapsedMillis = elapsedMillis/1000;
+
+                    if (elapsedMillis <=10){
+                        Toast.makeText(getActivity(), "حداقل صدای ضبط شده 10 ثانیه می باشد", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     statusRecord = 0;
                     binding.imgRecord.setBackgroundResource(R.drawable.ic_voice);
                     try {
@@ -248,6 +251,7 @@ public class AddExpertDataFragment extends Fragment {
                     isNotRecording = true;
                     binding.lottieRecord.setVisibility(View.GONE);
                     binding.lottieRecordTwo.setVisibility(View.GONE);
+
                 }
 
             }
@@ -303,6 +307,10 @@ public class AddExpertDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.GONE);
             binding.gotoTakePic.setText("مشاهده تصاویر");
         }
+        if (GlobalValue.isEdit){
+            binding.gotoTakePic.setText("ویرایش تصاویر");
+        }
+
 
         boolean isPlay = false;
         if (isPlay) {
@@ -386,7 +394,7 @@ public class AddExpertDataFragment extends Fragment {
         binding.recordTimer.setBase(SystemClock.elapsedRealtime());
         binding.recordTimer.start();
         binding.txtFileName.setText("");
-
+        elapsedMillis = 0;
         String path;
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
@@ -423,8 +431,8 @@ public class AddExpertDataFragment extends Fragment {
     }
 
     private void stopRecording() {
-        binding.recordTimer.stop();
 
+        binding.recordTimer.stop();
         mediaRecorder.stop();
         mediaRecorder.release();
         mediaRecorder = null;
@@ -433,12 +441,12 @@ public class AddExpertDataFragment extends Fragment {
         //saveAttachImageFile(pathStr);
 
         try {
-            mediaPlayer = new MediaPlayer();
             mediaPlayer.reset();
             FileInputStream fis = new FileInputStream(audioPath);
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare();
             mediaPlayer.setLooping(true);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -849,7 +857,7 @@ public class AddExpertDataFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private void mp3File(byte[] bytearray) {
         try {
-            mediaPlayer = new MediaPlayer();
+            //mediaPlayer = new MediaPlayer();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_mm_ss");
             Date now = new Date();
             String s = "Recording_" + formatter.format(now) + ".mp3";
@@ -1012,6 +1020,7 @@ public class AddExpertDataFragment extends Fragment {
         if (GlobalValue.prcDataId != null) {
             if (!GlobalValue.isConfirm){
                 binding.btnEdit.setText("ویرایش");
+                binding.gotoTakePic.setText("ویرایش تصاویر");
                 binding.btnConfirm.setVisibility(View.VISIBLE);
                 binding.btnNonConfirm.setVisibility(View.VISIBLE);
                 binding.btnEdit.setVisibility(View.VISIBLE);

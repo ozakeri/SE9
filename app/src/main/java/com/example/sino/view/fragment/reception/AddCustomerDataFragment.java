@@ -137,7 +137,8 @@ public class AddCustomerDataFragment extends Fragment {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putInt(Constant.STATE_Reception, 3);
         myEdit.commit();
-
+        binding.editTextTextPersonName.setText("");
+        binding.editTextTextPersonName.setHint("توضیحات");
         if (GlobalValue.description != null) {
             binding.editTextTextPersonName.setText(GlobalValue.description);
         }

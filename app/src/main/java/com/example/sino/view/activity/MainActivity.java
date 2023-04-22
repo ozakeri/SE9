@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         drawerLayout = binding.drawerlayout;
+
         img_header = findViewById(R.id.img_header);
         txtName = findViewById(R.id.txt_header_name);
         txtCode = findViewById(R.id.txt_header_code);
