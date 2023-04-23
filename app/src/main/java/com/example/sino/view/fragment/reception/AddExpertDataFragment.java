@@ -1040,7 +1040,9 @@ public class AddExpertDataFragment extends Fragment {
                         .observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<AttachFile>() {
                             @Override
                             public void onChanged(AttachFile attachFile) {
+                                if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
 
+                                }
                             }
                         });
 

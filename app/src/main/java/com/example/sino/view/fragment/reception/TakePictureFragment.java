@@ -373,9 +373,9 @@ public class TakePictureFragment extends Fragment {
                     }
 
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
-                   //saveOrEdit();
+                   saveOrEdit();
                 }
-                saveOrEdit();
+                //saveOrEdit();
             }
         });
         return binding.getRoot();
