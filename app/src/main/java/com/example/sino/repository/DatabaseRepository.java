@@ -80,7 +80,7 @@ public class DatabaseRepository {
     public void insertAttachFileRepo(AttachFile attachFile) {
         sinoDao.insertAttachFile(attachFile);
     }
-    public LiveData<AttachFile> getAttachFileByParam(Long entityId, Long serverAttachFileSettingId) {
+    public Observable<AttachFile> getAttachFileByParam(Long entityId, Long serverAttachFileSettingId) {
         return sinoDao.getAttachFileByParam(entityId,serverAttachFileSettingId);
     }
 

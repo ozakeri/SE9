@@ -390,6 +390,14 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
+                if (signPath != null && signPathIsChanged){
+                    saveAttachImageFile(signPath, (long) 1077);
+                }
+
+                if (audioPath != null && audioPathIsChanged){
+                    saveAttachImageFile(signPath, (long) 1076);
+                }
+
                 gotoTakePicFragment(GlobalValue.isEdit);
             }
         });
@@ -411,6 +419,9 @@ public class AddExpertDataFragment extends Fragment {
             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
 
+        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+
+
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -425,7 +436,7 @@ public class AddExpertDataFragment extends Fragment {
         System.out.println("pathStr222====" + pathStr);
         audioPath = file.getAbsolutePath();
         audioPathIsChanged = true;
-        saveAttachImageFile(audioPath, (long) 1076);
+        //saveAttachImageFile(audioPath, (long) 1076);
         try {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -511,18 +522,20 @@ public class AddExpertDataFragment extends Fragment {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+
+
             File dir = new File(path);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
             int quality = 100;
             signPath = path + "/" + "userSign.png";
+
             signPathIsChanged = true;
             FileOutputStream fos = new FileOutputStream(new File(signPath));
             image.compress(Bitmap.CompressFormat.JPEG, quality, fos);
             fos.close();
-
-            saveAttachImageFile(signPath, (long) 1077);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -556,6 +569,9 @@ public class AddExpertDataFragment extends Fragment {
         } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
+
+        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
+
 
         File dir = new File(path);
         if (!dir.exists()) {
@@ -603,7 +619,7 @@ public class AddExpertDataFragment extends Fragment {
             //Copy you logic to calculate progress and call
 
             if (signPath != null && signPathIsChanged) {
-                //saveAttachImageFile(signPath, (long) 1077);
+                saveAttachImageFile(signPath, (long) 1077);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
                 if (getActivity() != null) {
@@ -616,11 +632,11 @@ public class AddExpertDataFragment extends Fragment {
             }
 
             if (audioPath != null && audioPathIsChanged) {
-               /* try {
+                try {
                     saveAttachImageFile(audioPath, (long) 1076);
                 } catch (Exception e) {
                     System.out.println(e.getLocalizedMessage());
-                }*/
+                }
 
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
                 if (getActivity() != null) {
@@ -782,6 +798,43 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.imgDelete.setVisibility(View.GONE);
                                         binding.signaturePad.setEnabled(true);
                                         binding.imgReload.setEnabled(true);
+
+                                        databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1077L)
+                                                .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new Observer<AttachFile>() {
+                                                    @Override
+                                                    public void onSubscribe(@NonNull Disposable d) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onNext(@NonNull AttachFile attachFile) {
+                                                        if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
+                                                            File imgFile = new File(attachFile.getAttachFileLocalPath());
+                                                            if (imgFile.exists()) {
+                                                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                                                                if (getActivity() != null) {
+                                                                    getActivity().runOnUiThread(new Runnable() {
+                                                                        public void run() {
+                                                                            binding.signaturePad.setSignatureBitmap(myBitmap);
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onError(@NonNull Throwable e) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onComplete() {
+
+                                                    }
+                                                });
                                     }
 
                                     dialog.dismiss();
@@ -857,6 +910,50 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.imgDeleteRecord.setVisibility(View.GONE);
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         binding.constraintLayoutRecord.setVisibility(View.VISIBLE);
+
+                                        databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1076L)
+                                                .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new Observer<AttachFile>() {
+                                                    @Override
+                                                    public void onSubscribe(@NonNull Disposable d) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onNext(@NonNull AttachFile attachFile) {
+                                                        if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
+
+                                                            try {
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_mm_ss");
+                                                                Date now = new Date();
+                                                                String s = "Recording_" + formatter.format(now) + ".mp3";
+                                                                File file = new File(attachFile.getAttachFileLocalPath() + "/" + s);
+                                                                File tempFile = null;
+                                                                tempFile = File.createTempFile("mobile", ".mp3", file);
+                                                                tempFile.deleteOnExit();
+                                                                FileInputStream fis = new FileInputStream(tempFile);
+                                                                mediaPlayer.setDataSource(fis.getFD());
+                                                                mediaPlayer.setLooping(true);
+                                                                mediaPlayer.prepare();
+                                                                binding.constraintLayoutRecord.setVisibility(View.GONE);
+                                                                binding.cardViewPlayer.setVisibility(View.VISIBLE);
+                                                            } catch (IOException e) {
+                                                                throw new RuntimeException(e);
+                                                            }
+
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onError(@NonNull Throwable e) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onComplete() {
+
+                                                    }
+                                                });
                                     }
                                 }
                             });
@@ -880,6 +977,9 @@ public class AddExpertDataFragment extends Fragment {
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
             }
+
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+
 
             File dir = new File(path + "/" + s);
             if (!dir.exists()) {
@@ -1035,32 +1135,6 @@ public class AddExpertDataFragment extends Fragment {
                 binding.btnConfirm.setVisibility(View.VISIBLE);
                 binding.btnNonConfirm.setVisibility(View.VISIBLE);
                 binding.btnEdit.setVisibility(View.VISIBLE);
-
-                databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1076L)
-                        .observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<AttachFile>() {
-                            @Override
-                            public void onChanged(AttachFile attachFile) {
-                                if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
-
-                                }
-                            }
-                        });
-
-                databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1077L)
-                        .observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<AttachFile>() {
-                            @Override
-                            public void onChanged(AttachFile attachFile) {
-
-                                if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
-                                    File imgFile = new File(attachFile.getAttachFileLocalPath());
-                                    if (imgFile.exists()) {
-                                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                        binding.signaturePad.setSignatureBitmap(myBitmap);
-                                    }
-                                }
-                            }
-                        });
-
             }
             if (getActivity() != null) {
                 getActivity().runOnUiThread(new Runnable() {

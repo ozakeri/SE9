@@ -131,7 +131,7 @@ public class DatabaseViewModel extends AndroidViewModel {
     public void insertAttachFileRepoVM(AttachFile attachFile) {
         repository.insertAttachFileRepo(attachFile);
     }
-    public LiveData<AttachFile> getAttachFileByParamRepoVM(Long entityId, Long serverAttachFileSettingId) {
+    public Observable<AttachFile> getAttachFileByParamRepoVM(Long entityId, Long serverAttachFileSettingId) {
         return repository.getAttachFileByParam(entityId,serverAttachFileSettingId);
     }
 
