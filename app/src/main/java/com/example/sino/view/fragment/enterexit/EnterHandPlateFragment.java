@@ -292,19 +292,24 @@ public class EnterHandPlateFragment extends Fragment {
                                                             binding.txtCarType.setVisibility(View.GONE);
                                                         }
 
-                                                        if (dailyEventRespons.result.dailyEvent.car.seLicPro != null){
-                                                            try {
-                                                                Date date = sdf.parse(dailyEventRespons.result.dailyEvent.car.seLicPro.endDatePlan);
-                                                                Calendar calendar = Calendar.getInstance();
-                                                                calendar.setTime(date);
-                                                                JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
-                                                                binding.txtLice.setText(" گارانتی : " + dailyEventRespons.result.dailyEvent.car.seLicPro.licTypeEn_text + " " +
-                                                                        jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
-                                                            } catch (ParseException e) {
-                                                                e.printStackTrace();
+                                                        if (dailyEventRespons.result.dailyEvent.car != null){
+                                                            if (dailyEventRespons.result.dailyEvent != null){
+                                                                if (dailyEventRespons.result.dailyEvent.car.seLicPro != null){
+                                                                    if (dailyEventRespons.result.dailyEvent.car.seLicPro.endDatePlan != null){
+                                                                        try {
+                                                                            Date date = sdf.parse(dailyEventRespons.result.dailyEvent.car.seLicPro.endDatePlan);
+                                                                            Calendar calendar = Calendar.getInstance();
+                                                                            calendar.setTime(date);
+                                                                            JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
+                                                                            binding.txtLice.setText(" گارانتی : " + dailyEventRespons.result.dailyEvent.car.seLicPro.licTypeEn_text + " " +
+                                                                                    jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
+                                                                        } catch (ParseException e) {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                    }
+
+                                                                }
                                                             }
-
-
                                                         }else {
                                                             binding.txtLice.setVisibility(View.GONE);
                                                         }

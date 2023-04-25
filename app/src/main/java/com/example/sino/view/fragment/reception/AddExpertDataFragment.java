@@ -183,6 +183,7 @@ public class AddExpertDataFragment extends Fragment {
         binding.lottieRecord.setVisibility(View.GONE);
         binding.lottieRecordTwo.setVisibility(View.GONE);
 
+
         binding.signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
@@ -390,14 +391,6 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                if (signPath != null && signPathIsChanged){
-                    saveAttachImageFile(signPath, (long) 1077);
-                }
-
-                if (audioPath != null && audioPathIsChanged){
-                    saveAttachImageFile(signPath, (long) 1076);
-                }
-
                 gotoTakePicFragment(GlobalValue.isEdit);
             }
         });
@@ -410,7 +403,7 @@ public class AddExpertDataFragment extends Fragment {
         binding.recordTimer.setBase(SystemClock.elapsedRealtime());
         binding.recordTimer.start();
         binding.txtFileName.setText("");
-        elapsedMillis = 0;
+
         String path;
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
@@ -418,9 +411,6 @@ public class AddExpertDataFragment extends Fragment {
         } else {
             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
-
-        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
-
 
         File dir = new File(path);
         if (!dir.exists()) {
@@ -436,7 +426,6 @@ public class AddExpertDataFragment extends Fragment {
         System.out.println("pathStr222====" + pathStr);
         audioPath = file.getAbsolutePath();
         audioPathIsChanged = true;
-        //saveAttachImageFile(audioPath, (long) 1076);
         try {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -522,9 +511,6 @@ public class AddExpertDataFragment extends Fragment {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
-            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
-
-
             File dir = new File(path);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -569,9 +555,6 @@ public class AddExpertDataFragment extends Fragment {
         } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
-
-        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
-
 
         File dir = new File(path);
         if (!dir.exists()) {
@@ -799,7 +782,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.signaturePad.setEnabled(true);
                                         binding.imgReload.setEnabled(true);
 
-                                        databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1077L)
+                                    /*    databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1077L)
                                                 .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(new Observer<AttachFile>() {
                                                     @Override
@@ -834,7 +817,7 @@ public class AddExpertDataFragment extends Fragment {
                                                     public void onComplete() {
 
                                                     }
-                                                });
+                                                });*/
                                     }
 
                                     dialog.dismiss();
@@ -911,7 +894,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         binding.constraintLayoutRecord.setVisibility(View.VISIBLE);
 
-                                        databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1076L)
+                                      /*  databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1076L)
                                                 .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(new Observer<AttachFile>() {
                                                     @Override
@@ -953,7 +936,7 @@ public class AddExpertDataFragment extends Fragment {
                                                     public void onComplete() {
 
                                                     }
-                                                });
+                                                });*/
                                     }
                                 }
                             });
@@ -977,9 +960,6 @@ public class AddExpertDataFragment extends Fragment {
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
             }
-
-            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
-
 
             File dir = new File(path + "/" + s);
             if (!dir.exists()) {
