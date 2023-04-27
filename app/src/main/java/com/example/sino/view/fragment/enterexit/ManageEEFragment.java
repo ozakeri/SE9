@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -29,6 +30,7 @@ import com.example.sino.model.dailyEvent.DailyEventRespons;
 import com.example.sino.model.db.User;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
+import com.example.sino.utils.common.Util;
 import com.example.sino.view.adapter.car.DailyEventListAdapter;
 import com.example.sino.viewmodel.MainViewModel;
 
@@ -157,6 +159,7 @@ public class ManageEEFragment extends Fragment {
 
     public void getList(){
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "","لطفا منتظر بمانید..." , true);
+        dialog.show();
         inputParam = GsonGenerator.getDailyEventList(user.getUsername(), user.getBisPassword(),GlobalValue.companyCode);
         viewModel.dailyEvent_GetList_CarEnter_PS0(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DailyEventRespons>() {
@@ -179,6 +182,18 @@ public class ManageEEFragment extends Fragment {
                                         }
                                     });
                                 }
+                            }
+                        }else if (dailyEventRespons.ERROR != null){
+
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        dialog.dismiss();
+                                        Toast toast = Toast.makeText(getActivity(), dailyEventRespons.ERROR, Toast.LENGTH_LONG);
+                                        Util.showToast(toast, getActivity());
+                                        toast.show();
+                                    }
+                                });
                             }
                         }
                     }
