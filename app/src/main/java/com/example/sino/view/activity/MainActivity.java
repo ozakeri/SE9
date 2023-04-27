@@ -36,7 +36,9 @@ import com.example.sino.databinding.ActivityMainBinding;
 import com.example.sino.enumtype.GeneralStatus;
 import com.example.sino.model.db.User;
 import com.example.sino.model.db.UserPermission;
+import com.example.sino.utils.Config;
 import com.example.sino.utils.GlobalValue;
+import com.example.sino.utils.common.Constant;
 import com.example.sino.utils.common.Util;
 import com.example.sino.view.adapter.HomeAdapterRV;
 import com.example.sino.viewmodel.DatabaseViewModel;
@@ -109,9 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
                     txtName.setText(user.getName() + " " + user.getFamily());
                     if (user.getCompanyName() != null){
-                        txtCode.setText(user.getCompanyName()+" " + "(کد ۱۱۱۱)");
+                        txtCode.setText(user.getCompanyName()+" " + "(کد )");
                     }else {
-                        txtCode.setText("نمایندگی مرکزی"+" " + "(کد ۱۱۱۱)");
+                        if (GlobalValue.companyCode != null){
+                            txtCode.setText("نمایندگی "+" " + GlobalValue.companyCode + "کد ");
+                        }
+
                     }
 
                     getPermissionList(user);
@@ -275,6 +280,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                                     @Override
                                     public void onClick(KAlertDialog kAlertDialog) {
+                                        Config.putSharedPreference(MainActivity.this, Constant.COMPANY_CODE, null);
+                                        GlobalValue.companyCode = null;
                                         databaseViewModel.deleteAllData();
                                         navController.navigate(R.id.splashFragment, null, navBuilder.build());
                                         kAlertDialog.dismissWithAnimation();
@@ -352,7 +359,10 @@ public class MainActivity extends AppCompatActivity {
                     binding.include.imgUser.setVisibility(View.GONE);
                     binding.include.txtCode.setVisibility(View.VISIBLE);
                     //binding.include.txtCode.setText("  نمایندگی کد  " + companyCode);
-                    binding.include.txtCode.setText("نمایندگی مرکزی کد 1111");
+                    if (GlobalValue.companyCode != null){
+                        binding.include.txtCode.setText(GlobalValue.companyCode + "نمایندگی مرکزی کد");
+                    }
+
                 }
 
                 if (navDestination.getLabel().equals("SplashFragment") || navDestination.getLabel().equals("FragmentRegistration")

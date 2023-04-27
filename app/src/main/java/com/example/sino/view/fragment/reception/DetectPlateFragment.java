@@ -285,7 +285,7 @@ public class DetectPlateFragment extends Fragment {
                 return;
             }*/
 
-            GlobalValue.companyCode = "1111";
+            //GlobalValue.companyCode = "1111";
 
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 
@@ -512,7 +512,7 @@ public class DetectPlateFragment extends Fragment {
                     System.out.println("plateText1======" + plateText);
 
 
-                    inputParam = GsonGenerator.getCarInfo(user.getUsername(), user.getBisPassword(), plateText, chassis, selectedType,1111);
+                    inputParam = GsonGenerator.getCarInfo(user.getUsername(), user.getBisPassword(), plateText, chassis, selectedType, Integer.parseInt(GlobalValue.companyCode));
                     Util.showProgress(circularProgressView);
                     viewModel.getCarInfo_ProSrv(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                             .subscribe(new io.reactivex.rxjava3.core.Observer<SuccessCarInfoBean>() {
@@ -736,7 +736,7 @@ public class DetectPlateFragment extends Fragment {
 
                 }
 
-                GlobalValue.companyCode = "1111";
+                //GlobalValue.companyCode = "1111";
                 dialog.dismiss();
                 getCompanyInfo(txt_companyCode.getText().toString());
 

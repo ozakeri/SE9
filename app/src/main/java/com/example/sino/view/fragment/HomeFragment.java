@@ -83,6 +83,10 @@ public class HomeFragment extends Fragment {
 
             binding.txtUserName.setText(user.getName() + " " + user.getFamily());
 
+            if (user != null && user.getCompanyCode() != null){
+                GlobalValue.companyCode = String.valueOf(user.getCompanyCode());
+                Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, String.valueOf(user.getCompanyCode()));
+            }
 
             String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
             if (user.getCompanyCode() == null && getSharedData.trim().isEmpty()){
@@ -91,13 +95,11 @@ public class HomeFragment extends Fragment {
                 GlobalValue.companyCode = getSharedData;
             }
 
-            if (user.getCompanyCode() != null){
-                GlobalValue.companyCode = String.valueOf(user.getCompanyCode());
-            }
+
             if (user.getCompanyName() != null){
                 binding.txtCompany.setText(user.getCompanyName() +" " + " کد نمایندگی : " + GlobalValue.companyCode);
             }else {
-                binding.txtCompany.setText("نمایندگی مرکزی"+" " + " کد : " + GlobalValue.companyCode);
+                binding.txtCompany.setText("نمایندگی "+" " + " کد : " + GlobalValue.companyCode);
             }
 
 
@@ -320,6 +322,7 @@ public class HomeFragment extends Fragment {
                     Toast toast = Toast.makeText(getActivity(), "کد را وارد کنید", Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
+                    return;
                 }
                 GlobalValue.companyCode = txt_companyCode.getText().toString();
                 Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, txt_companyCode.getText().toString());
@@ -327,7 +330,7 @@ public class HomeFragment extends Fragment {
                 if (user.getCompanyName() != null){
                     binding.txtCompany.setText(user.getCompanyName() +" " + " کد : " + GlobalValue.companyCode );
                 }else {
-                    binding.txtCompany.setText("نمایندگی مرکزی"+" " + GlobalValue.companyCode);
+                    binding.txtCompany.setText("نمایندگی "+" " + GlobalValue.companyCode);
                 }
                 dialog.dismiss();
             }

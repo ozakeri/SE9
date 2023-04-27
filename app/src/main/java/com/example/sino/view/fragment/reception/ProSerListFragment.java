@@ -86,7 +86,7 @@ public class ProSerListFragment extends Fragment {
 
         Util.showProgress(binding.waitProgress);
         binding.txtNull.setVisibility(View.GONE);
-        inputParam = GsonGenerator.getProSrvList(user.getUsername(), user.getBisPassword(),1111);
+        inputParam = GsonGenerator.getProSrvList(user.getUsername(), user.getBisPassword(), Integer.parseInt(GlobalValue.companyCode));
         mainViewModel.getProSrvList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
                     @Override

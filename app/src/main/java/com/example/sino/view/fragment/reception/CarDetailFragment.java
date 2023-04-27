@@ -743,7 +743,7 @@ public class CarDetailFragment extends Fragment {
         System.out.println("==================" + GlobalValue.lat);
         System.out.println("==================" + GlobalValue.lang);
 
-        inputParam = GsonGenerator.saveProModel(user.getUsername(), user.getBisPassword(), carId,1111, kmCar,GlobalValue.fuel, serviceType, GlobalValue.lat, GlobalValue.lang);
+        inputParam = GsonGenerator.saveProModel(user.getUsername(), user.getBisPassword(), carId, Integer.parseInt(GlobalValue.companyCode), kmCar,GlobalValue.fuel, serviceType, GlobalValue.lat, GlobalValue.lang);
         mainViewModel.saveProService(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<FormRequentBean>() {
                     @Override

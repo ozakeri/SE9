@@ -47,6 +47,7 @@ import com.example.sino.model.complaintreport.ComplaintReport;
 import com.example.sino.model.db.User;
 import com.example.sino.model.enumType.EntityNameEn;
 import com.example.sino.model.form.FormRequentBean;
+import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
 import com.example.sino.utils.services.ApiServiceAsync;
@@ -442,7 +443,7 @@ public class FieldInspectionFragment extends Fragment {
     }
 
     public void getCompanyInfo() {
-        inputParam = GsonGenerator.getCompanyInfo(user.getUsername(), user.getBisPassword(), "1111");
+        inputParam = GsonGenerator.getCompanyInfo(user.getUsername(), user.getBisPassword(), GlobalValue.companyCode);
         mainViewModel.getCompanyInfo(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.rxjava3.core.Observer<SuccessCarInfoBean>() {
                     @Override

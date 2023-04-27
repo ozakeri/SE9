@@ -15,7 +15,7 @@
         android:textColorHint="@color/black"
         android:gravity="center"
         android:inputType="number"
-        android:text="نمایندگی مرکزی کد 1111"/>
+        android:text="نمایندگی کد "/>
 
 
     <androidx.cardview.widget.CardView
