@@ -102,10 +102,14 @@ public class MainActivity extends AppCompatActivity {
         navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
-        viewModel.getAllUser().observeForever(new Observer<List<User>>() {
+        viewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
             @Override
-            public void onChanged(List<User> users) {
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                compositeDisposable.add(d);
+            }
 
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<User> users) {
                 if (users != null && users.size() > 0) {
                     user = users.get(0);
 
@@ -122,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
                     getPermissionList(user);
 
                 }
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
 
@@ -214,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       // compositeDisposable.clear();
+        compositeDisposable.clear();
     }
 
     @SuppressLint("SetTextI18n")

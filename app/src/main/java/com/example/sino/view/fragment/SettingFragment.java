@@ -19,16 +19,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.sino.BuildConfig;
 import com.example.sino.R;
+import com.example.sino.SinoApplication;
 import com.example.sino.databinding.FragmentSettingBinding;
 import com.example.sino.model.SuccessPermissionBean;
+import com.example.sino.model.db.User;
 import com.example.sino.model.documentversion.DocumentVersion;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.JalaliCalendarUtil;
@@ -56,6 +60,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -67,6 +73,7 @@ import javax.net.ssl.X509TrustManager;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -84,6 +91,8 @@ public class SettingFragment extends Fragment {
     private String updateUrl;
     MainActivity mainActivity;
     private int counter = 0;
+    private User user;
+    private MainViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,8 +101,16 @@ public class SettingFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false);
         compositeDisposable = new CompositeDisposable();
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         inputParam = GsonGenerator.getLastDocumentVersionToGson();
+        user = SinoApplication.getInstance().getCurrentUser();
+
+
+        if (user.getAutoLogin()){
+            binding.switchButton.setChecked(false);
+        }else {
+            binding.switchButton.setChecked(true);
+        }
 
         try {
             getCurrentVersionNo();
@@ -122,6 +139,19 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 openDownloads(getActivity());
+            }
+        });
+
+
+        //********************************
+
+        binding.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                System.out.println("====b=====" + b);
+                user = SinoApplication.getInstance().getCurrentUser();
+                user.setAutoLogin(!b);
+                viewModel.insertUser(user);
             }
         });
 
@@ -205,12 +235,6 @@ public class SettingFragment extends Fragment {
 
     public String GetFileNameFromUrl(String urlString) {
         return urlString.substring(urlString.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0];
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.clear();
     }
 
     private void DoUpdate() {
@@ -417,4 +441,9 @@ public class SettingFragment extends Fragment {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        compositeDisposable.clear();
+    }
 }

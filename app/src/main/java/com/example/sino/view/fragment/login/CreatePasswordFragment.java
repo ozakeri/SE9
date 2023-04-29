@@ -66,12 +66,17 @@ public class CreatePasswordFragment extends Fragment {
                     return;
                 }
 
+                if (binding.password.getText().toString().trim().length() <4 || binding.confirmPassword.getText().toString().trim().length() <4) {
+                    CuteToast.ct(getActivity(), getString(R.string.enter_min_password), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                    return;
+                }
+
                 if (!binding.password.getText().toString().trim().equals(binding.confirmPassword.getText().toString().trim())) {
                     CuteToast.ct(getActivity(), getString(R.string.mistake_enter_data), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                     return;
                 }
                 user.setPassword(binding.password.getText().toString());
-                user.setAutoLogin(true);
+                //user.setAutoLogin(fa);
                 mainViewModel.insertUser(user);
                 SinoApplication.getInstance().setCurrentUser(user);
 

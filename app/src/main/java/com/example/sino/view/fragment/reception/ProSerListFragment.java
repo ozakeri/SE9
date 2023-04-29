@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.sino.R;
 import com.example.sino.SinoApplication;
 import com.example.sino.databinding.FragmentProSerListBinding;
-import com.example.sino.model.ResultBean;
 import com.example.sino.model.db.User;
-import com.example.sino.model.form.FormRequentBean;
 import com.example.sino.model.reception.ProServiceResponse;
 import com.example.sino.model.reception.ProSrv;
 import com.example.sino.utils.GlobalValue;
@@ -56,7 +54,7 @@ public class ProSerListFragment extends Fragment {
         user = SinoApplication.getInstance().getCurrentUser();
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         getProSrvList();
-       // getProSrvById();
+        // getProSrvById();
         return binding.getRoot();
     }
 
@@ -97,7 +95,7 @@ public class ProSerListFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
 
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
 
                                 @Override
@@ -105,12 +103,24 @@ public class ProSerListFragment extends Fragment {
 
                                     // Stuff that updates the UI
                                     Util.hideProgress(binding.waitProgress);
-                                    if (proServiceResponse.success != null){
-                                        if (proServiceResponse.result != null){
+                                    if (proServiceResponse.success != null) {
+                                        if (proServiceResponse.result != null) {
 
                                             proServiceResponseTemp = proServiceResponse;
                                             System.out.println("nameFv=======" + proServiceResponse.result.proSrvList.get(0).car.nameFv);
                                             setupAdapter(proServiceResponse.result.proSrvList);
+                                        }
+                                    } else if (proServiceResponse.ERROR != null) {
+
+                                        if (getActivity() != null) {
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                public void run() {
+                                                    Util.hideProgress(binding.waitProgress);
+                                                    Toast toast = Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_LONG);
+                                                    Util.showToast(toast, getActivity());
+                                                    toast.show();
+                                                }
+                                            });
                                         }
                                     }
                                 }
@@ -118,14 +128,21 @@ public class ProSerListFragment extends Fragment {
                         }
 
 
-
-
                         System.out.println("===onNext===");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("===onError===" + e.getLocalizedMessage());
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Util.hideProgress(binding.waitProgress);
+                                    Toast toast = Toast.makeText(getActivity(),e.getLocalizedMessage(), Toast.LENGTH_LONG);
+                                    Util.showToast(toast, getActivity());
+                                    toast.show();
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -135,63 +152,4 @@ public class ProSerListFragment extends Fragment {
                 });
     }
 
-    private void getProSrvById(ProSrv proSrv) {
-        Util.showProgress(binding.waitProgress);
-        inputParam = GsonGenerator.getProSrvById(user.getUsername(), user.getBisPassword(), Long.parseLong(proSrv.proSrvId));
-        mainViewModel.getProSrvById(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ProServiceResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ProServiceResponse proServiceResponse) {
-
-                        if (getActivity() != null){
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Util.hideProgress(binding.waitProgress);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putParcelable("proSrv", proServiceResponse.result.proSrv);
-                                    NavOptions.Builder navBuilder = new NavOptions.Builder();
-                                    navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
-                                    NavHostFragment.findNavController(ProSerListFragment.this).navigate(R.id.recognizePlateFragment, bundle, navBuilder.build());
-                                }
-                            });
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                        if (getActivity() != null){
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    Util.hideProgress(binding.waitProgress);
-                                    Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                        if (getActivity() != null){
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    Util.hideProgress(binding.waitProgress);
-                                }
-                            });
-                        }
-                    }
-                });
-    }
 }

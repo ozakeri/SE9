@@ -224,7 +224,7 @@ public class NetworkRepository {
         return sinoDao.getUserByMobileNo(mobileNo);
     }
 
-    public LiveData<List<User>> getAllUser() {
+    public Observable<List<User>> getAllUser() {
         return sinoDao.getAllUser();
     }
 

@@ -59,7 +59,7 @@ public class MainViewModel extends AndroidViewModel {
         return userPermissionMutableLiveData;
     }
 
-    public LiveData<List<User>> getAllUser() {
+    public Observable<List<User>> getAllUser() {
         return repository.getAllUser();
     }
 
@@ -127,10 +127,6 @@ public class MainViewModel extends AndroidViewModel {
         return repository.chatMessageDeliveredReportRepo(INPUT_PARAM);
     }
 
-    public MutableLiveData<SuccessCarInfoBean> getCarInfoResult() {
-        return carInfoMutableLiveData;
-    }
-
     public Observable<SuccessChatGroupBean> getUserChatGroupList(String INPUT_PARAM) {
         return repository.getUserChatGroupListRepo(INPUT_PARAM);
     }
@@ -145,14 +141,6 @@ public class MainViewModel extends AndroidViewModel {
 
     public Observable<SuccessCarInfoBean> getCompanyInfo(String INPUT_PARAM) {
         return repository.getCompanyInfoRepo(INPUT_PARAM);
-    }
-
-    public Observable<SuccessCarInfoBean> getCarInfo(String INPUT_PARAM) {
-        return repository.getCarInfoRepo(INPUT_PARAM);
-    }
-
-    public Observable<SuccessCarInfoBean> getCarInfoCopy(String INPUT_PARAM) {
-        return repository.getCarInfoCopyRepo(INPUT_PARAM);
     }
 
     public Observable<SuccessCarInfoBean> getCarInfo_ProSrv(String INPUT_PARAM) {
@@ -171,11 +159,6 @@ public class MainViewModel extends AndroidViewModel {
         return repository.saveChatMessageRepo(INPUT_PARAM);
     }
 
-
-    public Observable<DriverLicenceRequentBean> getDriverJobList(String INPUT_PARAM) {
-        return repository.getDriverJobListRepo(INPUT_PARAM);
-    }
-
     public Observable<FormRequentBean> getUserSurveyFormListVM(String INPUT_PARAM) {
         System.out.println("INPUT_PARAM====" + INPUT_PARAM);
         return repository.getUserSurveyFormListRepo(INPUT_PARAM);
@@ -183,20 +166,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public Observable<FormRequentBean> sendComplaintReport(String INPUT_PARAM) {
         return repository.sendComplaintReport(INPUT_PARAM);
-
-
     }
 
     public Observable<FormRequentBean> saveProService(String INPUT_PARAM) {
         return repository.saveProService(INPUT_PARAM);
-    }
-
-    public Observable<FormRequentBean> editProService(String INPUT_PARAM) {
-        return repository.editProService(INPUT_PARAM);
-    }
-
-    public Observable<FormRequentBean> getProService(String INPUT_PARAM) {
-        return repository.getProService(INPUT_PARAM);
     }
 
     public Observable<ProServiceResponse> getProSrvList(String INPUT_PARAM) {

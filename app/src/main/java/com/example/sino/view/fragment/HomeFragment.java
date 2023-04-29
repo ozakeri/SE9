@@ -318,6 +318,12 @@ public class HomeFragment extends Fragment {
         dialog.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (txt_companyCode.getText().toString().trim().length() < 4){
+                    Toast toast = Toast.makeText(getActivity(), "کد نمایندگی 4 رقم می باشد", Toast.LENGTH_LONG);
+                    Util.showToast(toast, getActivity());
+                    toast.show();
+                    return;
+                }
                 if (txt_companyCode.getText().toString().trim().isEmpty()) {
                     Toast toast = Toast.makeText(getActivity(), "کد را وارد کنید", Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());

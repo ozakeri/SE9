@@ -769,12 +769,6 @@ public class CarDetailFragment extends Fragment {
                                 bundle.putInt("personTypeEn", personTypeEn);
                                 bundle.putParcelable("personCopy", personCopy);
                                 System.out.println("===isOwner===" + isOwner);
-                              /*  if (isOwner) {
-                                    NavHostFragment.findNavController(CarDetailFragment.this).navigate(R.id.recognizePlateFragment, bundle, navBuilder.build());
-                                } else {
-                                    // searchCustomerDialog();
-                                    NavHostFragment.findNavController(CarDetailFragment.this).navigate(R.id.searchCustomerFragment, bundle, navBuilder.build());
-                                }*/
                             }
                         }
                     }

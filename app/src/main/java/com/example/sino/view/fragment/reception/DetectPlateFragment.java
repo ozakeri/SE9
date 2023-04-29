@@ -973,32 +973,6 @@ public class DetectPlateFragment extends Fragment {
     }
 
 
-    private void getProServiceByCarId(int id){
-        inputParam = GsonGenerator.getProSrvByCarId(user.getUsername(), user.getBisPassword(), id);
-        viewModel.getProService(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<FormRequentBean>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull FormRequentBean formRequentBean) {
-
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
     public void showDialogWords() {
         final String[] strName = new String[1];
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());

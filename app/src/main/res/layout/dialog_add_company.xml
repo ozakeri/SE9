@@ -42,6 +42,7 @@
                 android:inputType="number"
                 android:textColor="@color/toolbar_home"
                 android:textColorHint="#398adc"
+                android:maxLength="4"
                 android:textSize="14sp" />
 
 

@@ -735,6 +735,11 @@ public class AddCustomerDataFragment extends Fragment {
                             GlobalValue.isEdit = true;
                             System.out.println("======prcDataId=====" + GlobalValue.prcDataId);
                         }
+
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -792,6 +797,12 @@ public class AddCustomerDataFragment extends Fragment {
                                 });
                             }
                         }
+
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
@@ -845,7 +856,6 @@ public class AddCustomerDataFragment extends Fragment {
                                     }
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 }
-
 
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());

@@ -318,8 +318,8 @@ public class AddExpertDataFragment extends Fragment {
             binding.imgDelete.setVisibility(View.GONE);
             binding.imgDeleteRecord.setVisibility(View.GONE);
             binding.gotoTakePic.setText("مشاهده تصاویر");
-        }
-        if (GlobalValue.isEdit) {
+            binding.signaturePad.setEnabled(false);
+        }else if (GlobalValue.isEdit) {
             binding.gotoTakePic.setText("ویرایش تصاویر");
         }
 
@@ -676,6 +676,11 @@ public class AddExpertDataFragment extends Fragment {
                             GlobalValue.prcDataId = proServiceResponse.result.prcData.id;
                             GlobalValue.isEdit = true;
                         }
+
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -733,6 +738,7 @@ public class AddExpertDataFragment extends Fragment {
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
                         jsonArrayAttachCopy = null;
                         if (proServiceResponse.result.jsonArrayAttach != null) {
+                            dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
                                 attachFileSignId = String.valueOf(proServiceResponse.result.jsonArrayAttach.get(0).attachFileId);
@@ -751,6 +757,11 @@ public class AddExpertDataFragment extends Fragment {
                             }
                         }
 
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
@@ -760,7 +771,7 @@ public class AddExpertDataFragment extends Fragment {
 
                     @Override
                     public void onComplete() {
-
+                        dialog.dismiss();
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
@@ -782,45 +793,8 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.signaturePad.setEnabled(true);
                                         binding.imgReload.setEnabled(true);
 
-                                    /*    databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1077L)
-                                                .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Observer<AttachFile>() {
-                                                    @Override
-                                                    public void onSubscribe(@NonNull Disposable d) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(@NonNull AttachFile attachFile) {
-                                                        if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
-                                                            File imgFile = new File(attachFile.getAttachFileLocalPath());
-                                                            if (imgFile.exists()) {
-                                                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-                                                                if (getActivity() != null) {
-                                                                    getActivity().runOnUiThread(new Runnable() {
-                                                                        public void run() {
-                                                                            binding.signaturePad.setSignatureBitmap(myBitmap);
-                                                                        }
-                                                                    });
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onError(@NonNull Throwable e) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onComplete() {
-
-                                                    }
-                                                });*/
                                     }
 
-                                    dialog.dismiss();
                                     getProSrvAttachFileAudio();
                                 }
                             });
@@ -847,6 +821,7 @@ public class AddExpertDataFragment extends Fragment {
 
                         jsonArrayAttachCopy = null;
                         if (proServiceResponse.result.jsonArrayAttach != null) {
+                            dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
                                 attachFileAudioId = String.valueOf(proServiceResponse.result.jsonArrayAttach.get(0).attachFileId);
@@ -863,21 +838,25 @@ public class AddExpertDataFragment extends Fragment {
                             }
                         }
 
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        dialog.dismiss();
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @RequiresApi(api = Build.VERSION_CODES.Q)
                                 public void run() {
-                                    dialog.dismiss();
                                     if (jsonArrayAttachCopy.size() != 0) {
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
@@ -894,49 +873,6 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         binding.constraintLayoutRecord.setVisibility(View.VISIBLE);
 
-                                      /*  databaseViewModel.getAttachFileByParamRepoVM(Long.valueOf(GlobalValue.prcDataId), 1076L)
-                                                .subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Observer<AttachFile>() {
-                                                    @Override
-                                                    public void onSubscribe(@NonNull Disposable d) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(@NonNull AttachFile attachFile) {
-                                                        if (attachFile != null && attachFile.getAttachFileLocalPath() != null) {
-
-                                                            try {
-                                                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_mm_ss");
-                                                                Date now = new Date();
-                                                                String s = "Recording_" + formatter.format(now) + ".mp3";
-                                                                File file = new File(attachFile.getAttachFileLocalPath() + "/" + s);
-                                                                File tempFile = null;
-                                                                tempFile = File.createTempFile("mobile", ".mp3", file);
-                                                                tempFile.deleteOnExit();
-                                                                FileInputStream fis = new FileInputStream(tempFile);
-                                                                mediaPlayer.setDataSource(fis.getFD());
-                                                                mediaPlayer.setLooping(true);
-                                                                mediaPlayer.prepare();
-                                                                binding.constraintLayoutRecord.setVisibility(View.GONE);
-                                                                binding.cardViewPlayer.setVisibility(View.VISIBLE);
-                                                            } catch (IOException e) {
-                                                                throw new RuntimeException(e);
-                                                            }
-
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onError(@NonNull Throwable e) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onComplete() {
-
-                                                    }
-                                                });*/
                                     }
                                 }
                             });
@@ -1072,10 +1008,14 @@ public class AddExpertDataFragment extends Fragment {
                                     public void run() {
                                         dialog.dismiss();
                                         Toast.makeText(getActivity(), proServiceResponse.success, Toast.LENGTH_SHORT).show();
-                                        NavHostFragment.findNavController(AddExpertDataFragment.this).navigate(R.id.recognizePlateFragment, null, navBuilder.build());
                                     }
                                 });
                             }
+                        }
+
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -1097,6 +1037,7 @@ public class AddExpertDataFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     dialog.dismiss();
+                                    NavHostFragment.findNavController(AddExpertDataFragment.this).navigate(R.id.recognizePlateFragment, null, navBuilder.build());
                                 }
                             });
                         }

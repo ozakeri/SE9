@@ -320,6 +320,13 @@ public class RecognizePlateFragment extends Fragment {
                                         setupBtnAdapter();
                                     }
 
+                                    if (proServiceResponse.ERROR != null){
+                                        Util.hideProgress(binding.waitProgress);
+                                        Toast toast = Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_LONG);
+                                        Util.showToast(toast, getActivity());
+                                        toast.show();
+                                    }
+
                                 }
                             });
                         }

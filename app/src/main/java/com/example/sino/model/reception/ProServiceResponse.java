@@ -11,5 +11,7 @@ public class ProServiceResponse {
     public String success;
     @SerializedName("RESULT")
     public ResultBean result;
+    @SerializedName("ERROR")
+    public String ERROR;
 
 }

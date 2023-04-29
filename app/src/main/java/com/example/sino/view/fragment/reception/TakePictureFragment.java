@@ -347,7 +347,7 @@ public class TakePictureFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    if (pathFront.equals("")){
+                   /* if (pathFront.equals("")){
                         Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -370,12 +370,12 @@ public class TakePictureFragment extends Fragment {
                     if (pathKm.equals("")){
                         Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
                         return;
-                    }
+                    }*/
 
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
-                   saveOrEdit();
+                   //saveOrEdit();
                 }
-                //saveOrEdit();
+                saveOrEdit();
             }
         });
         return binding.getRoot();
@@ -996,7 +996,7 @@ public class TakePictureFragment extends Fragment {
                     apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
                 }
             }
-
+            dialog.dismiss();
             System.out.println("=====doInBackground====");
             return null;
         }
@@ -1055,6 +1055,12 @@ public class TakePictureFragment extends Fragment {
                                 });
                             }
                         }
+
+                        if (proServiceResponse.ERROR != null){
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
@@ -1147,9 +1153,11 @@ public class TakePictureFragment extends Fragment {
 
                     }
                 });
+        progressDialog.dismiss();
     }
 
     private void getProSrvAttachFileRight(boolean isNext) {
+        progressDialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1079");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1217,9 +1225,11 @@ public class TakePictureFragment extends Fragment {
 
                     }
                 });
+        progressDialog.dismiss();
     }
 
     private void getProSrvAttachFileBack(boolean isNext) {
+        progressDialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1080");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1287,9 +1297,11 @@ public class TakePictureFragment extends Fragment {
 
                     }
                 });
+        progressDialog.dismiss();
     }
 
     private void getProSrvAttachFileLeft(boolean isNext) {
+        progressDialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1081");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1358,9 +1370,12 @@ public class TakePictureFragment extends Fragment {
 
                     }
                 });
+
+        progressDialog.dismiss();
     }
 
     private void getProSrvAttachFileOther() {
+        progressDialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1108");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1435,6 +1450,7 @@ public class TakePictureFragment extends Fragment {
 
 
     private void getProSrvAttachFileKM() {
+        progressDialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1097");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProServiceResponse>() {
@@ -1501,6 +1517,8 @@ public class TakePictureFragment extends Fragment {
 
                     }
                 });
+
+        progressDialog.dismiss();
     }
 
     private void deleteAttachFile(String name, String id) {
