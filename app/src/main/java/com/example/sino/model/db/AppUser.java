@@ -19,8 +19,6 @@ public class AppUser {
     public Integer id;
     @SerializedName("family")
     public String family;
-    @SerializedName("company")
-    public Company company;
 
     public String getName() {
         return name;

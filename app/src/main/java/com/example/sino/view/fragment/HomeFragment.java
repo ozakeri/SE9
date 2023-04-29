@@ -1,7 +1,6 @@
 package com.example.sino.view.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +25,6 @@ import com.example.sino.SinoApplication;
 import com.example.sino.databinding.FragmentHomeBinding;
 import com.example.sino.enumtype.GeneralStatus;
 import com.example.sino.model.SuccessPermissionBean;
-import com.example.sino.model.db.AppUser;
 import com.example.sino.model.db.User;
 import com.example.sino.model.db.UserPermission;
 import com.example.sino.model.userInfobyid.SuccessUserInfoByIdBean;
@@ -74,13 +72,15 @@ public class HomeFragment extends Fragment {
 
         if (binding == null) {
 
-            binding= DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
             initVeiw(binding.getRoot());
             mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
             user = SinoApplication.getInstance().getCurrentUser();
             compositeDisposable = new CompositeDisposable();
             binding.btnTryAgain.setVisibility(View.GONE);
+
+            binding.txtUserName.setText(user.getName() + " " + user.getFamily());
 
             getUserById(user);
 
@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
 
         //userPermissionList = mainViewModel.getUserPermission(user.getId());
 
-        for (UserPermission p:userPermissionList) {
+        for (UserPermission p : userPermissionList) {
             permissionList.add(p.getPermissionName());
 
             System.out.println("====p====" + p.getPermissionName());
@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
         //permissionList.add("Rescuer");
         //permissionList.add("Car");
         //permissionList.add("Inspection");
-       // permissionList.add("Representation");
+        // permissionList.add("Representation");
         //permissionList.add("Watcher");
         //permissionList.add("Messages");
         //permissionList.add("Forms");
@@ -141,12 +141,12 @@ public class HomeFragment extends Fragment {
 
                         break;
 
-                        case "CheckList":
+                    case "CheckList":
 
                         break;
 
-                        case "Rescuer":
-                            NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.startServiceFragment, null, navBuilder.build());
+                    case "Rescuer":
+                        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.startServiceFragment, null, navBuilder.build());
                         break;
 
                     case "Car":
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.detectPlateFragment, null, navBuilder.build());
                         break;
 
-                        case "ROLE_APP_GET_AGENT_CAR_VIEW_SEC":
+                    case "ROLE_APP_GET_AGENT_CAR_VIEW_SEC":
                         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                         break;
 
@@ -262,7 +262,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void getDataFromServer(){
+    public void getDataFromServer() {
         binding.btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,7 +299,7 @@ public class HomeFragment extends Fragment {
         dialog.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (txt_companyCode.getText().toString().trim().length() < 4){
+                if (txt_companyCode.getText().toString().trim().length() < 4) {
                     Toast toast = Toast.makeText(getActivity(), "کد نمایندگی 4 رقم می باشد", Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
@@ -314,10 +314,10 @@ public class HomeFragment extends Fragment {
                 GlobalValue.companyCode = txt_companyCode.getText().toString();
                 Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, txt_companyCode.getText().toString());
 
-                if (user.getCompanyName() != null){
-                    binding.txtCompany.setText(user.getCompanyName() +" " + " کد : " + GlobalValue.companyCode );
-                }else {
-                    binding.txtCompany.setText("نمایندگی "+" " + GlobalValue.companyCode);
+                if (user.getCompanyName() != null) {
+                    binding.txtCompany.setText(user.getCompanyName() + " " + " کد : " + GlobalValue.companyCode);
+                } else {
+                    binding.txtCompany.setText("نمایندگی " + " " + GlobalValue.companyCode);
                 }
                 dialog.dismiss();
             }
@@ -337,30 +337,30 @@ public class HomeFragment extends Fragment {
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessUserInfoByIdBean successUserInfoByIdBean) {
                         if (successUserInfoByIdBean.success != null) {
                             if (successUserInfoByIdBean.result != null) {
-                                if (successUserInfoByIdBean.result.user != null) {
+                                if (successUserInfoByIdBean.result.userInfoResponse != null) {
+                                    if (successUserInfoByIdBean.result.userInfoResponse.company != null) {
+
+                                        if (successUserInfoByIdBean.result.userInfoResponse.company.code != null) {
+                                            GlobalValue.companyCode = successUserInfoByIdBean.result.userInfoResponse.company.code;
+                                            Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, successUserInfoByIdBean.result.userInfoResponse.company.code);
+                                        }
+
+                                        String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
+                                        if (successUserInfoByIdBean.result.userInfoResponse.company.companyType == null || successUserInfoByIdBean.result.userInfoResponse.company.companyType != 3) {
+                                            addCompanyDialog();
+                                        } else {
+                                            GlobalValue.companyCode = getSharedData;
+                                        }
 
 
-                                    binding.txtUserName.setText(user.getName() + " " + user.getFamily());
+                                        binding.txtCompany.setText(successUserInfoByIdBean.result.userInfoResponse.company.name + " " + " کد نمایندگی : " + GlobalValue.companyCode);
 
-                                    if (successUserInfoByIdBean.result.user.company.code != null){
-                                        GlobalValue.companyCode = successUserInfoByIdBean.result.user.company.code;
-                                        Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, successUserInfoByIdBean.result.user.company.code);
+                                        if (user.getCompanyName() != null) {
+                                            //binding.txtCompany.setText(successUserInfoByIdBean.result.userInfoResponse.company.name + " " + " کد نمایندگی : " + GlobalValue.companyCode);
+                                        } else {
+                                            //binding.txtCompany.setText("نمایندگی " + " " + " کد : " + GlobalValue.companyCode);
+                                        }
                                     }
-
-                                    String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
-                                    if (successUserInfoByIdBean.result.user.company.companyType == null || successUserInfoByIdBean.result.user.company.companyType != 3){
-                                        addCompanyDialog();
-                                    }else {
-                                        GlobalValue.companyCode = getSharedData;
-                                    }
-
-
-                                    if (user.getCompanyName() != null){
-                                        binding.txtCompany.setText(successUserInfoByIdBean.result.user.company.name +" " + " کد نمایندگی : " + GlobalValue.companyCode);
-                                    }else {
-                                        binding.txtCompany.setText("نمایندگی "+" " + " کد : " + GlobalValue.companyCode);
-                                    }
-
                                 }
                             }
                         }

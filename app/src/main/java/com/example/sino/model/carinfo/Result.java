@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import androidx.room.TypeConverters;
 
+import com.example.sino.model.UserInfoResponse;
 import com.example.sino.model.company.Company;
 import com.example.sino.model.db.AppUser;
 import com.example.sino.model.db.User;
@@ -24,8 +25,10 @@ public class Result implements Parcelable {
     @TypeConverters({CarListConverter.class})
     @SerializedName("carList")
     public List<Car> carList;
-
     @SerializedName("user")
+    public UserInfoResponse userInfoResponse;
+
+    @SerializedName("user1")
     @Expose
     public AppUser user;
 
