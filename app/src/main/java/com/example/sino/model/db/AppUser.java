@@ -6,22 +6,21 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
+import com.example.sino.model.company.Company;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "AppUser")
 public class AppUser {
 
     @SerializedName("name")
-    @Expose
     public String name;
     @SerializedName("id")
-    @Expose
     @PrimaryKey
     public Integer id;
     @SerializedName("family")
-    @Expose
     public String family;
+    @SerializedName("company")
+    public Company company;
 
     public String getName() {
         return name;

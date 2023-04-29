@@ -1,6 +1,7 @@
 package com.example.sino.view.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +26,10 @@ import com.example.sino.SinoApplication;
 import com.example.sino.databinding.FragmentHomeBinding;
 import com.example.sino.enumtype.GeneralStatus;
 import com.example.sino.model.SuccessPermissionBean;
+import com.example.sino.model.db.AppUser;
 import com.example.sino.model.db.User;
 import com.example.sino.model.db.UserPermission;
+import com.example.sino.model.userInfobyid.SuccessUserInfoByIdBean;
 import com.example.sino.utils.Config;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
@@ -77,31 +80,9 @@ public class HomeFragment extends Fragment {
 
             user = SinoApplication.getInstance().getCurrentUser();
             compositeDisposable = new CompositeDisposable();
-            inputParam = GsonGenerator.getUserPermissionList(user.getUsername(), user.getBisPassword());
-
             binding.btnTryAgain.setVisibility(View.GONE);
 
-            binding.txtUserName.setText(user.getName() + " " + user.getFamily());
-
-            if (user != null && user.getCompanyCode() != null){
-                GlobalValue.companyCode = String.valueOf(user.getCompanyCode());
-                Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, String.valueOf(user.getCompanyCode()));
-            }
-
-            String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
-            if (user.getCompanyCode() == null && getSharedData.trim().isEmpty()){
-               addCompanyDialog();
-            }else {
-                GlobalValue.companyCode = getSharedData;
-            }
-
-
-            if (user.getCompanyName() != null){
-                binding.txtCompany.setText(user.getCompanyName() +" " + " کد نمایندگی : " + GlobalValue.companyCode);
-            }else {
-                binding.txtCompany.setText("نمایندگی "+" " + " کد : " + GlobalValue.companyCode);
-            }
-
+            getUserById(user);
 
             callApiRequest();
 
@@ -227,7 +208,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void callApiRequest() {
-
+        inputParam = GsonGenerator.getUserPermissionList(user.getUsername(), user.getBisPassword());
         Util.showProgress(progressView);
         binding.btnTryAgain.setVisibility(View.GONE);
 
@@ -341,6 +322,60 @@ public class HomeFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void getUserById(User user) {
+        inputParam = GsonGenerator.getUserInfoById(user.getUsername(), user.getBisPassword(), user.getServerUserId());
+        mainViewModel.getUserInfoById(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.rxjava3.core.Observer<SuccessUserInfoByIdBean>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessUserInfoByIdBean successUserInfoByIdBean) {
+                        if (successUserInfoByIdBean.success != null) {
+                            if (successUserInfoByIdBean.result != null) {
+                                if (successUserInfoByIdBean.result.user != null) {
+
+
+                                    binding.txtUserName.setText(user.getName() + " " + user.getFamily());
+
+                                    if (successUserInfoByIdBean.result.user.company.code != null){
+                                        GlobalValue.companyCode = successUserInfoByIdBean.result.user.company.code;
+                                        Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, successUserInfoByIdBean.result.user.company.code);
+                                    }
+
+                                    String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
+                                    if (successUserInfoByIdBean.result.user.company.companyType == null || successUserInfoByIdBean.result.user.company.companyType != 3){
+                                        addCompanyDialog();
+                                    }else {
+                                        GlobalValue.companyCode = getSharedData;
+                                    }
+
+
+                                    if (user.getCompanyName() != null){
+                                        binding.txtCompany.setText(successUserInfoByIdBean.result.user.company.name +" " + " کد نمایندگی : " + GlobalValue.companyCode);
+                                    }else {
+                                        binding.txtCompany.setText("نمایندگی "+" " + " کد : " + GlobalValue.companyCode);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }

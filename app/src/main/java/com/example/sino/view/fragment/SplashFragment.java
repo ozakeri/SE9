@@ -68,7 +68,14 @@ public class SplashFragment extends Fragment {
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<User> users) {
                                 if (users == null || users.size() == 0) {
                                     //Navigation.findNavController(binding.getRoot()).navigate(R.id.fragmentRegistration);
-                                    NavHostFragment.findNavController(SplashFragment.this).navigate(R.id.fragmentRegistration, null, null);
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            public void run() {
+                                                NavHostFragment.findNavController(SplashFragment.this).navigate(R.id.fragmentRegistration, null, null);
+                                            }
+                                        });
+                                    }
+
                                     return;
                                 }
 
