@@ -52,9 +52,26 @@ public class CreatePasswordFragment extends Fragment {
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
 
+        if (user.getPassword() != null){
+            binding.confirmPassword.setVisibility(View.GONE);
+        }
         view.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (user.getPassword() != null){
+                    if (binding.password.getText() != null || !binding.password.getText().toString().trim().isEmpty()){
+                        if (binding.password.getText().toString().equals(user.getPassword())){
+                            SinoApplication.getInstance().setCurrentUser(user);
+                            NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.homeFragment, null, null);
+                            return;
+                        }else {
+                            CuteToast.ct(getActivity(),"رمز عبور اشتباه است", CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                        }
+                    }else {
+                        CuteToast.ct(getActivity(), getString(R.string.enter_compelete_data), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                    }
+                }
 
                 if (binding.password.getText() == null || binding.password.getText().toString().trim().isEmpty()) {
                     CuteToast.ct(getActivity(), getString(R.string.enter_compelete_data), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
@@ -76,10 +93,10 @@ public class CreatePasswordFragment extends Fragment {
                     return;
                 }
                 user.setPassword(binding.password.getText().toString());
-                //user.setAutoLogin(fa);
+                user.setAutoLogin(false);
+                user.setLoginIs(true);
                 mainViewModel.insertUser(user);
                 SinoApplication.getInstance().setCurrentUser(user);
-
                 NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.homeFragment, null, null);
 
             }

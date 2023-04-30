@@ -82,7 +82,16 @@ public class HomeFragment extends Fragment {
 
             binding.txtUserName.setText(user.getName() + " " + user.getFamily());
 
-            getUserById(user);
+            String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
+
+            System.out.println("getSharedData====" + getSharedData);
+            if (getSharedData.isEmpty()){
+                getUserById(user);
+            }else {
+                GlobalValue.companyCode = getSharedData;
+                binding.txtCompany.setText(" کد نمایندگی : " + GlobalValue.companyCode);
+            }
+
 
             callApiRequest();
 
@@ -340,13 +349,42 @@ public class HomeFragment extends Fragment {
                                 if (successUserInfoByIdBean.result.userInfoResponse != null) {
                                     if (successUserInfoByIdBean.result.userInfoResponse.company != null) {
 
+                                        if (successUserInfoByIdBean.result.userInfoResponse.company.companyType != 3 || successUserInfoByIdBean.result.userInfoResponse.company.code == null){
+
+                                            if (getActivity() != null) {
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        addCompanyDialog();
+                                                    }
+                                                });
+                                            }
+                                            return;
+                                        }
+
                                         if (successUserInfoByIdBean.result.userInfoResponse.company.code != null) {
                                             GlobalValue.companyCode = successUserInfoByIdBean.result.userInfoResponse.company.code;
                                             Config.putSharedPreference(getActivity(), Constant.COMPANY_CODE, successUserInfoByIdBean.result.userInfoResponse.company.code);
+                                            if (getActivity() != null) {
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        binding.txtCompany.setText(" کد نمایندگی : " + GlobalValue.companyCode);
+                                                    }
+                                                });
+                                            }
+
+                                        }else {
+                                            if (getActivity() != null) {
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        addCompanyDialog();
+                                                    }
+                                                });
+                                            }
                                         }
 
-                                        String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
-                                        if (successUserInfoByIdBean.result.userInfoResponse.company.companyType == null || successUserInfoByIdBean.result.userInfoResponse.company.companyType != 3) {
+
+
+                                      /*  if (successUserInfoByIdBean.result.userInfoResponse.company.companyType == null || successUserInfoByIdBean.result.userInfoResponse.company.companyType != 3) {
                                             addCompanyDialog();
                                         } else {
                                             GlobalValue.companyCode = getSharedData;
@@ -359,7 +397,7 @@ public class HomeFragment extends Fragment {
                                             //binding.txtCompany.setText(successUserInfoByIdBean.result.userInfoResponse.company.name + " " + " کد نمایندگی : " + GlobalValue.companyCode);
                                         } else {
                                             //binding.txtCompany.setText("نمایندگی " + " " + " کد : " + GlobalValue.companyCode);
-                                        }
+                                        }*/
                                     }
                                 }
                             }

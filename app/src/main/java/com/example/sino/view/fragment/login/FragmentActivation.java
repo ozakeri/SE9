@@ -96,6 +96,7 @@ public class FragmentActivation extends Fragment {
                                                 mainViewModel.insertUser(user);
                                                 SinoApplication.getInstance().setCurrentUser(user);
                                                 //createImageUserPath(successActivationBean);
+                                                NavHostFragment.findNavController(FragmentActivation.this).navigateUp();
                                                 NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.createPasswordFragment, null, null);
 
                                             } else {
