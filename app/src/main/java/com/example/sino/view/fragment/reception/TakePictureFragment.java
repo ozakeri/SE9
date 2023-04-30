@@ -347,7 +347,7 @@ public class TakePictureFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                   /* if (pathFront.equals("")){
+                    if (pathFront.equals("")){
                         Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -370,12 +370,12 @@ public class TakePictureFragment extends Fragment {
                     if (pathKm.equals("")){
                         Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
                         return;
-                    }*/
+                    }
 
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
-                   //saveOrEdit();
+                   saveOrEdit();
                 }
-                saveOrEdit();
+               // saveOrEdit();
             }
         });
         return binding.getRoot();
