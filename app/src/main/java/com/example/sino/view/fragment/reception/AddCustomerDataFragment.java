@@ -113,6 +113,7 @@ public class AddCustomerDataFragment extends Fragment {
     private Bitmap bitmap;
     private byte[] bytes;
     private boolean confirm = false;
+    private long elapsedMillis = 0;
 
     //private boolean isConfirm = false;
 
@@ -230,6 +231,15 @@ public class AddCustomerDataFragment extends Fragment {
                     }
 
                 } else if (statusRecord == 1) {
+
+                    elapsedMillis = SystemClock.elapsedRealtime() - binding.recordTimer.getBase();
+                    elapsedMillis = elapsedMillis / 1000;
+
+                    if (elapsedMillis <= 10) {
+                        Toast.makeText(getActivity(), "حداقل صدای ضبط شده 10 ثانیه می باشد", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     statusRecord = 0;
                     binding.imgRecord.setBackgroundResource(R.drawable.ic_voice);
                     try {

@@ -64,11 +64,14 @@ public class FragmentActivation extends Fragment {
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         user = SinoApplication.getInstance().getCurrentUser();
+
+        System.out.println("getMobileNo=====" + user.getMobileNo());
+
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (binding.activationCode.getText() != null) {
-                    System.out.println("getMobileNo=====" + user.getMobileNo());
+
                     if (user.getMobileNo() != null) {
                         code = GsonGenerator.sendActivationCodeToGson(user.getMobileNo(), binding.activationCode.getText().toString());
                         if (binding.activationCode.getText() != null && !binding.activationCode.getText().toString().trim().isEmpty()) {
@@ -83,6 +86,7 @@ public class FragmentActivation extends Fragment {
 
                                         @Override
                                         public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessActivationBean successActivationBean) {
+
                                             if (successActivationBean.getERROR() == null && successActivationBean.getSUCCESS() != null) {
                                                 user.setName(successActivationBean.getRESULT().getName());
                                                 user.setServerUserId(successActivationBean.getRESULT().getServerUserId());

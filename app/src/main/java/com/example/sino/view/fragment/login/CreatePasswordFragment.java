@@ -54,6 +54,7 @@ public class CreatePasswordFragment extends Fragment {
 
         if (user.getPassword() != null){
             binding.confirmPassword.setVisibility(View.GONE);
+            binding.txtEdit.setVisibility(View.GONE);
         }
         view.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override

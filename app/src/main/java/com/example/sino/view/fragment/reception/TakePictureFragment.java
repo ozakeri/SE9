@@ -375,7 +375,7 @@ public class TakePictureFragment extends Fragment {
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
                    saveOrEdit();
                 }
-               // saveOrEdit();
+                //saveOrEdit();
             }
         });
         return binding.getRoot();
@@ -1058,7 +1058,13 @@ public class TakePictureFragment extends Fragment {
 
                         if (proServiceResponse.ERROR != null){
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                         }
 
                     }

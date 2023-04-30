@@ -208,6 +208,8 @@ public class AddExpertDataFragment extends Fragment {
             public void onClick(View view) {
                 binding.signaturePad.clear();
                 binding.imgReload.setVisibility(View.GONE);
+                signPathIsChanged = false;
+                signPath = null;
             }
         });
 
@@ -266,13 +268,14 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                if (audioPath == null && signPath == null) {
+                if (audioPath == null || signPath == null) {
                     Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                saveOrEdit();
 
                 if (audioPathIsChanged || signPathIsChanged || editTextIsChanged) {
-                    saveOrEdit();
+
                 }
             }
         });
@@ -365,20 +368,18 @@ public class AddExpertDataFragment extends Fragment {
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                confirm = false;
                 if (statusRecord != 0) {
                     Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                    if (audioPath == null && signPath == null) {
+                    if (audioPath == null || signPath == null) {
                         Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                if (audioPathIsChanged || signPathIsChanged || editTextIsChanged) {
-                    saveOrEdit();
-                }
+                saveOrEdit();
             }
         });
 
@@ -411,6 +412,8 @@ public class AddExpertDataFragment extends Fragment {
         } else {
             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
+
+        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
 
         File dir = new File(path);
         if (!dir.exists()) {
@@ -511,6 +514,8 @@ public class AddExpertDataFragment extends Fragment {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
+            //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+
             File dir = new File(path);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -555,6 +560,10 @@ public class AddExpertDataFragment extends Fragment {
         } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
+
+        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
+
+
 
         File dir = new File(path);
         if (!dir.exists()) {
@@ -601,35 +610,38 @@ public class AddExpertDataFragment extends Fragment {
         protected String doInBackground(String... urls) {
             //Copy you logic to calculate progress and call
 
-            if (signPath != null && signPathIsChanged) {
-                saveAttachImageFile(signPath, (long) 1077);
-                apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
+            if (audioPathIsChanged || signPathIsChanged) {
+                if (signPath != null && signPathIsChanged) {
+                    saveAttachImageFile(signPath, (long) 1077);
+                    apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            getProSrvAttachFileSign();
-                        }
-                    });
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                getProSrvAttachFileSign();
+                            }
+                        });
+                    }
+                }
+
+                if (audioPath != null && audioPathIsChanged) {
+                    try {
+                        saveAttachImageFile(audioPath, (long) 1076);
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
+
+                    apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                getProSrvAttachFileAudio();
+                            }
+                        });
+                    }
                 }
             }
 
-            if (audioPath != null && audioPathIsChanged) {
-                try {
-                    saveAttachImageFile(audioPath, (long) 1076);
-                } catch (Exception e) {
-                    System.out.println(e.getLocalizedMessage());
-                }
-
-                apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            getProSrvAttachFileAudio();
-                        }
-                    });
-                }
-            }
 
             System.out.println("=====doInBackground====");
             return null;
@@ -646,12 +658,14 @@ public class AddExpertDataFragment extends Fragment {
             binding.btnEdit.setText("ویرایش");
             binding.btnConfirm.setVisibility(View.VISIBLE);
             binding.btnNonConfirm.setVisibility(View.VISIBLE);
-            binding.imgDelete.setVisibility(View.VISIBLE);
-            binding.imgDeleteRecord.setVisibility(View.VISIBLE);
+            //binding.imgDelete.setVisibility(View.VISIBLE);
+            //binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
             editTextIsChanged = false;
             GlobalValue.isEdit = true;
+
+            System.out.println("confirm=======" + confirm);
             if (confirm) {
                 confirmPrcData();
             }
@@ -698,23 +712,7 @@ public class AddExpertDataFragment extends Fragment {
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
                                     public void run() {
-                                        System.out.println("GlobalValue.prcDataId=====" + GlobalValue.prcDataId);
-                                        Bitmap signatureBitmap = binding.signaturePad.getSignatureBitmap();
-                                        // tryToSaveImage(signatureBitmap);
-
-                                        if (audioPath == null && signPath == null) {
-                                            Toast.makeText(getActivity(), "پیوست را تکمیل کنید", Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
-
-                                        if (audioPath != null && signPath != null) {
-                                            if (statusRecord == 0) {
-                                                new UploadFile().execute();
-                                            } else {
-                                                Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
+                                            new UploadFile().execute();
                                     }
                                 });
                             }
@@ -737,7 +735,7 @@ public class AddExpertDataFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
                         jsonArrayAttachCopy = null;
-                        if (proServiceResponse.result.jsonArrayAttach != null) {
+                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size()>0) {
                             dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
@@ -755,6 +753,8 @@ public class AddExpertDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
+                        }else {
+                            signPath = null;
                         }
 
                         if (proServiceResponse.ERROR != null){
@@ -775,7 +775,7 @@ public class AddExpertDataFragment extends Fragment {
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
-                                    if (jsonArrayAttachCopy.size() != 0) {
+                                    if (jsonArrayAttachCopy!= null && jsonArrayAttachCopy.size()>0) {
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDelete.setVisibility(View.VISIBLE);
                                         }
@@ -785,14 +785,14 @@ public class AddExpertDataFragment extends Fragment {
                                             binding.signaturePad.setSignatureBitmap(bitmap);
                                             signPathIsChanged = false;
                                             binding.signaturePad.setEnabled(false);
-                                            binding.imgReload.setEnabled(false);
+                                            binding.imgReload.setVisibility(View.GONE);
                                         }
 
                                     } else {
+                                        signPath = null;
                                         binding.imgDelete.setVisibility(View.GONE);
                                         binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setEnabled(true);
-
+                                        binding.imgReload.setVisibility(View.VISIBLE);
                                     }
 
                                     getProSrvAttachFileAudio();
@@ -820,7 +820,7 @@ public class AddExpertDataFragment extends Fragment {
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
 
                         jsonArrayAttachCopy = null;
-                        if (proServiceResponse.result.jsonArrayAttach != null) {
+                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size()>0) {
                             dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
@@ -836,6 +836,8 @@ public class AddExpertDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
+                        }else {
+                            audioPath = null;
                         }
 
                         if (proServiceResponse.ERROR != null){
@@ -857,7 +859,7 @@ public class AddExpertDataFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @RequiresApi(api = Build.VERSION_CODES.Q)
                                 public void run() {
-                                    if (jsonArrayAttachCopy.size() != 0) {
+                                    if (jsonArrayAttachCopy != null && jsonArrayAttachCopy.size() > 0) {
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
                                         }
@@ -872,7 +874,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.imgDeleteRecord.setVisibility(View.GONE);
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         binding.constraintLayoutRecord.setVisibility(View.VISIBLE);
-
+                                        audioPath = null;
                                     }
                                 }
                             });
@@ -960,7 +962,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.imgDelete.setVisibility(View.GONE);
                                         binding.signaturePad.clear();
                                         binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setEnabled(true);
+                                        binding.imgReload.setVisibility(View.VISIBLE);
                                         getProSrvAttachFileSign();
                                         signPathIsChanged = false;
                                     } else {

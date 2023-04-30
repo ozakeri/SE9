@@ -160,6 +160,6 @@ public class SplashFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        compositeDisposable.clear();
+        //compositeDisposable.clear();
     }
 }
