@@ -655,7 +655,8 @@ public class DetectPlateFragment extends Fragment {
 
                                     @Override
                                     public void run() {
-
+                                        GlobalValue.plateNo = null;
+                                        Util.hideProgress(circularProgressViewFragment);
                                         if (successCarInfoBeanCopy.success != null) {
 
                                             carList = successCarInfoBeanCopy.result.carList;
@@ -664,6 +665,16 @@ public class DetectPlateFragment extends Fragment {
                                             bundle.putParcelable("car", car);
                                             NavHostFragment.findNavController(DetectPlateFragment.this).navigate(R.id.carDetailFragment, bundle, navBuilder.build());
 
+                                        }else {
+                                            Toast toast = Toast.makeText(getActivity(), "خودرویی یافت نشد", Toast.LENGTH_LONG);
+                                            Util.showToast(toast, getActivity());
+                                            toast.show();
+                                        }
+
+                                        if (successCarInfoBeanCopy.error != null) {
+                                            Toast toast = Toast.makeText(getActivity(), "خودرویی یافت نشد", Toast.LENGTH_LONG);
+                                            Util.showToast(toast, getActivity());
+                                            toast.show();
                                         }
 
                                     }
@@ -681,11 +692,11 @@ public class DetectPlateFragment extends Fragment {
 
                                     @Override
                                     public void run() {
+                                        GlobalValue.plateNo = null;
                                         Util.hideProgress(circularProgressViewFragment);
                                         Toast toast = Toast.makeText(getActivity(), "خودرویی یافت نشد", Toast.LENGTH_LONG);
                                         Util.showToast(toast, getActivity());
                                         toast.show();
-                                        Util.hideProgress(circularProgressViewFragment);
                                     }
                                 });
                             }
@@ -695,13 +706,9 @@ public class DetectPlateFragment extends Fragment {
                         @Override
                         public void onComplete() {
                             getActivity().runOnUiThread(new Runnable() {
-
                                 @Override
                                 public void run() {
-                                    Util.hideProgress(circularProgressViewFragment);
-                                    //Toast toast = Toast.makeText(getActivity(), "خودرویی یافت نشد", Toast.LENGTH_LONG);
-                                    //Util.showToast(toast, getActivity());
-                                    //toast.show();
+                                    GlobalValue.plateNo = null;
                                     Util.hideProgress(circularProgressViewFragment);
                                 }
                             });

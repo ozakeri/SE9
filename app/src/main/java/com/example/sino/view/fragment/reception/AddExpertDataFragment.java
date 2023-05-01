@@ -20,10 +20,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -114,13 +116,10 @@ public class AddExpertDataFragment extends Fragment {
     private boolean editTextIsChanged = false;
     private MainActivity mainActivity;
     private long elapsedMillis = 0;
-
     @Override
-    public View onCreateView(@androidx.annotation.NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_expert_data, container, false);
+    public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         bundle = new Bundle();
         checkAudioPermission();
         mainActivity = (MainActivity) getActivity();
@@ -268,15 +267,16 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                if (audioPath == null || signPath == null) {
-                    Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                if (audioPath == null) {
+                    Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (signPath == null) {
+                    Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 saveOrEdit();
-
-                if (audioPathIsChanged || signPathIsChanged || editTextIsChanged) {
-
-                }
             }
         });
 
@@ -374,10 +374,15 @@ public class AddExpertDataFragment extends Fragment {
                     return;
                 }
 
-                    if (audioPath == null || signPath == null) {
-                        Toast.makeText(getActivity(), "افزودن صدای کارشناس و امضاء الزامیست", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                if (audioPath == null) {
+                    Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (signPath == null) {
+                    Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 saveOrEdit();
             }
@@ -395,7 +400,14 @@ public class AddExpertDataFragment extends Fragment {
                 gotoTakePicFragment(GlobalValue.isEdit);
             }
         });
+    }
 
+    @Override
+    public View onCreateView(@androidx.annotation.NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_expert_data, container, false);
         return binding.getRoot();
     }
 
@@ -407,7 +419,7 @@ public class AddExpertDataFragment extends Fragment {
 
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
         } else {
             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
@@ -508,13 +520,13 @@ public class AddExpertDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
-            //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+           // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
 
             File dir = new File(path);
             if (!dir.exists()) {
@@ -555,13 +567,13 @@ public class AddExpertDataFragment extends Fragment {
 
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
 
-        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
+       // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
 
 
 
@@ -860,6 +872,8 @@ public class AddExpertDataFragment extends Fragment {
                                 @RequiresApi(api = Build.VERSION_CODES.Q)
                                 public void run() {
                                     if (jsonArrayAttachCopy != null && jsonArrayAttachCopy.size() > 0) {
+
+                                        binding.imgPlayPause.setVisibility(View.VISIBLE);
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteRecord.setVisibility(View.VISIBLE);
                                         }
@@ -875,6 +889,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         binding.constraintLayoutRecord.setVisibility(View.VISIBLE);
                                         audioPath = null;
+                                        binding.imgPlayPause.setVisibility(View.GONE);
                                     }
                                 }
                             });
@@ -893,7 +908,7 @@ public class AddExpertDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
@@ -971,6 +986,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         getProSrvAttachFileAudio();
                                         audioPathIsChanged = false;
+                                        binding.recordTimer.setText("00.00");
                                     }
                                     dialog.dismiss();
                                     Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
