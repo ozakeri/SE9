@@ -16,16 +16,43 @@
             android:layout_height="wrap_content"
             tools:context=".view.fragment.reception.AddCustomerDataFragment">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.example.sino.utils.textwidget.CustomTextView
+                    android:id="@+id/txtPlate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="پلاک"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.example.sino.utils.textwidget.CustomTextView
+                    android:id="@+id/txtTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="تیپ"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPlate" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <com.example.sino.utils.textwidget.CustomTextViewTitle
                 android:id="@+id/textView36"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:text="اظهارات مشتری"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayoutHeader" />
 
             <com.example.sino.utils.textwidget.CustomEditText
                 android:id="@+id/editTextTextPersonName"
@@ -139,15 +166,26 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.423" />
 
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:id="@+id/txtPlayVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="صدای مشتری"
+                        android:textColor="@color/mdtp_done_text_color_dark_disabled"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/image_play"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/lottieRecordTwo2"
-                        android:layout_width="290dp"
+                        android:layout_width="0dp"
                         android:layout_height="45dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/image_play"
+                        app:layout_constraintEnd_toStartOf="@+id/txtPlayVoice"
                         app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/img_deleteRecord"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.6"
                         app:lottie_autoPlay="true"
@@ -185,8 +223,8 @@
                     android:layout_height="match_parent">
 
 
-                    <com.github.gcacace.signaturepad.views.SignaturePad
-                        android:id="@+id/signature_pad"
+                    <ImageView
+                        android:id="@+id/imgSignature"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:visibility="visible"
@@ -197,17 +235,6 @@
                         app:penColor="@android:color/black" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/img_signature"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:penColor="@android:color/black"
-                        android:visibility="gone"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_delete"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -216,22 +243,40 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/img_reload"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/refresh"
-                        app:layout_constraintStart_toEndOf="@+id/img_delete"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.example.sino.utils.textwidget.CustomTextView
-                        android:id="@+id/textView18"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/carOpenDialog"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="محل امضا"
+                        android:layout_margin="5dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardMaxElevation="12dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <com.example.sino.utils.textwidget.CustomTextView
+                                android:id="@+id/txtOpenDialog"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" افزودن امضا " />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/baseline_add_24" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -253,6 +298,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.example.sino.utils.textwidget.CustomTextViewTitle
@@ -267,27 +313,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"
                         android:text="عدم تایید"/>
 
-                    <com.example.sino.utils.textwidget.CustomTextViewTitle
-                        android:id="@+id/btn_edit"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/bg_button"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="ویرایش"/>
 
                     <com.example.sino.utils.textwidget.CustomTextViewTitle
                         android:id="@+id/btn_confirm"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:layout_weight="1.3"
                         android:layout_margin="5dp"
                         android:background="@drawable/bg_button"
                         android:gravity="center"
@@ -295,7 +328,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:text="ویرایش و تایید"/>
+                        android:text="تایید"/>
+
+                    <com.example.sino.utils.textwidget.CustomTextViewTitle
+                        android:id="@+id/btn_edit"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="ویرایش اظهارات"/>
 
 
 

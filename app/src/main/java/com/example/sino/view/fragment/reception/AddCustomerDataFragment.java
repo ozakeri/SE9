@@ -3,6 +3,7 @@ package com.example.sino.view.fragment.reception;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,8 +22,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,7 +48,6 @@ import com.example.sino.enumtype.SendingStatusEn;
 import com.example.sino.model.db.User;
 import com.example.sino.model.enumType.EntityNameEn;
 import com.example.sino.model.reception.JsonArrayAttach;
-import com.example.sino.model.reception.PrcSet;
 import com.example.sino.model.reception.ProServiceResponse;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
@@ -115,6 +119,7 @@ public class AddCustomerDataFragment extends Fragment {
     private byte[] bytes;
     private boolean confirm = false;
     private long elapsedMillis = 0;
+    private Bitmap signatureBitmap;
 
     //private boolean isConfirm = false;
 
@@ -134,7 +139,10 @@ public class AddCustomerDataFragment extends Fragment {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         sharedPreferences = getActivity().getSharedPreferences("proModelId", MODE_PRIVATE);
         //proModelId = sharedPreferences.getString("proModelId", "");
-
+        binding.recordTimer.setTextColor(getResources().getColor(R.color.mdtp_done_text_color_dark_disabled));
+        binding.txtPlate.setText(GlobalValue.plateText);
+        binding.txtTip.setText(GlobalValue.carType);
+        binding.recordTimer.setText("رکورد صدای مشتری");
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putInt(Constant.STATE_Reception, 3);
         myEdit.commit();
@@ -143,6 +151,13 @@ public class AddCustomerDataFragment extends Fragment {
         if (GlobalValue.description != null) {
             binding.editTextTextPersonName.setText(GlobalValue.description);
         }
+
+        binding.carOpenDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signDialog();
+            }
+        });
 
         binding.editTextTextPersonName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -177,11 +192,10 @@ public class AddCustomerDataFragment extends Fragment {
 
         }
 
-        binding.imgReload.setVisibility(View.GONE);
         binding.lottieRecord.setVisibility(View.GONE);
         binding.lottieRecordTwo.setVisibility(View.GONE);
 
-        binding.signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+    /*    binding.signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
 
@@ -208,7 +222,7 @@ public class AddCustomerDataFragment extends Fragment {
                 signPathIsChanged = false;
                 signPath = null;
             }
-        });
+        });*/
 
         binding.imgRecord.setBackgroundResource(R.drawable.ic_voice);
 
@@ -290,7 +304,7 @@ public class AddCustomerDataFragment extends Fragment {
         });
 
         if (GlobalValue.isEdit) {
-            binding.btnEdit.setText("ویرایش");
+            binding.btnEdit.setText("ویرایش اظهارات");
 
             if (getActivity() != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -303,7 +317,7 @@ public class AddCustomerDataFragment extends Fragment {
         } else {
             binding.btnEdit.setText("ذخیره");
             binding.btnConfirm.setVisibility(View.GONE);
-            binding.btnNonConfirm.setVisibility(View.GONE);
+            //binding.btnNonConfirm.setVisibility(View.GONE);
             binding.imgDelete.setVisibility(View.GONE);
             binding.imgDeleteRecord.setVisibility(View.GONE);
             binding.cardViewPlayer.setVisibility(View.GONE);
@@ -311,7 +325,7 @@ public class AddCustomerDataFragment extends Fragment {
 
         if (GlobalValue.isConfirm) {
             binding.btnConfirm.setVisibility(View.GONE);
-            binding.btnNonConfirm.setVisibility(View.GONE);
+            //binding.btnNonConfirm.setVisibility(View.GONE);
             binding.btnEdit.setVisibility(View.GONE);
             binding.imgDelete.setVisibility(View.GONE);
             binding.imgDeleteRecord.setVisibility(View.GONE);
@@ -399,10 +413,13 @@ public class AddCustomerDataFragment extends Fragment {
         binding.txtFileName.setText("");
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
-             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
-        }else {
-             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
+        } else {
+            path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
         }
 
         //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
@@ -500,13 +517,16 @@ public class AddCustomerDataFragment extends Fragment {
 
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
-        }else {
+        } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
 
-       // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
+        // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
 
 
         File dir = new File(path);
@@ -630,9 +650,12 @@ public class AddCustomerDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S
+                    || Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
-            }else {
+            } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
@@ -716,9 +739,9 @@ public class AddCustomerDataFragment extends Fragment {
         protected void onPostExecute(String result) {
             dialog.dismiss();
             Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-            binding.btnEdit.setText("ویرایش");
+            binding.btnEdit.setText("ویرایش اظهارات");
             binding.btnConfirm.setVisibility(View.VISIBLE);
-            binding.btnNonConfirm.setVisibility(View.VISIBLE);
+            //binding.btnNonConfirm.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
             signPathIsChanged = false;
             editTextIsChanged = false;
@@ -775,7 +798,7 @@ public class AddCustomerDataFragment extends Fragment {
                             System.out.println("======prcDataId=====" + GlobalValue.prcDataId);
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -830,7 +853,7 @@ public class AddCustomerDataFragment extends Fragment {
                             }
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -892,12 +915,11 @@ public class AddCustomerDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
-                        }
-                        else {
+                        } else {
                             signPath = null;
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -915,24 +937,27 @@ public class AddCustomerDataFragment extends Fragment {
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
-                                    if (jsonArrayAttachCopy!= null && jsonArrayAttachCopy.size()>0) {
+                                    if (jsonArrayAttachCopy != null && jsonArrayAttachCopy.size() > 0) {
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDelete.setVisibility(View.VISIBLE);
                                         }
 
                                         signPath = "signPath";
                                         if (bitmap != null) {
-                                            binding.signaturePad.setSignatureBitmap(bitmap);
+                                            // binding.signaturePad.setSignatureBitmap(bitmap);
                                             signPathIsChanged = false;
-                                            binding.signaturePad.setEnabled(false);
-                                            binding.imgReload.setVisibility(View.GONE);
+                                            //binding.signaturePad.setEnabled(false);
+                                            //binding.imgReload.setVisibility(View.GONE);
+                                            binding.imgSignature.setImageBitmap(bitmap);
+                                            binding.carOpenDialog.setVisibility(View.GONE);
                                         }
 
                                     } else {
                                         signPath = null;
                                         binding.imgDelete.setVisibility(View.GONE);
-                                        binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setVisibility(View.VISIBLE);
+                                        binding.carOpenDialog.setVisibility(View.VISIBLE);
+                                        //binding.signaturePad.setEnabled(true);
+                                        //binding.imgReload.setVisibility(View.VISIBLE);
                                     }
 
                                     getProSrvAttachFileAudio();
@@ -974,11 +999,11 @@ public class AddCustomerDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
-                        }else {
+                        } else {
                             audioPath = null;
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -1034,9 +1059,12 @@ public class AddCustomerDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S
+                    || Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
-            }else {
+            } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
             }
 
@@ -1070,7 +1098,7 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     private void deleteAttachFile(String name, String id) {
-        if (id == null){
+        if (id == null) {
             return;
         }
         ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
@@ -1101,9 +1129,9 @@ public class AddCustomerDataFragment extends Fragment {
                                 public void run() {
                                     if (name.equals("sign")) {
                                         binding.imgDelete.setVisibility(View.GONE);
-                                        binding.signaturePad.clear();
-                                        binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setEnabled(true);
+                                        binding.carOpenDialog.setVisibility(View.VISIBLE);
+                                        binding.imgSignature.setImageBitmap(null);
+                                        binding.imgSignature.setBackgroundResource(R.drawable.image_empty);
                                         getProSrvAttachFileSign();
                                         signPathIsChanged = false;
                                     } else {
@@ -1112,7 +1140,7 @@ public class AddCustomerDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         getProSrvAttachFileAudio();
                                         audioPathIsChanged = false;
-                                        binding.recordTimer.setText("00.00");
+                                        binding.recordTimer.setText("رکورد صدای مشتری");
                                     }
                                     dialog.dismiss();
                                     Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
@@ -1121,6 +1149,60 @@ public class AddCustomerDataFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    public void signDialog() {
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_sign);
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(layoutParams);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        SignaturePad signaturePad = dialog.findViewById(R.id.signature_pad);
+        ImageView reload = dialog.findViewById(R.id.img_reload);
+        TextView save = dialog.findViewById(R.id.btnSave);
+
+
+        signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+            @Override
+            public void onStartSigning() {
+
+            }
+
+            @Override
+            public void onSigned() {
+                reload.setVisibility(View.VISIBLE);
+                signatureBitmap = signaturePad.getSignatureBitmap();
+                tryToSaveImage(signatureBitmap);
+            }
+
+            @Override
+            public void onClear() {
+                reload.setVisibility(View.GONE);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.imgSignature.setImageBitmap(signatureBitmap);
+                dialog.dismiss();
+            }
+        });
+
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signaturePad.clear();
+                signPathIsChanged = false;
+                signPath = null;
+            }
+        });
     }
 
 }

@@ -38,12 +38,11 @@
                     android:layout_height="match_parent">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView7"
+                        android:id="@+id/cardViewTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:padding="5dp"
-                        app:cardBackgroundColor="@color/custom_toast_text"
+                        app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="5dp"
                         app:cardMaxElevation="12dp"
                         app:cardPreventCornerOverlap="true"
@@ -55,15 +54,58 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
+
+                            <com.example.sino.utils.textwidget.CustomTextView
+                                android:id="@+id/txtPlate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="پلاک"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <com.example.sino.utils.textwidget.CustomTextView
+                                android:id="@+id/txtTip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="تیپ"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/txtPlate" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        app:cardBackgroundColor="@color/custom_toast_text"
+                        app:cardCornerRadius="5dp"
+                        app:cardMaxElevation="12dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardViewTitle">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/img_deleteFront"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/delete"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:visibility="gone"/>
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_front" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/camera_front"
@@ -139,9 +181,9 @@
                                 android:layout_height="30dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/delete"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:visibility="gone"/>
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_right" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitle
                                 android:layout_width="wrap_content"
@@ -218,9 +260,9 @@
                                 android:layout_height="30dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/delete"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:visibility="gone"/>
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_back" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitle
                                 android:layout_width="wrap_content"
@@ -296,9 +338,9 @@
                                 android:layout_height="30dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/delete"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:visibility="gone"/>
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_left" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitle
                                 android:layout_width="wrap_content"
@@ -354,7 +396,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardViewKm"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="100dp"
                         android:layout_margin="5dp"
                         android:padding="5dp"
                         app:cardBackgroundColor="@color/custom_toast_text"
@@ -377,9 +419,9 @@
                                 android:layout_height="30dp"
                                 android:layout_margin="10dp"
                                 android:background="@drawable/delete"
-                               app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:visibility="gone"/>
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_km" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitle
                                 android:layout_width="wrap_content"
@@ -401,8 +443,8 @@
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/img_km"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
                                 android:src="@drawable/km"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

@@ -44,14 +44,13 @@ public class ProSerStatusListAdapter extends RecyclerView.Adapter<ProSerStatusLi
         holder.txt_name.setText(prcData.prcDataVO.prcSet.name);
         System.out.println("doSuccess=====" + prcData.prcDataVO.doSuccess);
         if (prcData.prcDataVO.doSuccess != null){
-            holder.imgConfirm.setVisibility(View.VISIBLE);
             if (prcData.prcDataVO.doSuccess){
                 holder.imgConfirm.setBackgroundResource(R.drawable.ic_confirm);
             }else {
                 holder.imgConfirm.setBackgroundResource(R.drawable.ic_cancel);
             }
         }else {
-            holder.imgConfirm.setVisibility(View.GONE);
+            holder.imgConfirm.setBackgroundResource(R.drawable.baseline_edit);
         }
 
         try {

@@ -271,19 +271,57 @@ public class RecognizePlateFragment extends Fragment {
                                     if (proServiceResponse.result.proSrv != null) {
                                         if (proServiceResponse.result.proSrv.car.plateText != null) {
                                             binding.txtPlate.setText("پلاک : " + proServiceResponse.result.proSrv.car.plateText);
+                                            GlobalValue.plateText = "پلاک : " + proServiceResponse.result.proSrv.car.plateText;
                                         }
                                         if (proServiceResponse.result.proSrv.car.chassis != null) {
                                             binding.txtChassis.setText("شاسی : " + proServiceResponse.result.proSrv.car.chassis);
                                         }
                                         if (proServiceResponse.result.proSrv.car.autoCompleteLabel != null) {
-                                            binding.txtTip.setText("تیپ : " + proServiceResponse.result.proSrv.car.autoCompleteLabel);
+                                            binding.txtTip.setText("تیپ : " + proServiceResponse.result.proSrv.car.carTypeFa);
+                                            GlobalValue.carType = "تیپ : " + proServiceResponse.result.proSrv.car.carTypeFa;
+                                        }
+
+                                        if (proServiceResponse.result.proSrv.car.gurActFV != null) {
+                                            if (proServiceResponse.result.proSrv.car.gurActFV){
+                                                binding.txtPermission.setText("گارانتی : دارد");
+
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                                Date date = null;
+                                                try {
+                                                    date = sdf.parse(proServiceResponse.result.proSrv.car.gurDateEndFV);
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    calendar.setTime(date);
+                                                    JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
+                                                    binding.txtPermissionDate.setText("اعتبار تا : " + jalaliCalendarUtil.getIranianDate());
+
+                                                } catch (ParseException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+
+                                            }else {
+                                                binding.txtPermission.setText("گارانتی : ندارد");
+
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                                Date date = null;
+                                                try {
+                                                    date = sdf.parse(proServiceResponse.result.proSrv.car.gurDateEndFV);
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    calendar.setTime(date);
+                                                    JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
+                                                    binding.txtPermissionDate.setText("پایان اعتبار : " + jalaliCalendarUtil.getIranianDate());
+
+                                                } catch (ParseException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                            }
+
                                         }
                                         if (proServiceResponse.result.proSrv.car.productionYear != null) {
                                             binding.txtModel.setText("مدل : " + proServiceResponse.result.proSrv.car.productionYear);
                                         }
                                         if (proServiceResponse.result.proSrv.licPro != null && proServiceResponse.result.proSrv.licPro.licTypeEn_text != null) {
-                                            binding.txtPermission.setText("مجوز : " + proServiceResponse.result.proSrv.licPro.licTypeEn_text);
-
+                                            //binding.txtPermission.setText("گارانتی : " + proServiceResponse.result.proSrv.licPro.licTypeEn_text);
+/*
                                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                                             if (proServiceResponse.result.proSrv.licPro.endDatePlan != null) {
                                                 try {
@@ -310,7 +348,7 @@ public class RecognizePlateFragment extends Fragment {
                                                 } catch (ParseException e) {
                                                     throw new RuntimeException(e);
                                                 }
-                                            }
+                                            }*/
 
                                         }
                                         processBisSettingVOList = proServiceResponse.result.proSrv.prcSetList;

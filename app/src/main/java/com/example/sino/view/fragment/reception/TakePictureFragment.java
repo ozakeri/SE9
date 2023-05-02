@@ -171,6 +171,9 @@ public class TakePictureFragment extends Fragment {
 
         binding.btnEdit.setText("ذخیره");
 
+        binding.txtPlate.setText(GlobalValue.plateText);
+        binding.txtTip.setText(GlobalValue.carType);
+
         binding.cameraFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,7 +281,6 @@ public class TakePictureFragment extends Fragment {
                 if (GlobalValue.isEdit) {
                     deleteAttachFile("imgDeleteFront", attachFileIdFront);
                 }
-
             }
         });
 
@@ -347,33 +349,33 @@ public class TakePictureFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    if (pathFront.equals("")){
-                        Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (pathFront == null) {
+                    Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                    if (pathRight.equals("")){
-                        Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (pathRight == null) {
+                    Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                    if (pathBack.equals("")){
-                        Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (pathBack == null) {
+                    Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                    if (pathLeft.equals("")){
-                        Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (pathLeft == null) {
+                    Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                    if (pathKm.equals("")){
-                        Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (pathKm == null) {
+                    Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
-                   saveOrEdit();
+                    saveOrEdit();
                 }
                 //saveOrEdit();
             }
@@ -909,10 +911,10 @@ public class TakePictureFragment extends Fragment {
         protected String doInBackground(String... urls) {
             //Copy you logic to calculate progress and call
 
-            if (!pathFront.equals("") && pathFrontIsChanged) {
+            if (pathFront != null && pathFrontIsChanged) {
                 saveAttachImageFile(pathFront, (long) 1078);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
-                if (GlobalValue.isEdit){
+                if (GlobalValue.isEdit) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -924,11 +926,11 @@ public class TakePictureFragment extends Fragment {
 
             }
 
-            if (!pathRight.equals("") && pathRightIsChanged) {
+            if (pathRight != null && pathRightIsChanged) {
                 saveAttachImageFile(pathRight, (long) 1079);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (GlobalValue.isEdit){
+                if (GlobalValue.isEdit) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -940,11 +942,11 @@ public class TakePictureFragment extends Fragment {
 
             }
 
-            if (!pathBack.equals("") && pathBackIsChanged) {
+            if (pathBack != null && pathBackIsChanged) {
                 saveAttachImageFile(pathBack, (long) 1080);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (GlobalValue.isEdit){
+                if (GlobalValue.isEdit) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -960,7 +962,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathLeft, (long) 1081);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (GlobalValue.isEdit){
+                if (GlobalValue.isEdit) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -976,7 +978,7 @@ public class TakePictureFragment extends Fragment {
                 saveAttachImageFile(pathKm, (long) 1097);
                 apiServiceAsync.resumeAttachFile(user, getActivity(), attachFile, databaseViewModel);
 
-                if (GlobalValue.isEdit){
+                if (GlobalValue.isEdit) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -1018,8 +1020,8 @@ public class TakePictureFragment extends Fragment {
             Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
             Bundle bundle = new Bundle();
-           // bundle.putString("prcDataId",prcDataId);
-           // bundle.putString("prcSetId",prcSetId);
+            // bundle.putString("prcDataId",prcDataId);
+            // bundle.putString("prcSetId",prcSetId);
             //bundle.putString("proSrvId",proSrvId);
             NavHostFragment.findNavController(TakePictureFragment.this).navigate(R.id.addExpertDataFragment, bundle, navBuilder.build());
             //NavHostFragment.findNavController(TakePictureFragment.this).navigateUp();
@@ -1056,7 +1058,7 @@ public class TakePictureFragment extends Fragment {
                             }
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
@@ -1120,6 +1122,8 @@ public class TakePictureFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
+                        } else {
+                            pathFront = null;
                         }
 
                     }
@@ -1136,17 +1140,20 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!GlobalValue.isConfirm){
+                                        if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteFront.setVisibility(View.VISIBLE);
                                         }
 
                                         pathFrontIsChanged = false;
                                         binding.imgFront.setImageBitmap(bitmap);
                                         pathFront = "pathFront";
+                                        GlobalValue.pathFront = "pathFront";
                                     } else {
                                         binding.imgDeleteFront.setVisibility(View.GONE);
                                         binding.imgFront.setImageBitmap(null);
                                         binding.imgFront.setBackgroundResource(R.drawable.image_empty);
+                                        pathFront = null;
+                                        GlobalValue.pathFront = null;
                                     }
 
                                     binding.btnEdit.setText("ویرایش");
@@ -1207,16 +1214,19 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!GlobalValue.isConfirm){
+                                        if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteRight.setVisibility(View.VISIBLE);
                                         }
                                         pathRightIsChanged = false;
                                         binding.imgRight.setImageBitmap(bitmap);
                                         pathRight = "pathRight";
+                                        GlobalValue.pathRight = "pathRight";
                                     } else {
                                         binding.imgDeleteRight.setVisibility(View.GONE);
                                         binding.imgRight.setImageBitmap(null);
                                         binding.imgRight.setBackgroundResource(R.drawable.image_empty);
+                                        pathRight = null;
+                                        GlobalValue.pathRight = null;
                                     }
 
                                     binding.btnEdit.setText("ویرایش");
@@ -1280,16 +1290,19 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!GlobalValue.isConfirm){
+                                        if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteBack.setVisibility(View.VISIBLE);
                                         }
                                         pathBack = "pathBack";
                                         pathBackIsChanged = false;
                                         binding.imgBack.setImageBitmap(bitmap);
+                                        GlobalValue.pathBack = "pathBack";
                                     } else {
                                         binding.imgDeleteBack.setVisibility(View.GONE);
                                         binding.imgBack.setImageBitmap(null);
                                         binding.imgBack.setBackgroundResource(R.drawable.image_empty);
+                                        pathBack = null;
+                                        GlobalValue.pathBack = null;
                                     }
 
                                     binding.btnEdit.setText("ویرایش");
@@ -1352,20 +1365,23 @@ public class TakePictureFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
-                                        if (!GlobalValue.isConfirm){
+                                        if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteLeft.setVisibility(View.VISIBLE);
                                         }
                                         pathLeft = "pathLeft";
+                                        GlobalValue.pathLeft = "pathLeft";
                                         pathLeftIsChanged = false;
                                         binding.imgLeft.setImageBitmap(bitmap);
                                     } else {
                                         binding.imgLeft.setImageBitmap(null);
                                         binding.imgDeleteLeft.setVisibility(View.GONE);
                                         binding.imgLeft.setBackgroundResource(R.drawable.image_empty);
+                                        pathLeft = null;
+                                        GlobalValue.pathLeft = null;
                                     }
 
                                     binding.btnEdit.setText("ویرایش");
-                                    Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+                                   // Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
                                     if (isNext) {
                                         getProSrvAttachFileKM();
                                     }
@@ -1502,19 +1518,22 @@ public class TakePictureFragment extends Fragment {
                                 public void run() {
                                     if (jsonArrayAttachCopy.size() != 0) {
                                         pathKmIsChanged = false;
-                                        if (!GlobalValue.isConfirm){
+                                        if (!GlobalValue.isConfirm) {
                                             binding.imgDeleteKm.setVisibility(View.VISIBLE);
                                         }
                                         pathKm = "pathKm";
+                                        GlobalValue.pathKm = "pathKm";
                                         binding.imgKm.setImageBitmap(bitmap);
                                     } else {
                                         binding.imgDeleteKm.setVisibility(View.GONE);
                                         binding.imgKm.setImageBitmap(null);
                                         binding.imgKm.setBackgroundResource(R.drawable.image_empty);
+                                        pathKm = null;
+                                        GlobalValue.pathKm = null;
                                     }
 
                                     binding.btnEdit.setText("ویرایش");
-                                    Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
                                     getProSrvAttachFileOther();
                                 }
                             });
@@ -1567,6 +1586,8 @@ public class TakePictureFragment extends Fragment {
                                         //getProSrvAttachFileFront(false);
                                         binding.imgFront.setImageBitmap(null);
                                         binding.imgFront.setBackgroundResource(R.drawable.image_empty);
+                                        pathFront = null;
+                                        GlobalValue.pathFront = null;
 
                                     } else if (name.equals("imgDeleteRight")) {
                                         binding.imgDeleteRight.setVisibility(View.GONE);
@@ -1574,6 +1595,8 @@ public class TakePictureFragment extends Fragment {
                                         //getProSrvAttachFileRight(false);
                                         binding.imgRight.setImageBitmap(null);
                                         binding.imgRight.setBackgroundResource(R.drawable.image_empty);
+                                        pathRight = null;
+                                        GlobalValue.pathRight = null;
 
                                     } else if (name.equals("imgDeleteBack")) {
                                         binding.imgDeleteBack.setVisibility(View.GONE);
@@ -1581,6 +1604,8 @@ public class TakePictureFragment extends Fragment {
                                         //getProSrvAttachFileBack(false);
                                         binding.imgBack.setImageBitmap(null);
                                         binding.imgBack.setBackgroundResource(R.drawable.image_empty);
+                                        pathBack = null;
+                                        GlobalValue.pathBack = null;
 
                                     } else if (name.equals("imgDeleteLeft")) {
                                         binding.imgDeleteLeft.setVisibility(View.GONE);
@@ -1588,6 +1613,8 @@ public class TakePictureFragment extends Fragment {
                                         //getProSrvAttachFileLeft(false);
                                         binding.imgLeft.setImageBitmap(null);
                                         binding.imgLeft.setBackgroundResource(R.drawable.image_empty);
+                                        pathLeft = null;
+                                        GlobalValue.pathLeft = null;
 
                                     } else if (name.equals("imgDeleteKm")) {
                                         binding.imgDeleteKm.setVisibility(View.GONE);
@@ -1595,6 +1622,8 @@ public class TakePictureFragment extends Fragment {
                                         //getProSrvAttachFileKM();
                                         binding.imgKm.setImageBitmap(null);
                                         binding.imgKm.setBackgroundResource(R.drawable.image_empty);
+                                        pathKm = null;
+                                        GlobalValue.pathKm = null;
                                     }
 
                                     dialog.dismiss();

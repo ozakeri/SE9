@@ -148,6 +148,15 @@ public class Car implements Parcelable {
     @SerializedName("carSosIsEditable")
     public Boolean carSosIsEditable;
 
+    @SerializedName("carTypeFa")
+    public String carTypeFa;
+
+    @SerializedName("gurActFV")
+    public Boolean gurActFV;
+
+    @SerializedName("gurDateEndFV")
+    public String gurDateEndFV;
+
 
     public Car() {
     }

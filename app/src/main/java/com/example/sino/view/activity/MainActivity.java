@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
                     txtName.setText(user.getName() + " " + user.getFamily());
                     if (user.getCompanyName() != null){
-                        txtCode.setText(user.getCompanyName()+" " + "(کد )");
+                        txtCode.setText(" ( کد )" + user.getCompanyName());
                     }else {
                         if (GlobalValue.companyCode != null){
-                            txtCode.setText("نمایندگی "+" " + GlobalValue.companyCode + "کد ");
+                            txtCode.setText(GlobalValue.companyCode + " کد "+" نمایندگی ");
                         }
 
                     }
@@ -148,10 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (navDestination.getLabel().equals("fragment_home")) {
                     binding.include.imgBack.setVisibility(View.GONE);
+                    binding.include.imgLogo.setVisibility(View.GONE);
+                    binding.include.txtCode.setVisibility(View.GONE);
                     binding.include.txtEnterExit.setVisibility(View.GONE);
                     binding.include.imgUser.setVisibility(View.VISIBLE);
                 } else {
                     binding.include.imgBack.setVisibility(View.VISIBLE);
+                    binding.include.imgLogo.setVisibility(View.VISIBLE);
+                    binding.include.txtCode.setVisibility(View.VISIBLE);
                     binding.include.imgUser.setVisibility(View.GONE);
                 }
 
@@ -233,6 +237,13 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setupRecyclerView(List<UserPermission> userPermissionList, User user) {
+
+
+        String getSharedData = Config.getSharedPreferenceString(MainActivity.this, Constant.COMPANY_CODE);
+        if (!getSharedData.isEmpty()){
+            GlobalValue.companyCode = getSharedData;
+            binding.include.txtCode.setText( " نمایندگی " + GlobalValue.companyCode );
+        }
 
         binding.txtVersion.setText(" شماره ورژن " + BuildConfig.VERSION_NAME);
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -358,7 +369,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (navDestination.getLabel().equals("fragment_home")) {
                     binding.include.imgBack.setVisibility(View.GONE);
+                    binding.include.imgLogo.setVisibility(View.GONE);
+                    binding.include.txtCode.setVisibility(View.GONE);
                     binding.include.imgUser.setVisibility(View.VISIBLE);
+                }else {
+                    binding.include.imgBack.setVisibility(View.VISIBLE);
+                    binding.include.imgLogo.setVisibility(View.VISIBLE);
+                    binding.include.txtCode.setVisibility(View.VISIBLE);
+                    binding.include.imgUser.setVisibility(View.GONE);
                 }
 
                 if (navDestination.getLabel().equals("fragment_detect_plate") ||
@@ -372,11 +390,6 @@ public class MainActivity extends AppCompatActivity {
                     binding.include.imgBack.setVisibility(View.VISIBLE);
                     binding.include.imgUser.setVisibility(View.GONE);
                     binding.include.txtCode.setVisibility(View.VISIBLE);
-                    //binding.include.txtCode.setText("  نمایندگی کد  " + companyCode);
-                    if (GlobalValue.companyCode != null){
-                        binding.include.txtCode.setText(GlobalValue.companyCode + "نمایندگی مرکزی کد");
-                    }
-
                 }
 
                 if (navDestination.getLabel().equals("SplashFragment") || navDestination.getLabel().equals("FragmentRegistration")

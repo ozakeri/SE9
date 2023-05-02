@@ -30,4 +30,13 @@ public class GlobalValue {
     public static String description;
     public static boolean isEdit;
     public static boolean isConfirm;
+
+    public static String pathFront = null;
+    public static String pathRight = null;
+    public static String pathBack = null;
+    public static String pathLeft = null;
+    public static String pathKm = null;
+
+    public static String plateText = null;
+    public static String carType = null;
 }

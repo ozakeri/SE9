@@ -3,6 +3,7 @@ package com.example.sino.view.fragment.reception;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,9 +21,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -116,6 +120,8 @@ public class AddExpertDataFragment extends Fragment {
     private boolean editTextIsChanged = false;
     private MainActivity mainActivity;
     private long elapsedMillis = 0;
+    private Bitmap signatureBitmap;
+
     @Override
     public void onViewCreated(@androidx.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -134,6 +140,9 @@ public class AddExpertDataFragment extends Fragment {
         myEdit.putInt(Constant.STATE_Reception, 4);
         myEdit.commit();
 
+        binding.txtPlate.setText(GlobalValue.plateText);
+        binding.txtTip.setText(GlobalValue.carType);
+        binding.recordTimer.setTextColor(getResources().getColor(R.color.mdtp_done_text_color_dark_disabled));
         navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
@@ -178,41 +187,21 @@ public class AddExpertDataFragment extends Fragment {
 
         }
 
-        binding.imgReload.setVisibility(View.GONE);
         binding.lottieRecord.setVisibility(View.GONE);
         binding.lottieRecordTwo.setVisibility(View.GONE);
 
 
-        binding.signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+        binding.carOpenDialog.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartSigning() {
-
-            }
-
-            @Override
-            public void onSigned() {
-                binding.imgReload.setVisibility(View.VISIBLE);
-                Bitmap signatureBitmap = binding.signaturePad.getSignatureBitmap();
-                tryToSaveImage(signatureBitmap);
-            }
-
-            @Override
-            public void onClear() {
-                binding.imgReload.setVisibility(View.GONE);
+            public void onClick(View v) {
+                signDialog();
             }
         });
 
-        binding.imgReload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.signaturePad.clear();
-                binding.imgReload.setVisibility(View.GONE);
-                signPathIsChanged = false;
-                signPath = null;
-            }
-        });
 
         binding.imgRecord.setBackgroundResource(R.drawable.ic_voice);
+
+        binding.recordTimer.setText("رکورد صدای کارشناس");
 
         binding.imgRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,17 +265,42 @@ public class AddExpertDataFragment extends Fragment {
                     Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (GlobalValue.pathFront == null){
+                    Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (GlobalValue.pathRight == null){
+                    Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (GlobalValue.pathBack == null){
+                    Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (GlobalValue.pathLeft == null){
+                    Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (GlobalValue.pathKm == null){
+                    Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 saveOrEdit();
             }
         });
 
-        binding.btnNonConfirm.setOnClickListener(new View.OnClickListener() {
+      /*  binding.btnNonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirm = false;
                 confirmPrcData();
             }
-        });
+        });*/
 
 
         /*if (isEdit) {
@@ -316,13 +330,14 @@ public class AddExpertDataFragment extends Fragment {
 
         if (GlobalValue.isConfirm) {
             binding.btnConfirm.setVisibility(View.GONE);
-            binding.btnNonConfirm.setVisibility(View.GONE);
+            // binding.btnNonConfirm.setVisibility(View.GONE);
             binding.btnEdit.setVisibility(View.GONE);
             binding.imgDelete.setVisibility(View.GONE);
             binding.imgDeleteRecord.setVisibility(View.GONE);
             binding.gotoTakePic.setText("مشاهده تصاویر");
-            binding.signaturePad.setEnabled(false);
-        }else if (GlobalValue.isEdit) {
+            //binding.signaturePad.setEnabled(false);
+            binding.carOpenDialog.setVisibility(View.GONE);
+        } else if (GlobalValue.isEdit) {
             binding.gotoTakePic.setText("ویرایش تصاویر");
         }
 
@@ -419,7 +434,10 @@ public class AddExpertDataFragment extends Fragment {
 
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + "/Sino" + "/audio";
         } else {
             path = Environment.getExternalStorageDirectory().toString() + "/Sino" + "/audio";
@@ -520,13 +538,16 @@ public class AddExpertDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
             }
 
-           // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
+            // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_SIGN_OUT_PUT_DIR;
 
             File dir = new File(path);
             if (!dir.exists()) {
@@ -567,14 +588,16 @@ public class AddExpertDataFragment extends Fragment {
 
         String path;
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.S ||
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         } else {
             path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
         }
 
-       // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
-
+        // path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_IMG_OUT_PUT_DIR;
 
 
         File dir = new File(path);
@@ -667,9 +690,9 @@ public class AddExpertDataFragment extends Fragment {
         protected void onPostExecute(String result) {
             dialog.dismiss();
             Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-            binding.btnEdit.setText("ویرایش");
+            binding.btnEdit.setText("ویرایش اظهارات");
             binding.btnConfirm.setVisibility(View.VISIBLE);
-            binding.btnNonConfirm.setVisibility(View.VISIBLE);
+            //binding.btnNonConfirm.setVisibility(View.VISIBLE);
             //binding.imgDelete.setVisibility(View.VISIBLE);
             //binding.imgDeleteRecord.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
@@ -703,7 +726,7 @@ public class AddExpertDataFragment extends Fragment {
                             GlobalValue.isEdit = true;
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -724,7 +747,7 @@ public class AddExpertDataFragment extends Fragment {
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
                                     public void run() {
-                                            new UploadFile().execute();
+                                        new UploadFile().execute();
                                     }
                                 });
                             }
@@ -747,7 +770,7 @@ public class AddExpertDataFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
                         jsonArrayAttachCopy = null;
-                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size()>0) {
+                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size() > 0) {
                             dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
@@ -765,11 +788,11 @@ public class AddExpertDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
-                        }else {
+                        } else {
                             signPath = null;
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -787,24 +810,25 @@ public class AddExpertDataFragment extends Fragment {
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
-                                    if (jsonArrayAttachCopy!= null && jsonArrayAttachCopy.size()>0) {
+                                    if (jsonArrayAttachCopy != null && jsonArrayAttachCopy.size() > 0) {
                                         if (!GlobalValue.isConfirm) {
                                             binding.imgDelete.setVisibility(View.VISIBLE);
                                         }
 
                                         signPath = "signPath";
                                         if (bitmap != null) {
-                                            binding.signaturePad.setSignatureBitmap(bitmap);
+                                            //binding.signaturePad.setSignatureBitmap(bitmap);
+                                            binding.imgSignature.setImageBitmap(bitmap);
                                             signPathIsChanged = false;
-                                            binding.signaturePad.setEnabled(false);
-                                            binding.imgReload.setVisibility(View.GONE);
+                                            // binding.signaturePad.setEnabled(false);
+                                            binding.carOpenDialog.setVisibility(View.GONE);
                                         }
 
                                     } else {
                                         signPath = null;
                                         binding.imgDelete.setVisibility(View.GONE);
-                                        binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setVisibility(View.VISIBLE);
+                                        //binding.signaturePad.setEnabled(true);
+                                        binding.carOpenDialog.setVisibility(View.VISIBLE);
                                     }
 
                                     getProSrvAttachFileAudio();
@@ -832,7 +856,7 @@ public class AddExpertDataFragment extends Fragment {
                     public void onNext(@NonNull ProServiceResponse proServiceResponse) {
 
                         jsonArrayAttachCopy = null;
-                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size()>0) {
+                        if (proServiceResponse.result.jsonArrayAttach != null && proServiceResponse.result.jsonArrayAttach.size() > 0) {
                             dialog.dismiss();
                             jsonArrayAttachCopy = proServiceResponse.result.jsonArrayAttach;
                             try {
@@ -848,11 +872,11 @@ public class AddExpertDataFragment extends Fragment {
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
-                        }else {
+                        } else {
                             audioPath = null;
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -908,7 +932,10 @@ public class AddExpertDataFragment extends Fragment {
 
             String path;
 
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2|| Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2 ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.S ||
+                    Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
                 path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS).toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
             } else {
                 path = Environment.getExternalStorageDirectory().toString() + Constant.DEFAULT_OUT_PUT_DIR + Constant.DEFAULT_AUDIO_OUT_PUT_DIR;
@@ -975,9 +1002,11 @@ public class AddExpertDataFragment extends Fragment {
                                 public void run() {
                                     if (name.equals("sign")) {
                                         binding.imgDelete.setVisibility(View.GONE);
-                                        binding.signaturePad.clear();
-                                        binding.signaturePad.setEnabled(true);
-                                        binding.imgReload.setVisibility(View.VISIBLE);
+                                        //binding.signaturePad.clear();
+                                        //binding.signaturePad.setEnabled(true);
+                                        binding.carOpenDialog.setVisibility(View.VISIBLE);
+                                        binding.imgSignature.setImageBitmap(null);
+                                        binding.imgSignature.setBackgroundResource(R.drawable.image_empty);
                                         getProSrvAttachFileSign();
                                         signPathIsChanged = false;
                                     } else {
@@ -986,7 +1015,7 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         getProSrvAttachFileAudio();
                                         audioPathIsChanged = false;
-                                        binding.recordTimer.setText("00.00");
+                                        binding.recordTimer.setText("رکورد صدای کارشناس");
                                     }
                                     dialog.dismiss();
                                     Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
@@ -1031,7 +1060,7 @@ public class AddExpertDataFragment extends Fragment {
                             }
                         }
 
-                        if (proServiceResponse.ERROR != null){
+                        if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
                             Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
                         }
@@ -1069,10 +1098,10 @@ public class AddExpertDataFragment extends Fragment {
 
         if (GlobalValue.prcDataId != null) {
             if (!GlobalValue.isConfirm) {
-                binding.btnEdit.setText("ویرایش");
+                binding.btnEdit.setText("ویرایش اظهارات");
                 binding.gotoTakePic.setText("ویرایش تصاویر");
                 binding.btnConfirm.setVisibility(View.VISIBLE);
-                binding.btnNonConfirm.setVisibility(View.VISIBLE);
+                // binding.btnNonConfirm.setVisibility(View.VISIBLE);
                 binding.btnEdit.setVisibility(View.VISIBLE);
             }
             if (getActivity() != null) {
@@ -1088,8 +1117,62 @@ public class AddExpertDataFragment extends Fragment {
             binding.imgDeleteRecord.setVisibility(View.GONE);
             binding.cardViewPlayer.setVisibility(View.GONE);
             binding.btnConfirm.setVisibility(View.GONE);
-            binding.btnNonConfirm.setVisibility(View.GONE);
+            // binding.btnNonConfirm.setVisibility(View.GONE);
             binding.btnEdit.setVisibility(View.GONE);
         }
+    }
+
+    public void signDialog() {
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_sign);
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(layoutParams);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        SignaturePad signaturePad = dialog.findViewById(R.id.signature_pad);
+        ImageView reload = dialog.findViewById(R.id.img_reload);
+        TextView save = dialog.findViewById(R.id.btnSave);
+
+
+        signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+            @Override
+            public void onStartSigning() {
+
+            }
+
+            @Override
+            public void onSigned() {
+                reload.setVisibility(View.VISIBLE);
+                signatureBitmap = signaturePad.getSignatureBitmap();
+                tryToSaveImage(signatureBitmap);
+            }
+
+            @Override
+            public void onClear() {
+                reload.setVisibility(View.GONE);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.imgSignature.setImageBitmap(signatureBitmap);
+                dialog.dismiss();
+            }
+        });
+
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signaturePad.clear();
+                signPathIsChanged = false;
+                signPath = null;
+            }
+        });
     }
 }

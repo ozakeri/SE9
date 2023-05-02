@@ -18,13 +18,26 @@
 
           <androidx.appcompat.widget.AppCompatImageView
               android:id="@+id/img_menu"
-              android:layout_width="35dp"
-              android:layout_height="50dp"
+              android:layout_width="25dp"
+              android:layout_height="35dp"
               android:background="@drawable/drawer_menu_24"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toTopOf="parent"
               android:layout_margin="10dp"/>
+
+          <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/imgLogo"
+              android:layout_width="35dp"
+              android:layout_height="35dp"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:layout_marginBottom="14dp"
+              android:layout_marginTop="10dp"
+              android:background="@drawable/sinoempty"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/img_menu"
+              app:layout_constraintTop_toTopOf="parent" />
 
 
           <androidx.appcompat.widget.AppCompatImageView
@@ -46,10 +59,11 @@
               app:layout_constraintTop_toTopOf="parent"
               android:layout_marginLeft="10dp"/>
 
-          <com.example.sino.utils.textwidget.CustomTextViewTitle
+          <androidx.appcompat.widget.AppCompatTextView
               android:id="@+id/txtCode"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:textColor="@color/mdtp_done_text_color_dark_disabled"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toStartOf="@+id/img_menu"
               app:layout_constraintStart_toEndOf="@+id/img_user"
@@ -62,8 +76,7 @@
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toStartOf="@+id/img_menu"
               app:layout_constraintStart_toEndOf="@+id/img_user"
-              app:layout_constraintTop_toTopOf="parent"
-              android:text="فرایند ورود و خروج"/>
+              app:layout_constraintTop_toTopOf="parent" />
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>
