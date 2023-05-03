@@ -157,6 +157,9 @@ public class Car implements Parcelable {
     @SerializedName("gurDateEndFV")
     public String gurDateEndFV;
 
+    @SerializedName("gurDayRemFv")
+    public String gurDayRemFv;
+
 
     public Car() {
     }

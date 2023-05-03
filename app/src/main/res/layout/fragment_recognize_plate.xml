@@ -92,7 +92,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txt_chassis" />
 
-                        <com.example.sino.utils.textwidget.CustomTextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/txt_permission"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -121,7 +121,6 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:text="-"
                             android:textSize="14sp"
                             android:textColor="@color/red"
                             app:layout_constraintEnd_toStartOf="@+id/txt_permission"

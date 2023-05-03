@@ -281,11 +281,11 @@ public class RecognizePlateFragment extends Fragment {
                                             GlobalValue.carType = "تیپ : " + proServiceResponse.result.proSrv.car.carTypeFa;
                                         }
 
-                                        if (proServiceResponse.result.proSrv.car.gurActFV != null) {
+                                        if (proServiceResponse.result.proSrv.car.gurActFV != null && proServiceResponse.result.proSrv.car.gurDateEndFV != null) {
                                             if (proServiceResponse.result.proSrv.car.gurActFV){
                                                 binding.txtPermission.setText("گارانتی : دارد");
-
-                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                                binding.txtPermission.setTextColor(getResources().getColor(R.color.green));
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                                 Date date = null;
                                                 try {
                                                     date = sdf.parse(proServiceResponse.result.proSrv.car.gurDateEndFV);
@@ -300,8 +300,9 @@ public class RecognizePlateFragment extends Fragment {
 
                                             }else {
                                                 binding.txtPermission.setText("گارانتی : ندارد");
+                                                binding.txtPermission.setTextColor(getResources().getColor(R.color.red));
 
-                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                               /* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                                 Date date = null;
                                                 try {
                                                     date = sdf.parse(proServiceResponse.result.proSrv.car.gurDateEndFV);
@@ -312,10 +313,15 @@ public class RecognizePlateFragment extends Fragment {
 
                                                 } catch (ParseException e) {
                                                     throw new RuntimeException(e);
-                                                }
+                                                }*/
                                             }
 
                                         }
+
+                                        if (proServiceResponse.result.proSrv.car.gurDayRemFv != null){
+                                            binding.txtRemind.setText(proServiceResponse.result.proSrv.car.gurDayRemFv +" روز تا پایان اعتبار " );
+                                        }
+
                                         if (proServiceResponse.result.proSrv.car.productionYear != null) {
                                             binding.txtModel.setText("مدل : " + proServiceResponse.result.proSrv.car.productionYear);
                                         }
