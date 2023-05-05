@@ -302,7 +302,7 @@ public class RecognizePlateFragment extends Fragment {
                                                 binding.txtPermission.setText("گارانتی : ندارد");
                                                 binding.txtPermission.setTextColor(getResources().getColor(R.color.red));
 
-                                               /* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                                 Date date = null;
                                                 try {
                                                     date = sdf.parse(proServiceResponse.result.proSrv.car.gurDateEndFV);
@@ -313,12 +313,12 @@ public class RecognizePlateFragment extends Fragment {
 
                                                 } catch (ParseException e) {
                                                     throw new RuntimeException(e);
-                                                }*/
+                                                }
                                             }
 
                                         }
 
-                                        if (proServiceResponse.result.proSrv.car.gurDayRemFv != null){
+                                        if (proServiceResponse.result.proSrv.car.gurDayRemFv != null && !proServiceResponse.result.proSrv.car.gurDayRemFv.equals("0")){
                                             binding.txtRemind.setText(proServiceResponse.result.proSrv.car.gurDayRemFv +" روز تا پایان اعتبار " );
                                         }
 
