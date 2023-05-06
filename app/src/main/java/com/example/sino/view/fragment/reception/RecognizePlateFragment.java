@@ -283,8 +283,10 @@ public class RecognizePlateFragment extends Fragment {
 
                                         if (proServiceResponse.result.proSrv.car.gurActFV != null && proServiceResponse.result.proSrv.car.gurDateEndFV != null) {
                                             if (proServiceResponse.result.proSrv.car.gurActFV){
-                                                binding.txtPermission.setText("گارانتی : دارد");
-                                                binding.txtPermission.setTextColor(getResources().getColor(R.color.green));
+                                                binding.txtPermission.setText("گارانتی : ");
+                                                binding.txtPermissionValue.setText("دارد");
+                                                binding.txtPermissionValue.setTextColor(getResources().getColor(R.color.green));
+
                                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                                 Date date = null;
                                                 try {
@@ -299,8 +301,9 @@ public class RecognizePlateFragment extends Fragment {
                                                 }
 
                                             }else {
-                                                binding.txtPermission.setText("گارانتی : ندارد");
-                                                binding.txtPermission.setTextColor(getResources().getColor(R.color.red));
+                                                binding.txtPermission.setText("گارانتی : ");
+                                                binding.txtPermissionValue.setText("ندارد");
+                                                binding.txtPermissionValue.setTextColor(getResources().getColor(R.color.red));
 
                                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                                 Date date = null;

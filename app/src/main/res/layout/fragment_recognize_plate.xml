@@ -97,21 +97,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="-"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txt_model" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_permissionValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txt_permission"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_permission"
+                            app:layout_constraintTop_toTopOf="@+id/txt_permission" />
 
                         <com.example.sino.utils.textwidget.CustomTextView
                             android:id="@+id/txt_permissionDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_margin="5dp"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="@+id/txt_permission"
-                            app:layout_constraintEnd_toStartOf="@+id/txt_permission"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_model" />
+                            app:layout_constraintEnd_toStartOf="@+id/txt_permissionValue"
+                            app:layout_constraintTop_toTopOf="@+id/txt_permission" />
 
                         <com.example.sino.utils.textwidget.CustomTextViewTitleRed
                             android:id="@+id/txt_remind"
