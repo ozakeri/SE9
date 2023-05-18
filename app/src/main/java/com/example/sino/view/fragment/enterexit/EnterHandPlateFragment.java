@@ -336,9 +336,17 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                         binding.txtId.setVisibility(View.VISIBLE);
                                                         binding.txtDateTime.setVisibility(View.VISIBLE);
+                                                        binding.txtSrvReq.setVisibility(View.VISIBLE);
+                                                        binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
 
                                                         binding.txtId.setText(" درخواست با شناسه کار " + dailEvn_id + " ثبت شد ");
                                                         binding.txtDateTime.setText(dailyEventRespons.result.dailyEvent.entityStrForAttach);
+
+                                                        if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
+                                                            binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                                        }else {
+                                                            binding.txtSrvReq.setText(" ندارد ");
+                                                        }
 
 
                                                         if (false){

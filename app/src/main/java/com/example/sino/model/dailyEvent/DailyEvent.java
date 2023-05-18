@@ -95,6 +95,8 @@ public class DailyEvent implements Parcelable {
     public Integer status;
     @SerializedName("car")
     public Car car;
+    @SerializedName("srvReq")
+    public String srvReq;
     @SerializedName("carPlateText")
     public String carPlateText;
 

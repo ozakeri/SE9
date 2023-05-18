@@ -49,6 +49,33 @@
                         android:layout_margin="10dp"
                         android:visibility="gone"/>
 
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_gravity="right">
+
+                      <com.example.sino.utils.textwidget.CustomTextViewTitleRed
+                          android:id="@+id/txtSrvReq"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_horizontal"
+                          android:layout_margin="10dp"
+                          android:visibility="gone"/>
+
+                      <com.example.sino.utils.textwidget.CustomTextViewTitleLight
+                          android:id="@+id/txtSrvReqTitle"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_horizontal"
+                          android:layout_margin="10dp"
+                          android:text="@string/reserve_code"
+                          android:visibility="gone"/>
+
+
+
+                  </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/layoutSelectPlateType"
                         android:layout_width="match_parent"
@@ -578,6 +605,7 @@
                                 android:layout_gravity="right"
                                 android:layout_marginEnd="16dp"
                                 android:text="گارانتی" />
+
 
                         </LinearLayout>
 

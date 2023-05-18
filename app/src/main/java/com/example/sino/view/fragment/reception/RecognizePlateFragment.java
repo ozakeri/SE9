@@ -281,6 +281,13 @@ public class RecognizePlateFragment extends Fragment {
                                             GlobalValue.carType = "تیپ : " + proServiceResponse.result.proSrv.car.carTypeFa;
                                         }
 
+                                        binding.txtSrvReqTitle.setText(getResources().getString(R.string.reserve_code));
+                                        if (proServiceResponse.result.proSrv.srvReq != null && !proServiceResponse.result.proSrv.srvReq.equals("null")){
+                                            binding.txtSrvReq.setText(proServiceResponse.result.dailyEvent.id);
+                                        }else {
+                                            binding.txtSrvReq.setText(" ندارد " );
+                                        }
+
                                         if (proServiceResponse.result.proSrv.car.gurActFV != null && proServiceResponse.result.proSrv.car.gurDateEndFV != null) {
                                             if (proServiceResponse.result.proSrv.car.gurActFV){
                                                 binding.txtPermission.setText("گارانتی : ");

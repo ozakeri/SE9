@@ -52,6 +52,9 @@ public class ProSrv implements Parcelable {
     @SerializedName("licPro")
     public LicPro licPro = null;
 
+    @SerializedName("srvReq")
+    public String srvReq = null;
+
     protected ProSrv(Parcel in) {
         proSrvId = in.readString();
         entityStrForAttach = in.readString();
