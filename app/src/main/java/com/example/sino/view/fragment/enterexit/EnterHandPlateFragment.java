@@ -256,6 +256,14 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                     dailEvn_id = dailyEventRespons.result.dailyEvent.id;
 
+                                                    binding.txtSrvReq.setVisibility(View.VISIBLE);
+                                                    binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
+                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
+                                                        binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                                    }else {
+                                                        binding.txtSrvReq.setText(" ندارد ");
+                                                    }
+
                                                     if (eventTypeEn == 16){
                                                         NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                         Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
@@ -336,17 +344,12 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                         binding.txtId.setVisibility(View.VISIBLE);
                                                         binding.txtDateTime.setVisibility(View.VISIBLE);
-                                                        binding.txtSrvReq.setVisibility(View.VISIBLE);
-                                                        binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
+
 
                                                         binding.txtId.setText(" درخواست با شناسه کار " + dailEvn_id + " ثبت شد ");
                                                         binding.txtDateTime.setText(dailyEventRespons.result.dailyEvent.entityStrForAttach);
 
-                                                        if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
-                                                            binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
-                                                        }else {
-                                                            binding.txtSrvReq.setText(" ندارد ");
-                                                        }
+
 
 
                                                         if (false){
@@ -449,15 +452,15 @@ public class EnterHandPlateFragment extends Fragment {
                                                         Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
                                                         NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                         GlobalValue.ManageEEFragment = "ManageEEFragment";
-                                                    }/*else if (dailyEventRespons.result.dailyEvent.processStatus != null && (dailyEventRespons.result.dailyEvent.processStatus == 6 || dailyEventRespons.result.dailyEvent.processStatus == 1)){
+                                                    }
 
-                                                if (isCancel){
-                                                    System.out.println("=====objActionEnFP=====" + dailyEventRespons.result.dailyEvent.objActionEnFP);
-                                                    Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
-                                                    NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
-                                                    GlobalValue.ManageEEFragment = "ManageEEFragment";
-                                                }
-                                            }*/
+                                                    binding.txtSrvReq.setVisibility(View.VISIBLE);
+                                                    binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
+                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
+                                                        binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                                    }else {
+                                                        binding.txtSrvReq.setText(" ندارد ");
+                                                    }
                                                 }
                                             });
                                         }
@@ -1620,15 +1623,15 @@ public class EnterHandPlateFragment extends Fragment {
                                                 Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
                                                 NavHostFragment.findNavController(EnterHandPlateFragment.this).navigateUp();
                                                 GlobalValue.ManageEEFragment = "ManageEEFragment";
-                                            }/*else if (dailyEventRespons.result.dailyEvent.processStatus != null && (dailyEventRespons.result.dailyEvent.processStatus == 6 || dailyEventRespons.result.dailyEvent.processStatus == 1)){
+                                            }
 
-                                                if (isCancel){
-                                                    System.out.println("=====objActionEnFP=====" + dailyEventRespons.result.dailyEvent.objActionEnFP);
-                                                    Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
-                                                    NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
-                                                    GlobalValue.ManageEEFragment = "ManageEEFragment";
-                                                }
-                                            }*/
+                                            binding.txtSrvReq.setVisibility(View.VISIBLE);
+                                            binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
+                                            if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
+                                                binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                            }else {
+                                                binding.txtSrvReq.setText(" ندارد ");
+                                            }
                                         }
                                     });
                                 }
