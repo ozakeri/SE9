@@ -1,16 +1,12 @@
 package com.example.sino.view.fragment;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.SSLCertificateSocketFactory;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,29 +21,24 @@ import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.sino.BuildConfig;
 import com.example.sino.R;
 import com.example.sino.SinoApplication;
 import com.example.sino.databinding.FragmentSettingBinding;
-import com.example.sino.model.SuccessPermissionBean;
 import com.example.sino.model.db.User;
 import com.example.sino.model.documentversion.DocumentVersion;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.JalaliCalendarUtil;
+import com.example.sino.utils.common.Util;
 import com.example.sino.view.activity.MainActivity;
 import com.example.sino.viewmodel.MainViewModel;
 
-import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -60,8 +51,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -73,11 +62,14 @@ import javax.net.ssl.X509TrustManager;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
 
 @AndroidEntryPoint
 public class SettingFragment extends Fragment {
@@ -93,7 +85,7 @@ public class SettingFragment extends Fragment {
     private int counter = 0;
     private User user;
     private MainViewModel viewModel;
-
+    private static final String SHOWCASE_ID = "sequence example";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,11 +96,11 @@ public class SettingFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         inputParam = GsonGenerator.getLastDocumentVersionToGson();
         user = SinoApplication.getInstance().getCurrentUser();
+        Util.presentShowcaseView(getActivity(),binding.switchButton,"فعالسازی رمز عبور");
 
-
-        if (user.getAutoLogin()){
+        if (user.getAutoLogin()) {
             binding.switchButton.setChecked(false);
-        }else {
+        } else {
             binding.switchButton.setChecked(true);
         }
 
@@ -171,49 +163,49 @@ public class SettingFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull DocumentVersion documentVersion) {
                         binding.waitProgress.setVisibility(View.GONE);
-                        if (documentVersion.result!= null) {
+                        if (documentVersion.result != null) {
                             if (documentVersion.result.document != null) {
                                 if (documentVersion.result.document.lastDocumentVersion != null) {
-                                        if (documentVersion.result.document.lastDocumentVersion.versionNo != null) {
-                                            try {
-                                                binding.txtNewVersionNo.setText(documentVersion.result.document.lastDocumentVersion.versionName);
-                                                int versionCode = Integer.parseInt(documentVersion.result.document.lastDocumentVersion.versionNo);
-                                                updateUrl = documentVersion.result.document.lastDocumentVersion.pathUrl;
-                                                //updateUrl = "https://91.98.112.159:54542/sino/sinoempty.png";
-                                                //updateUrl = "http://www.appsapk.com/downloading/latest/Barcode%20Scanner-1.2.apk";
+                                    if (documentVersion.result.document.lastDocumentVersion.versionNo != null) {
+                                        try {
+                                            binding.txtNewVersionNo.setText(documentVersion.result.document.lastDocumentVersion.versionName);
+                                            int versionCode = Integer.parseInt(documentVersion.result.document.lastDocumentVersion.versionNo);
+                                            updateUrl = documentVersion.result.document.lastDocumentVersion.pathUrl;
+                                            //updateUrl = "https://91.98.112.159:54542/sino/sinoempty.png";
+                                            //updateUrl = "http://www.appsapk.com/downloading/latest/Barcode%20Scanner-1.2.apk";
 
-                                                System.out.println("updateUrl====" + updateUrl);
+                                            System.out.println("updateUrl====" + updateUrl);
 
-                                                int currentVersion = BuildConfig.VERSION_CODE;
-                                                System.out.println("currentVersion====" + currentVersion);
-                                                if (currentVersion < versionCode) {
-                                                    if (updateUrl != null) {
-                                                        binding.cardNull.setVisibility(View.GONE);
-                                                        appFileName = GetFileNameFromUrl(updateUrl);
-                                                        try {
-                                                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                                                            Date date = sdf.parse(documentVersion.result.document.lastDocumentVersion.versionDate);
-                                                            Calendar calendar = Calendar.getInstance();
-                                                            calendar.setTime(date);
-                                                            JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
-                                                            binding.txtNewVersionDate.setText(jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
-                                                            binding.cardNewVersion.setVisibility(View.VISIBLE);
-                                                        } catch (ParseException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    } else {
-                                                        binding.cardNull.setVisibility(View.VISIBLE);
-                                                        binding.cardNewVersion.setVisibility(View.GONE);
+                                            int currentVersion = BuildConfig.VERSION_CODE;
+                                            System.out.println("currentVersion====" + currentVersion);
+                                            if (currentVersion < versionCode) {
+                                                if (updateUrl != null) {
+                                                    binding.cardNull.setVisibility(View.GONE);
+                                                    appFileName = GetFileNameFromUrl(updateUrl);
+                                                    try {
+                                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                                        Date date = sdf.parse(documentVersion.result.document.lastDocumentVersion.versionDate);
+                                                        Calendar calendar = Calendar.getInstance();
+                                                        calendar.setTime(date);
+                                                        JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
+                                                        binding.txtNewVersionDate.setText(jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
+                                                        binding.cardNewVersion.setVisibility(View.VISIBLE);
+                                                    } catch (ParseException e) {
+                                                        e.printStackTrace();
                                                     }
                                                 } else {
                                                     binding.cardNull.setVisibility(View.VISIBLE);
                                                     binding.cardNewVersion.setVisibility(View.GONE);
                                                 }
-                                            }catch (Exception e){
-                                                Log.e("TAG",e.getLocalizedMessage());
+                                            } else {
+                                                binding.cardNull.setVisibility(View.VISIBLE);
+                                                binding.cardNewVersion.setVisibility(View.GONE);
                                             }
-
+                                        } catch (Exception e) {
+                                            Log.e("TAG", e.getLocalizedMessage());
                                         }
+
+                                    }
                                 }
                             }
                         }
@@ -427,8 +419,7 @@ public class SettingFragment extends Fragment {
             intent.putExtra("samsung.myfiles.intent.extra.START_PATH",
                     getDownloadsFile().getPath());
             activity.startActivity(intent);
-        }
-        else activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+        } else activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
     }
 
     public static boolean isSamsung() {
@@ -445,5 +436,33 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         compositeDisposable.clear();
+    }
+
+    void presentShowcaseView() {
+
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+
+        //sequence.setConfig(config);
+
+        ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
+                .corner(20)
+                .textColor(Color.parseColor("#007686"))
+                .text("test 2222");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder(getActivity())
+                        .setTarget(binding.switchButton)
+                        .setToolTip(toolTip2)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getResources().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        sequence.start();
     }
 }

@@ -3,11 +3,13 @@ package com.example.sino.utils.common;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -20,6 +22,7 @@ import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,8 +47,14 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
+
 public class Util {
 
+    private static final String SHOWCASE_ID = "sequence example";
 
     public static class WSParameter {
         public String key;
@@ -405,4 +414,33 @@ public class Util {
         return secondsString;
     }
 
+    public static void presentShowcaseView(Context context,View view,String str) {
+
+        MaterialShowcaseView.resetSingleUse(context, SHOWCASE_ID);
+
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence((Activity) context, SHOWCASE_ID);
+
+        //sequence.setConfig(config);
+
+        ShowcaseTooltip toolTip = ShowcaseTooltip.build(context)
+                .corner(10)
+                .textColor(Color.parseColor("#007686"))
+                .text(str);
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) context)
+                        .setTarget(view)
+                        .setToolTip(toolTip)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(context.getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        sequence.start();
+    }
 }
