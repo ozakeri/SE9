@@ -1,14 +1,18 @@
 package com.example.sino.view.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +50,11 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
+import uk.co.deanwild.materialshowcaseview.target.ViewTarget;
 
 
 @AndroidEntryPoint
@@ -63,6 +72,7 @@ public class HomeFragment extends Fragment {
     private List<UserPermission> userPermissionList;
     private List<UserPermission> userPermissionListDb;
     private FragmentHomeBinding binding;
+    private static final String SHOWCASE_ID = "sequence example";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -133,12 +143,49 @@ public class HomeFragment extends Fragment {
         permissionList.add("Exit");
 
         binding.recyclerViewPermission.setVisibility(View.VISIBLE);
-        adapterRV = new HomeAdapterRV(permissionList, GeneralStatus.IsHomeList);
+        adapterRV = new HomeAdapterRV(getActivity(),permissionList, GeneralStatus.IsHomeList);
         binding.recyclerViewPermission.setAdapter(adapterRV);
+
+        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+
+        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("کارشناس پذیرش");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(new ViewTarget(binding.recyclerViewPermission.getChildAt(0).findViewById(R.id.txt_permissionTitle)).getView())
+                        .setToolTip(toolTip1)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("ورود و خروج");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.recyclerViewPermission.getChildAt(1).getRootView())
+                        .setToolTip(toolTip2)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+        sequence.start();
         adapterRV.setOnItemClickListener(new HomeAdapterRV.ClickListener() {
             @Override
             public void onItemClick(String permissionName, View v) {
-
                 NavOptions.Builder navBuilder = new NavOptions.Builder();
                 navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 

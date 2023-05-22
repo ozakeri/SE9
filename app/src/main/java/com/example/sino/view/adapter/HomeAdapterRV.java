@@ -1,5 +1,6 @@
 package com.example.sino.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sino.R;
 import com.example.sino.enumtype.GeneralStatus;
+import com.example.sino.utils.common.Util;
 
 import java.util.List;
 
@@ -24,10 +26,13 @@ public class HomeAdapterRV extends RecyclerView.Adapter<HomeAdapterRV.CustomView
     private GeneralStatus generalStatus;
     private String permissionName;
 
+    private Context context;
 
-    public HomeAdapterRV(List<String> userPermissionList, GeneralStatus generalStatus) {
+
+    public HomeAdapterRV(Context context,List<String> userPermissionList, GeneralStatus generalStatus) {
         this.userPermissionList = userPermissionList;
         this.generalStatus = generalStatus;
+        this.context = context;
     }
 
     @NonNull
@@ -52,6 +57,7 @@ public class HomeAdapterRV extends RecyclerView.Adapter<HomeAdapterRV.CustomView
             if (permissionName.equals("ROLE_APP_GET_AGENT_CAR_VIEW_RECP")) {
                 if (generalStatus.equals(GeneralStatus.IsHomeList)) {
                     holder.layout_chart.setVisibility(View.VISIBLE);
+                   // Util.presentShowcaseView(context, holder.layout_chart,"کارشناسی پذیرش");
                 }
                 holder.permissionName.setText("ROLE_APP_GET_AGENT_CAR_VIEW_RECP");
                 holder.txt_permissionTitle.setText("کارشناسی پذیرش");
@@ -59,9 +65,11 @@ public class HomeAdapterRV extends RecyclerView.Adapter<HomeAdapterRV.CustomView
                 if (generalStatus.equals(GeneralStatus.IsMenu)) {
                     holder.img_permissionPic.setBackgroundResource(R.drawable.reception);
                 }
+
             }else if (permissionName.equals("ROLE_APP_GET_AGENT_CAR_VIEW_SEC")) {
                 if (generalStatus.equals(GeneralStatus.IsHomeList)) {
                     holder.layout_chart.setVisibility(View.VISIBLE);
+                    //Util.presentShowcaseView(context, holder.layout_chart,"مدیریت ورود و خروج");
                 }
                 holder.permissionName.setText("ROLE_APP_GET_AGENT_CAR_VIEW_SEC");
                 holder.txt_permissionTitle.setText("مدیریت ورود و خروج");
@@ -69,6 +77,7 @@ public class HomeAdapterRV extends RecyclerView.Adapter<HomeAdapterRV.CustomView
                 if (generalStatus.equals(GeneralStatus.IsMenu)) {
                     holder.img_permissionPic.setBackgroundResource(R.drawable.enter_icon);
                 }
+
             } else if (permissionName.equals("Setting")) {
 
                 if (generalStatus.equals(GeneralStatus.IsMenu)) {

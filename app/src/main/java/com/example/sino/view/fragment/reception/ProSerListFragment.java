@@ -137,7 +137,7 @@ public class ProSerListFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     Util.hideProgress(binding.waitProgress);
-                                    Toast toast = Toast.makeText(getActivity(),e.getLocalizedMessage(), Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(getActivity(),"اطلاعاتی یافت نشد", Toast.LENGTH_LONG);
                                     Util.showToast(toast, getActivity());
                                     toast.show();
                                 }

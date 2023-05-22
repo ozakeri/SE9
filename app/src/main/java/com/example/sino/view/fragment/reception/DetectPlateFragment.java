@@ -12,6 +12,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -96,6 +97,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
 
 
 @AndroidEntryPoint
@@ -147,7 +152,7 @@ public class DetectPlateFragment extends Fragment {
     private LocationSettingsRequest mLocationSettingsRequest;
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
-
+    private static final String SHOWCASE_ID = "sequence example";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -181,6 +186,63 @@ public class DetectPlateFragment extends Fragment {
                     permissionNeededList.toArray(new String[permissionNeededList.size()]),
                     1);
         }
+
+        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("خواندن پلاک بصورت اتوماتیک");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(view.findViewById(R.id.btn_camera_demo))
+                        .setToolTip(toolTip1)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .withRectangleShape()
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("وارد کردن اطلاعات بصورت دستی");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(view.findViewById(R.id.btn_custom))
+                        .setToolTip(toolTip2)
+                        .setTooltipMargin(30)
+                        .withRectangleShape()
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip3 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("لیست خودروهای در حال پذیرش");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(view.findViewById(R.id.btn_list))
+                        .setToolTip(toolTip3)
+                        .setTooltipMargin(30)
+                        .withRectangleShape()
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        sequence.start();
 
         return view;
     }

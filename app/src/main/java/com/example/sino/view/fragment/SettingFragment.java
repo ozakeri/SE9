@@ -96,7 +96,7 @@ public class SettingFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         inputParam = GsonGenerator.getLastDocumentVersionToGson();
         user = SinoApplication.getInstance().getCurrentUser();
-        Util.presentShowcaseView(getActivity(),binding.switchButton,"فعالسازی رمز عبور");
+        Util.presentShowcaseView(getActivity(),binding.switchButton,"با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید");
 
         if (user.getAutoLogin()) {
             binding.switchButton.setChecked(false);
@@ -147,6 +147,29 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.switchButton)
+                        .setToolTip(toolTip1)
+                        .setTooltipMargin(30)
+                        .withRectangleShape()
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        sequence.start();
+
         return binding.getRoot();
     }
 
@@ -190,6 +213,7 @@ public class SettingFragment extends Fragment {
                                                         JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
                                                         binding.txtNewVersionDate.setText(jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
                                                         binding.cardNewVersion.setVisibility(View.VISIBLE);
+                                                        Util.presentShowcaseView(getActivity(),binding.BtnDownloadAndUpdate,"دانلود و بروزرسانی");
                                                     } catch (ParseException e) {
                                                         e.printStackTrace();
                                                     }
@@ -436,33 +460,5 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         compositeDisposable.clear();
-    }
-
-    void presentShowcaseView() {
-
-        ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(500);
-
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
-
-        //sequence.setConfig(config);
-
-        ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
-                .corner(20)
-                .textColor(Color.parseColor("#007686"))
-                .text("test 2222");
-
-        sequence.addSequenceItem(
-                new MaterialShowcaseView.Builder(getActivity())
-                        .setTarget(binding.switchButton)
-                        .setToolTip(toolTip2)
-                        .setTooltipMargin(30)
-                        .setShapePadding(50)
-                        .setDismissOnTouch(true)
-                        .setMaskColour(getResources().getColor(R.color.transparentBlack))
-                        .build()
-        );
-
-        sequence.start();
     }
 }

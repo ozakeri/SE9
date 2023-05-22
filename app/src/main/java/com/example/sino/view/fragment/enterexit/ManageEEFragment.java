@@ -1,8 +1,10 @@
 package com.example.sino.view.fragment.enterexit;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.example.sino.model.db.User;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Util;
+import com.example.sino.view.activity.MainActivity;
 import com.example.sino.view.adapter.car.DailyEventListAdapter;
 import com.example.sino.viewmodel.MainViewModel;
 
@@ -42,6 +45,10 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
 
 @AndroidEntryPoint
 public class ManageEEFragment extends Fragment {
@@ -58,6 +65,7 @@ public class ManageEEFragment extends Fragment {
     private int typeGetCar = -1;
     private List<DailyEvent> eventList = null;
     private DailyEventListAdapter adapter;
+    private static final String SHOWCASE_ID = "sequence example";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +88,59 @@ public class ManageEEFragment extends Fragment {
         binding.imgEventList.setOnClickListener(getListClicked);
         getList();
 
+        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("پلاک خوان");
 
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.detectPlate)
+                        .setToolTip(toolTip1)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("دستی");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.handPlate)
+                        .setToolTip(toolTip2)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip3 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text("خودروهای بلاتکلیف");
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.imgEventList)
+                        .setToolTip(toolTip3)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        sequence.start();
         /*OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.include.txtCode.setVisibility(View.GONE);
                     binding.include.txtEnterExit.setVisibility(View.GONE);
                     binding.include.imgUser.setVisibility(View.VISIBLE);
+                    Util.presentShowcaseView(MainActivity.this, binding.include.imgMenu,"انتخاب منو");
                 } else {
                     binding.include.imgBack.setVisibility(View.VISIBLE);
                     binding.include.imgLogo.setVisibility(View.VISIBLE);
@@ -177,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         binding.include.imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         permissionList.add("Exit");
 
         binding.recyclerViewItemMenu.setVisibility(View.VISIBLE);
-        HomeAdapterRV adapterRV = new HomeAdapterRV(permissionList, GeneralStatus.IsMenu);
+        HomeAdapterRV adapterRV = new HomeAdapterRV(this,permissionList, GeneralStatus.IsMenu);
         binding.recyclerViewItemMenu.setAdapter(adapterRV);
 
         adapterRV.setOnItemClickListener(new HomeAdapterRV.ClickListener() {
