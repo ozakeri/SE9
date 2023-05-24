@@ -56,17 +56,105 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewPermission"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
 
+        <LinearLayout
+            android:id="@+id/layout_icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
-            tools:listitem="@layout/permission_items"/>
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardReception"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardMaxElevation="12dp"
+                app:cardBackgroundColor="@color/white"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/detectPlate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/reception" />
+
+
+                    <com.example.sino.utils.textwidget.CustomTextViewTitle
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="کارشناسی پذیرش"
+                        android:textSize="24sp"
+                        android:layout_alignParentBottom="true" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardEnterExit"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardMaxElevation="12dp"
+                app:cardBackgroundColor="@color/white"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/handPlate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/enter_icon" />
+
+                    <com.example.sino.utils.textwidget.CustomTextViewTitle
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:textSize="24sp"
+                        android:text="مدیریت ورود و خروج"
+                        android:layout_alignParentBottom="true" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+        </LinearLayout>
+
 
         <com.github.rahatarmanahmed.cpv.CircularProgressView
             android:id="@+id/waitProgress"

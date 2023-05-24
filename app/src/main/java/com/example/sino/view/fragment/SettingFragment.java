@@ -96,7 +96,6 @@ public class SettingFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         inputParam = GsonGenerator.getLastDocumentVersionToGson();
         user = SinoApplication.getInstance().getCurrentUser();
-        Util.presentShowcaseView(getActivity(),binding.switchButton,"با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید");
 
         if (user.getAutoLogin()) {
             binding.switchButton.setChecked(false);
@@ -154,14 +153,13 @@ public class SettingFragment extends Fragment {
         ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید");
+                .text(getString(R.string.guide_active_pass));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
                         .setTarget(binding.switchButton)
                         .setToolTip(toolTip1)
                         .setTooltipMargin(30)
-                        .withRectangleShape()
                         .setShapePadding(50)
                         .setDismissOnTouch(true)
                         .setMaskColour(getActivity().getColor(R.color.transparentBlack))
@@ -213,7 +211,7 @@ public class SettingFragment extends Fragment {
                                                         JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
                                                         binding.txtNewVersionDate.setText(jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
                                                         binding.cardNewVersion.setVisibility(View.VISIBLE);
-                                                        Util.presentShowcaseView(getActivity(),binding.BtnDownloadAndUpdate,"دانلود و بروزرسانی");
+                                                        Util.presentShowcaseView(getActivity(),binding.BtnDownloadAndUpdate,getString(R.string.guide_update));
                                                     } catch (ParseException e) {
                                                         e.printStackTrace();
                                                     }

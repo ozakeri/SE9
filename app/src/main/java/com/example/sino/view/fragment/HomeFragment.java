@@ -37,6 +37,7 @@ import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
 import com.example.sino.utils.common.Util;
+import com.example.sino.view.activity.MainActivity;
 import com.example.sino.view.adapter.HomeAdapterRV;
 import com.example.sino.viewmodel.MainViewModel;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
@@ -74,6 +75,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private static final String SHOWCASE_ID = "sequence example";
 
+    private MainActivity mainActivity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,25 +110,24 @@ public class HomeFragment extends Fragment {
 
             getDataFromServer();
         }
-
+        mainActivity = (MainActivity) getActivity();
         return binding.getRoot();
     }
 
     private void setupRecyclerView(List<UserPermission> userPermissionList) {
+
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1) {
             @Override
             protected boolean isLayoutRTL() {
                 return true;
             }
         };
-        binding.recyclerViewPermission.setLayoutManager(mLayoutManager);
+        //binding.recyclerViewPermission.setLayoutManager(mLayoutManager);
 
         //userPermissionList = mainViewModel.getUserPermission(user.getId());
 
         for (UserPermission p : userPermissionList) {
             permissionList.add(p.getPermissionName());
-
-            System.out.println("====p====" + p.getPermissionName());
         }
 
         //permissionList.add("TechnicalExpert");
@@ -142,9 +144,17 @@ public class HomeFragment extends Fragment {
         permissionList.add("Setting");
         permissionList.add("Exit");
 
-        binding.recyclerViewPermission.setVisibility(View.VISIBLE);
-        adapterRV = new HomeAdapterRV(getActivity(),permissionList, GeneralStatus.IsHomeList);
-        binding.recyclerViewPermission.setAdapter(adapterRV);
+        if (permissionList.contains("ROLE_APP_GET_AGENT_CAR_VIEW_RECP")) {
+            binding.cardReception.setVisibility(View.VISIBLE);
+        }
+
+        if (permissionList.contains("ROLE_APP_GET_AGENT_CAR_VIEW_SEC")) {
+            binding.cardEnterExit.setVisibility(View.VISIBLE);
+        }
+
+       // binding.recyclerViewPermission.setVisibility(View.VISIBLE);
+        //adapterRV = new HomeAdapterRV(getActivity(),permissionList, GeneralStatus.IsHomeList);
+        //binding.recyclerViewPermission.setAdapter(adapterRV);
 
         MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
@@ -154,11 +164,11 @@ public class HomeFragment extends Fragment {
         ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("کارشناس پذیرش");
+                .text(getString(R.string.guide_recept));
 
         sequence.addSequenceItem(
-                new MaterialShowcaseView.Builder((Activity) getActivity())
-                        .setTarget(new ViewTarget(binding.recyclerViewPermission.getChildAt(0).findViewById(R.id.txt_permissionTitle)).getView())
+                new MaterialShowcaseView.Builder( getActivity())
+                        .setTarget(binding.cardReception)
                         .setToolTip(toolTip1)
                         .setTooltipMargin(30)
                         .setShapePadding(50)
@@ -170,11 +180,11 @@ public class HomeFragment extends Fragment {
         ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("ورود و خروج");
+                .text(getString(R.string.guide_enter_exit));
 
         sequence.addSequenceItem(
-                new MaterialShowcaseView.Builder((Activity) getActivity())
-                        .setTarget(binding.recyclerViewPermission.getChildAt(1).getRootView())
+                new MaterialShowcaseView.Builder(getActivity())
+                        .setTarget(binding.cardEnterExit)
                         .setToolTip(toolTip2)
                         .setTooltipMargin(30)
                         .setShapePadding(50)
@@ -182,8 +192,42 @@ public class HomeFragment extends Fragment {
                         .setMaskColour(getActivity().getColor(R.color.transparentBlack))
                         .build()
         );
+
+        ShowcaseTooltip toolTip3 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text(getString(R.string.guide_menu));
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder( getActivity())
+                        .setTarget(mainActivity.imgMenu)
+                        .setToolTip(toolTip3)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
         sequence.start();
-        adapterRV.setOnItemClickListener(new HomeAdapterRV.ClickListener() {
+
+        NavOptions.Builder navBuilder = new NavOptions.Builder();
+        navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
+
+        binding.cardReception.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.detectPlateFragment, null, navBuilder.build());
+            }
+        });
+
+
+        binding.cardEnterExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
+            }
+        });
+        /*adapterRV.setOnItemClickListener(new HomeAdapterRV.ClickListener() {
             @Override
             public void onItemClick(String permissionName, View v) {
                 NavOptions.Builder navBuilder = new NavOptions.Builder();
@@ -247,7 +291,7 @@ public class HomeFragment extends Fragment {
                         break;
                 }
             }
-        });
+        });*/
 
     }
 

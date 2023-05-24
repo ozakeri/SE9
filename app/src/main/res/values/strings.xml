@@ -15,4 +15,15 @@
     <string name="www_gapcom_ir">www.gapcom.ir</string>
     <string name="my_text"><u>ویرایش شماره تلفن همراه</u></string>
     <string name="reserve_code">کد رزرو نوبت :</string>
+    <string name="guide_active_pass">با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید</string>
+    <string name="guide_recept">برای ثبت اطلاعات پذیرش وارد این قسمت شوید</string>
+    <string name="guide_enter_exit">برای ثبت ورود و خروج خودرو وارد این قسمت شوید</string>
+    <string name="guide_update">برای دانلود و بروز رسانی این گزینه را انتخاب کنید</string>
+    <string name="guide_menu">با استفاده از این گزینه میتوانید منوی برنامه را باز کرده و گزینه مورد نظر را انتخاب کنید</string>
+    <string name="guide_detect_plate_auto">با استفاده از این گزینه میتوانید پلاک خودروی مورد نظر را با دوربین بصورت خودکار وارد کنید</string>
+    <string name="guide_detect_plate_hand">با استفاده از این گزینه میتوانید اطلاعات خودرو را بصورت دستی وارد کنید</string>
+    <string name="guide_recept_list">با استفاده از این گزینه میتوانید اطلاعات خودروهایی که پذیرش شده اند را ببینید</string>
+    <string name="guide_btn_list">با استفاده از این گزینه ها می توانید اظهارات کارشناس و اظهارات مشتری را ثبت کنید</string>
+
+
 </resources>

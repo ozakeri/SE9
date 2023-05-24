@@ -194,7 +194,7 @@ public class DetectPlateFragment extends Fragment {
         ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("خواندن پلاک بصورت اتوماتیک");
+                .text(getString(R.string.guide_detect_plate_auto));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
@@ -211,7 +211,7 @@ public class DetectPlateFragment extends Fragment {
         ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("وارد کردن اطلاعات بصورت دستی");
+                .text(getString(R.string.guide_detect_plate_hand));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
@@ -228,7 +228,7 @@ public class DetectPlateFragment extends Fragment {
         ShowcaseTooltip toolTip3 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("لیست خودروهای در حال پذیرش");
+                .text(getString(R.string.guide_recept_list));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())

@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private ActivityMainBinding binding;
     public DrawerLayout drawerLayout;
+
+    public ImageView imgMenu;
     AppBarConfiguration appBarConfiguration;
     private CompositeDisposable compositeDisposable;
     private NavController navController;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         drawerLayout = binding.drawerlayout;
+        imgMenu = binding.include.imgMenu;
 
         img_header = findViewById(R.id.img_header);
         txtName = findViewById(R.id.txt_header_name);
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.include.txtCode.setVisibility(View.GONE);
                     binding.include.txtEnterExit.setVisibility(View.GONE);
                     binding.include.imgUser.setVisibility(View.VISIBLE);
-                    Util.presentShowcaseView(MainActivity.this, binding.include.imgMenu,"انتخاب منو");
+                   // Util.presentShowcaseView(MainActivity.this, binding.include.imgMenu,"انتخاب منو");
                 } else {
                     binding.include.imgBack.setVisibility(View.VISIBLE);
                     binding.include.imgLogo.setVisibility(View.VISIBLE);

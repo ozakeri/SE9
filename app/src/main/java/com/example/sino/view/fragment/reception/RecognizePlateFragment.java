@@ -1,6 +1,8 @@
 package com.example.sino.view.fragment.reception;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +49,10 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.ShowcaseTooltip;
 
 @AndroidEntryPoint
 public class RecognizePlateFragment extends Fragment {
@@ -71,7 +77,7 @@ public class RecognizePlateFragment extends Fragment {
     private String prcDataId;
     private String prcSetId;
     private String description;
-
+    private static final String SHOWCASE_ID = "sequence example";
     private boolean isConfirm = false;
 
     @Override
@@ -151,6 +157,29 @@ public class RecognizePlateFragment extends Fragment {
         // binding.btnRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.btnRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         binding.btnRecyclerView.setAdapter(buttonListAdapter);
+
+        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text(getString(R.string.guide_btn_list));
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.btnRecyclerView)
+                        .setToolTip(toolTip1)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .withRectangleShape()
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+        sequence.start();
+
         buttonListAdapter.setOnItemClickListener(new ButtonListAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
