@@ -208,7 +208,7 @@
                                 android:layout_height="230dp"
                                 android:layout_margin="5dp"
                                 android:gravity="right"
-                                android:hint="توضیحات"
+                                android:hint="@string/description"
                                 android:lineSpacingMultiplier="1.5"
                                 android:padding="5dp"
                                 android:scrollbars="vertical"

@@ -147,7 +147,7 @@ public class AddExpertDataFragment extends Fragment {
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
         binding.editTextTextPersonName.setText("");
-        binding.editTextTextPersonName.setHint("توضیحات");
+        binding.editTextTextPersonName.setHint(getString(R.string.description));
         if (GlobalValue.description != null) {
             binding.editTextTextPersonName.setText(GlobalValue.description);
         }
@@ -201,7 +201,7 @@ public class AddExpertDataFragment extends Fragment {
 
         binding.imgRecord.setBackgroundResource(R.drawable.ic_voice);
 
-        binding.recordTimer.setText("رکورد صدای کارشناس");
+        binding.recordTimer.setText(getString(R.string.record_expert_voic));
 
         binding.imgRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +226,7 @@ public class AddExpertDataFragment extends Fragment {
                     elapsedMillis = elapsedMillis / 1000;
 
                     if (elapsedMillis <= 10) {
-                        Toast.makeText(getActivity(), "حداقل صدای ضبط شده 10 ثانیه می باشد", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.minimum_second_for_record_vois), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -252,42 +252,42 @@ public class AddExpertDataFragment extends Fragment {
                 confirm = true;
 
                 if (statusRecord != 0) {
-                    Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.record_voice_is_run), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (audioPath == null) {
-                    Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_customer_voice), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (signPath == null) {
-                    Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_sign), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (GlobalValue.pathFront == null){
-                    Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_front), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (GlobalValue.pathRight == null){
-                    Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_right), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (GlobalValue.pathBack == null){
-                    Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_back), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (GlobalValue.pathLeft == null){
-                    Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_left), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (GlobalValue.pathKm == null){
-                    Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_km), Toast.LENGTH_LONG).show();
                     return;
                 }
                 saveOrEdit();
@@ -334,11 +334,11 @@ public class AddExpertDataFragment extends Fragment {
             binding.btnEdit.setVisibility(View.GONE);
             binding.imgDelete.setVisibility(View.GONE);
             binding.imgDeleteRecord.setVisibility(View.GONE);
-            binding.gotoTakePic.setText("مشاهده تصاویر");
+            binding.gotoTakePic.setText(getString(R.string.pic_view));
             //binding.signaturePad.setEnabled(false);
             binding.carOpenDialog.setVisibility(View.GONE);
         } else if (GlobalValue.isEdit) {
-            binding.gotoTakePic.setText("ویرایش تصاویر");
+            binding.gotoTakePic.setText(getString(R.string.pic_edit));
         }
 
 
@@ -385,17 +385,17 @@ public class AddExpertDataFragment extends Fragment {
             public void onClick(View view) {
                 confirm = false;
                 if (statusRecord != 0) {
-                    Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.record_voice_is_run), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (audioPath == null) {
-                    Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_customer_voice), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (signPath == null) {
-                    Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_sign), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -408,7 +408,7 @@ public class AddExpertDataFragment extends Fragment {
             public void onClick(View view) {
 
                 if (statusRecord != 0) {
-                    Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.record_voice_is_run), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -631,7 +631,7 @@ public class AddExpertDataFragment extends Fragment {
     }
 
     private class UploadFile extends AsyncTask<String, String, String> {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
 
         @Override
         protected void onPreExecute() {
@@ -689,8 +689,8 @@ public class AddExpertDataFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-            binding.btnEdit.setText("ویرایش اظهارات");
+            Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_SHORT).show();
+            binding.btnEdit.setText(getString(R.string.edit_data));
             binding.btnConfirm.setVisibility(View.VISIBLE);
             //binding.btnNonConfirm.setVisibility(View.VISIBLE);
             //binding.imgDelete.setVisibility(View.VISIBLE);
@@ -708,7 +708,7 @@ public class AddExpertDataFragment extends Fragment {
     }
 
     public void saveOrEdit() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -757,7 +757,7 @@ public class AddExpertDataFragment extends Fragment {
     }
 
     private void getProSrvAttachFileSign() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1077");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -842,7 +842,7 @@ public class AddExpertDataFragment extends Fragment {
 
     private void getProSrvAttachFileAudio() {
 
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1076");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -971,7 +971,7 @@ public class AddExpertDataFragment extends Fragment {
         if (id == null) {
             return;
         }
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.deleteAttachFile(user.getUsername(), user.getBisPassword(), id);
         mainViewModel.deleteAttachFile(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1015,10 +1015,10 @@ public class AddExpertDataFragment extends Fragment {
                                         binding.cardViewPlayer.setVisibility(View.GONE);
                                         getProSrvAttachFileAudio();
                                         audioPathIsChanged = false;
-                                        binding.recordTimer.setText("رکورد صدای کارشناس");
+                                        binding.recordTimer.setText(getString(R.string.record_expert_voic));
                                     }
                                     dialog.dismiss();
-                                    Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -1037,7 +1037,7 @@ public class AddExpertDataFragment extends Fragment {
     }
 
     public void confirmPrcData() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId, confirm);
         mainViewModel.confirmPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1098,8 +1098,8 @@ public class AddExpertDataFragment extends Fragment {
 
         if (GlobalValue.prcDataId != null) {
             if (!GlobalValue.isConfirm) {
-                binding.btnEdit.setText("ویرایش اظهارات");
-                binding.gotoTakePic.setText("ویرایش تصاویر");
+                binding.btnEdit.setText(getString(R.string.edit_data));
+                binding.gotoTakePic.setText(getString(R.string.pic_edit));
                 binding.btnConfirm.setVisibility(View.VISIBLE);
                 // binding.btnNonConfirm.setVisibility(View.VISIBLE);
                 binding.btnEdit.setVisibility(View.VISIBLE);

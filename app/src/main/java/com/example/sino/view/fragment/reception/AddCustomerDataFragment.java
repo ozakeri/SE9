@@ -147,7 +147,7 @@ public class AddCustomerDataFragment extends Fragment {
         myEdit.putInt(Constant.STATE_Reception, 3);
         myEdit.commit();
         binding.editTextTextPersonName.setText("");
-        binding.editTextTextPersonName.setHint("توضیحات");
+        binding.editTextTextPersonName.setHint(getString(R.string.description));
         if (GlobalValue.description != null) {
             binding.editTextTextPersonName.setText(GlobalValue.description);
         }
@@ -252,7 +252,7 @@ public class AddCustomerDataFragment extends Fragment {
                     elapsedMillis = elapsedMillis / 1000;
 
                     if (elapsedMillis <= 10) {
-                        Toast.makeText(getActivity(), "حداقل صدای ضبط شده 10 ثانیه می باشد", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.minimum_second_for_record_vois), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -277,17 +277,17 @@ public class AddCustomerDataFragment extends Fragment {
             public void onClick(View view) {
                 confirm = true;
                 if (statusRecord != 0) {
-                    Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.record_voice_is_run), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (audioPath == null) {
-                    Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_customer_voice), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (signPath == null) {
-                    Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_sign), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -304,7 +304,7 @@ public class AddCustomerDataFragment extends Fragment {
         });
 
         if (GlobalValue.isEdit) {
-            binding.btnEdit.setText("ویرایش اظهارات");
+            binding.btnEdit.setText(getString(R.string.edit_data));
 
             if (getActivity() != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -340,17 +340,17 @@ public class AddCustomerDataFragment extends Fragment {
                     public void onClick(View view) {
                         confirm = false;
                         if (statusRecord != 0) {
-                            Toast.makeText(getActivity(), "در حال رکورد صدا...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.record_voice_is_run), Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         if (audioPath == null) {
-                            Toast.makeText(getActivity(), "افزودن صدای مشتری الزامیست", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.necessary_add_customer_voice), Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         if (signPath == null) {
-                            Toast.makeText(getActivity(), "افزودن امضاء الزامیست", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.necessary_add_sign), Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -680,7 +680,7 @@ public class AddCustomerDataFragment extends Fragment {
 
 
     private class UploadFile extends AsyncTask<String, String, String> {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
 
         @Override
         protected void onPreExecute() {
@@ -738,8 +738,8 @@ public class AddCustomerDataFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-            binding.btnEdit.setText("ویرایش اظهارات");
+            Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_SHORT).show();
+            binding.btnEdit.setText(getString(R.string.edit_data));
             binding.btnConfirm.setVisibility(View.VISIBLE);
             //binding.btnNonConfirm.setVisibility(View.VISIBLE);
             audioPathIsChanged = false;
@@ -778,7 +778,7 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     public void saveOrEdit() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -829,7 +829,7 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     public void confirmPrcData() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.confirmPrcData(user.getUsername(), user.getBisPassword(), binding.editTextTextPersonName.getText().toString(), GlobalValue.prcDataId, confirm);
         mainViewModel.confirmPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -886,7 +886,7 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     private void getProSrvAttachFileSign() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1075");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -970,7 +970,7 @@ public class AddCustomerDataFragment extends Fragment {
     }
 
     private void getProSrvAttachFileAudio() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.getProSrvAttachFileList(user.getUsername(), user.getBisPassword(), GlobalValue.prcDataId, "1074");
         mainViewModel.getProSrvAttachFileList(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1101,7 +1101,7 @@ public class AddCustomerDataFragment extends Fragment {
         if (id == null) {
             return;
         }
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.deleteAttachFile(user.getUsername(), user.getBisPassword(), id);
         mainViewModel.deleteAttachFile(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1143,7 +1143,7 @@ public class AddCustomerDataFragment extends Fragment {
                                         binding.recordTimer.setText("رکورد صدای مشتری");
                                     }
                                     dialog.dismiss();
-                                    Toast.makeText(getActivity(), "درخواست با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

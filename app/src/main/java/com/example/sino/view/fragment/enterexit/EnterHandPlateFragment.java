@@ -228,7 +228,7 @@ public class EnterHandPlateFragment extends Fragment {
                 }
 
                 inputParam = GsonGenerator.saveDailyEventCopy(user.getUsername(), user.getBisPassword(),valDailyEvent.id,GlobalValue.companyCode,ObjActionEn);
-                ProgressDialog dialog = ProgressDialog.show(getActivity(), "","لطفا منتظر بمانید..." , true);
+                ProgressDialog dialog = ProgressDialog.show(getActivity(), "",getString(R.string.please_wait) , true);
 
                 viewModel.dailyEvent_MngAction(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<DailyEventRespons>() {
@@ -1171,7 +1171,7 @@ public class EnterHandPlateFragment extends Fragment {
 
 
     private class UploadFile extends AsyncTask<String, String, String> {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "","لطفا منتظر بمانید..." , true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "",getString(R.string.please_wait) , true);
 
         @Override
         protected void onPreExecute() {
@@ -1415,7 +1415,7 @@ public class EnterHandPlateFragment extends Fragment {
         inputParam = GsonGenerator.saveDailyEvent(user.getUsername(), user.getBisPassword(), eventTypeEn,carType,typePrc,typeGetCar,ObjActionEn,
                 carId,dailEvn_id,plateNo,description,parentId,GlobalValue.companyCode);
 
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "","لطفا منتظر بمانید..." , true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "",getString(R.string.please_wait) , true);
 
         viewModel.dailyEvent_MngAction(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DailyEventRespons>() {

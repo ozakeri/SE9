@@ -323,7 +323,7 @@ public class TakePictureFragment extends Fragment {
         });
 
         if (GlobalValue.isEdit) {
-            binding.btnEdit.setText("ویرایش");
+            binding.btnEdit.setText(getString(R.string.edit));
             getProSrvAttachFileFront(true);
         } else {
             binding.btnEdit.setText("ذخیره");
@@ -350,27 +350,27 @@ public class TakePictureFragment extends Fragment {
             public void onClick(View view) {
 
                 if (pathFront == null) {
-                    Toast.makeText(getActivity(), "تصویر جلوی خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_front), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (pathRight == null) {
-                    Toast.makeText(getActivity(), "تصویر سمت راست خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_right), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (pathBack == null) {
-                    Toast.makeText(getActivity(), "تصویر عقب خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_back), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (pathLeft == null) {
-                    Toast.makeText(getActivity(), "تصویر سمت چپ خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_left), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (pathKm == null) {
-                    Toast.makeText(getActivity(), "تصویر کیلومتر خودرو الزامیست", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.necessary_add_pic_km), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -897,7 +897,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     private class UploadFile extends AsyncTask<String, String, String> {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
 
         @Override
         protected void onPreExecute() {
@@ -1017,7 +1017,7 @@ public class TakePictureFragment extends Fragment {
             pathLeftIsChanged = false;
             pathKmIsChanged = false;
 
-            Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_LONG).show();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
             Bundle bundle = new Bundle();
             // bundle.putString("prcDataId",prcDataId);
@@ -1030,7 +1030,7 @@ public class TakePictureFragment extends Fragment {
     }
 
     public void saveOrEdit() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.saveOrEditPrcData(user.getUsername(), user.getBisPassword(), GlobalValue.prcSetId, "238", GlobalValue.proSrvId, "", GlobalValue.prcDataId);
         mainViewModel.saveOrEditPrcData(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1051,7 +1051,7 @@ public class TakePictureFragment extends Fragment {
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(new Runnable() {
                                     public void run() {
-                                        Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_LONG).show();
                                         new UploadFile().execute();
                                     }
                                 });
@@ -1087,7 +1087,7 @@ public class TakePictureFragment extends Fragment {
 
     private void getProSrvAttachFileFront(boolean isNext) {
 
-        progressDialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        progressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         progressDialog.show();
 
         if (GlobalValue.prcDataId == null || GlobalValue.prcDataId.equals("null")) {
@@ -1156,7 +1156,7 @@ public class TakePictureFragment extends Fragment {
                                         GlobalValue.pathFront = null;
                                     }
 
-                                    binding.btnEdit.setText("ویرایش");
+                                    binding.btnEdit.setText(getString(R.string.edit));
                                     if (isNext) {
                                         getProSrvAttachFileRight(true);
                                     }
@@ -1229,7 +1229,7 @@ public class TakePictureFragment extends Fragment {
                                         GlobalValue.pathRight = null;
                                     }
 
-                                    binding.btnEdit.setText("ویرایش");
+                                    binding.btnEdit.setText(getString(R.string.edit));
                                     if (isNext) {
                                         getProSrvAttachFileBack(true);
                                     }
@@ -1305,7 +1305,7 @@ public class TakePictureFragment extends Fragment {
                                         GlobalValue.pathBack = null;
                                     }
 
-                                    binding.btnEdit.setText("ویرایش");
+                                    binding.btnEdit.setText(getString(R.string.edit));
                                     if (isNext) {
                                         getProSrvAttachFileLeft(true);
                                     }
@@ -1380,7 +1380,7 @@ public class TakePictureFragment extends Fragment {
                                         GlobalValue.pathLeft = null;
                                     }
 
-                                    binding.btnEdit.setText("ویرایش");
+                                    binding.btnEdit.setText(getString(R.string.edit));
                                    // Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
                                     if (isNext) {
                                         getProSrvAttachFileKM();
@@ -1532,7 +1532,7 @@ public class TakePictureFragment extends Fragment {
                                         GlobalValue.pathKm = null;
                                     }
 
-                                    binding.btnEdit.setText("ویرایش");
+                                    binding.btnEdit.setText(getString(R.string.edit));
                                     //Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
                                     getProSrvAttachFileOther();
                                 }
@@ -1551,7 +1551,7 @@ public class TakePictureFragment extends Fragment {
             return;
         }
 
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", "لطفا منتظر بمانید...", true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.deleteAttachFile(user.getUsername(), user.getBisPassword(), id);
         mainViewModel.deleteAttachFile(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
@@ -1627,7 +1627,7 @@ public class TakePictureFragment extends Fragment {
                                     }
 
                                     dialog.dismiss();
-                                    Toast.makeText(getActivity(), "در خواست با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_LONG).show();
                                 }
                             });
                         }

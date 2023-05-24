@@ -207,7 +207,7 @@ public class CarDetailFragment extends Fragment {
         });
 
         if (userIfExist) {
-            btn_confirm.setText("ویرایش");
+            btn_confirm.setText(getString(R.string.edit));
         } else {
             btn_confirm.setText("ثبت");
         }

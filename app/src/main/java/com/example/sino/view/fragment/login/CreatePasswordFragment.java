@@ -89,7 +89,7 @@ public class CreatePasswordFragment extends Fragment {
                             NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.homeFragment, null, null);
                             return;
                         } else {
-                            CuteToast.ct(getActivity(), "رمز عبور اشتباه است", CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                            CuteToast.ct(getActivity(), getString(R.string.incorrect_pass), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                         }
                     } else {
                         CuteToast.ct(getActivity(), getString(R.string.enter_compelete_data), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();

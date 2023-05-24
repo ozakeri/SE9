@@ -218,7 +218,7 @@ public class ManageEEFragment extends Fragment {
     }
 
     public void getList(){
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "","لطفا منتظر بمانید..." , true);
+        ProgressDialog dialog = ProgressDialog.show(getActivity(), "",getString(R.string.please_wait), true);
         dialog.show();
         inputParam = GsonGenerator.getDailyEventList(user.getUsername(), user.getBisPassword(),GlobalValue.companyCode);
         viewModel.dailyEvent_GetList_CarEnter_PS0(inputParam).subscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())

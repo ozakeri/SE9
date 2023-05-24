@@ -25,6 +25,24 @@
     <string name="guide_detect_plate_hand">با استفاده از این گزینه میتوانید اطلاعات خودرو را بصورت دستی وارد کنید</string>
     <string name="guide_recept_list">با استفاده از این گزینه میتوانید اطلاعات خودروهایی که پذیرش شده اند را ببینید</string>
     <string name="guide_btn_list">با استفاده از این گزینه ها می توانید اظهارات کارشناس و اظهارات مشتری را ثبت کنید</string>
+    <string name="incorrect_pass">رمز عبور اشتباه است</string>
+    <string name="please_wait"> لطفا منتظر بمانید... </string>
+    <string name="description"> توضیحات </string>
+    <string name="record_expert_voic"> رکورد صدای کارشناس </string>
+    <string name="minimum_second_for_record_vois"> حداقل صدای ضبط شده 10 ثانیه می باشد </string>
+    <string name="record_voice_is_run"> در حال رکورد صدا... </string>
+    <string name="necessary_add_customer_voice">افزودن صدای مشتری الزامیست</string>
+    <string name="necessary_add_sign">افزودن امضاء الزامیست</string>
+    <string name="necessary_add_pic_front">تصویر جلوی خودرو الزامیست</string>
+    <string name="necessary_add_pic_right">تصویر سمت راست خودرو الزامیست</string>
+    <string name="necessary_add_pic_back">تصویر سمت چپ خودرو الزامیست</string>
+    <string name="necessary_add_pic_left">تصویر عقب خودرو الزامیست</string>
+    <string name="necessary_add_pic_km">تصویر کیلومتر خودرو الزامیست</string>
+    <string name="success_request">در خواست با موفقیت انجام شد</string>
+    <string name="edit">ویرایش</string>
+    <string name="pic_view">مشاهده تصاویر</string>
+    <string name="pic_edit">ویرایش تصاویر</string>
+    <string name="edit_data">ویرایش اظهارات</string>
 
 
 </resources>

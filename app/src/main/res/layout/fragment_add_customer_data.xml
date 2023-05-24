@@ -62,7 +62,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_text_request"
                 android:gravity="right"
-                android:hint="توضیحات"
+                android:hint="@string/description"
                 android:padding="5dp"
                 android:textSize="14sp"
                 android:inputType="textMultiLine"
@@ -341,7 +341,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:text="ویرایش اظهارات"/>
+                        android:text="@string/edit_data"/>
 
 
 
