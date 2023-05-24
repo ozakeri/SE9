@@ -145,6 +145,7 @@ public class CreatePasswordFragment extends Fragment {
 
     }
 
+
     private void sendCode() {
         System.out.println("getMobileNo====" + user.getMobileNo());
         mobileToGson = GsonGenerator.mobileNoConfirmationToGson(user.getMobileNo());
