@@ -48,7 +48,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/bg_text_request"
                         android:gravity="center"
-                        android:hint="شماره شاسی"
+                        android:hint="@string/chassiss_number"
                         android:inputType="number"
                         android:textColorHint="@color/mdtp_done_disabled_dark" />
 

@@ -94,13 +94,13 @@ public class CarDetailFragment extends Fragment {
 
         if (getArguments() != null) {
             car = getArguments().getParcelable("car");
-            binding.txtColor.setText(" رنگ خودرو : " + car.color.name);
-            binding.txtChassis.setText(" شماره شاسی : " + car.chassis);
+            binding.txtColor.setText(getString(R.string.car_color) + car.color.name);
+            binding.txtChassis.setText(getString(R.string.chassiss_number) + car.chassis);
             binding.txtMotor.setText(" شماره موتور : " + car.engineNo);
-            binding.txtPlate.setText(" شماره پلاک : " + car.plateText);
+            binding.txtPlate.setText(getString(R.string.plate_number) + car.plateText);
             binding.txtModel.setText(" مدل : " + car.productionYear);
             binding.txtPermission.setText(" مجوز : " + car.seLicPro.licTypeEn_text);
-            binding.txtType.setText(" نوع خودرو : " + car.seProModel.proModelGroup.name);
+            binding.txtType.setText(getString(R.string.car_type) + car.seProModel.proModelGroup.name);
             binding.txtTip.setText(" سیستم - تیپ : " + car.seProModel.name);
             binding.txtPermissionDate.setText(" تاریخ اعتبار : " + car.seLicPro.startDate);
             //System.out.println("car.id===" + car.id);

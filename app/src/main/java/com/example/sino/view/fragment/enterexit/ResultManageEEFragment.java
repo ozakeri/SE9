@@ -44,10 +44,10 @@ public class ResultManageEEFragment extends Fragment {
             binding.cardResultOk.setVisibility(View.VISIBLE);
             binding.cardNoResult.setVisibility(View.GONE);
 
-            binding.txtPlate.setText(" شماره پلاک : " + car.plateText);
-            binding.txtChassiss.setText(" شماره شاسی : " + car.chassis);
-            binding.txtColor.setText(" رنگ خودرو : " + car.color.name);
-            binding.txtCarType.setText(" نوع خودرو : " + car.seProModel.proModelGroup.name);
+            binding.txtPlate.setText(getString(R.string.plate_number) + car.plateText);
+            binding.txtChassiss.setText(getString(R.string.chassiss_number) + car.chassis);
+            binding.txtColor.setText(getString(R.string.car_color) + car.color.name);
+            binding.txtCarType.setText(getString(R.string.car_type) + car.seProModel.proModelGroup.name);
 
         }else {
             binding.cardResultOk.setVisibility(View.GONE);

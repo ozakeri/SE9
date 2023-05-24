@@ -277,25 +277,25 @@ public class EnterHandPlateFragment extends Fragment {
                                                         binding.txtCarIsNull.setVisibility(View.INVISIBLE);
 
                                                         if (dailyEventRespons.result.dailyEvent.car.plateText != null){
-                                                            binding.txtPlate.setText(" شماره پلاک : " + dailyEventRespons.result.dailyEvent.car.plateText);
+                                                            binding.txtPlate.setText(getString(R.string.plate_number) + dailyEventRespons.result.dailyEvent.car.plateText);
                                                         }else {
                                                             binding.txtPlate.setVisibility(View.GONE);
                                                         }
 
                                                         if (dailyEventRespons.result.dailyEvent.car.chassis != null){
-                                                            binding.txtChassiss.setText(" شماره شاسی : " + dailyEventRespons.result.dailyEvent.car.chassis);
+                                                            binding.txtChassiss.setText(getString(R.string.chassiss_number) + dailyEventRespons.result.dailyEvent.car.chassis);
                                                         }else {
                                                             binding.txtChassiss.setVisibility(View.GONE);
                                                         }
 
                                                         if (dailyEventRespons.result.dailyEvent.car.color != null){
-                                                            binding.txtColor.setText(" رنگ خودرو : " + dailyEventRespons.result.dailyEvent.car.color.name);
+                                                            binding.txtColor.setText(getString(R.string.car_color) + dailyEventRespons.result.dailyEvent.car.color.name);
                                                         }else {
                                                             binding.txtColor.setVisibility(View.GONE);
                                                         }
 
                                                         if (dailyEventRespons.result.dailyEvent.car.seProModel != null){
-                                                            binding.txtCarType.setText(" نوع خودرو : " + dailyEventRespons.result.dailyEvent.car.seProModel.proModelGroup.name);
+                                                            binding.txtCarType.setText(getString(R.string.car_type) + dailyEventRespons.result.dailyEvent.car.seProModel.proModelGroup.name);
                                                         }else {
                                                             binding.txtCarType.setVisibility(View.GONE);
                                                         }
@@ -1320,28 +1320,28 @@ public class EnterHandPlateFragment extends Fragment {
         if (plateNo == null){
             if (selectPlateType == 0){
                 if (binding.txtFour.getText().length() != 2 || binding.txtFour.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtThree.getText().length() != 1 || binding.txtThree.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtTwo.getText().length() != 3 || binding.txtTwo.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtOne.getText().length() != 2 || binding.txtOne.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
@@ -1368,28 +1368,28 @@ public class EnterHandPlateFragment extends Fragment {
             }else if (selectPlateType == 1){
 
                 if (binding.txtFourTempo.getText().length() != 2 || binding.txtFourTempo.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtThreeTempo.getText().length() != 3 || binding.txtThreeTempo.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtTwoTempo.getText().length() != 2 || binding.txtTwoTempo.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (binding.txtOneTempo.getText().length() != 2 || binding.txtOneTempo.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(getActivity(), "شماره پلاک را کامل وارد کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.enter_full_plate_number), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
@@ -1456,25 +1456,25 @@ public class EnterHandPlateFragment extends Fragment {
                                                 binding.txtCarIsNull.setVisibility(View.INVISIBLE);
 
                                                 if (dailyEventRespons.result.dailyEvent.car.plateText != null){
-                                                    binding.txtPlate.setText(" شماره پلاک : " + dailyEventRespons.result.dailyEvent.car.plateText);
+                                                    binding.txtPlate.setText(getString(R.string.plate_number) + dailyEventRespons.result.dailyEvent.car.plateText);
                                                 }else {
                                                     binding.txtPlate.setVisibility(View.GONE);
                                                 }
 
                                                 if (dailyEventRespons.result.dailyEvent.car.chassis != null){
-                                                    binding.txtChassiss.setText(" شماره شاسی : " + dailyEventRespons.result.dailyEvent.car.chassis);
+                                                    binding.txtChassiss.setText(getString(R.string.chassiss_number) + dailyEventRespons.result.dailyEvent.car.chassis);
                                                 }else {
                                                     binding.txtChassiss.setVisibility(View.GONE);
                                                 }
 
                                                 if (dailyEventRespons.result.dailyEvent.car.color != null){
-                                                    binding.txtColor.setText(" رنگ خودرو : " + dailyEventRespons.result.dailyEvent.car.color.name);
+                                                    binding.txtColor.setText(getString(R.string.car_color) + dailyEventRespons.result.dailyEvent.car.color.name);
                                                 }else {
                                                     binding.txtColor.setVisibility(View.GONE);
                                                 }
 
                                                 if (dailyEventRespons.result.dailyEvent.car.seProModel != null){
-                                                    binding.txtCarType.setText(" نوع خودرو : " + dailyEventRespons.result.dailyEvent.car.seProModel.proModelGroup.name);
+                                                    binding.txtCarType.setText(getString(R.string.car_type) + dailyEventRespons.result.dailyEvent.car.seProModel.proModelGroup.name);
                                                 }else {
                                                     binding.txtCarType.setVisibility(View.GONE);
                                                 }

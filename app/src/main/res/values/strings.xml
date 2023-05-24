@@ -43,6 +43,11 @@
     <string name="pic_view">مشاهده تصاویر</string>
     <string name="pic_edit">ویرایش تصاویر</string>
     <string name="edit_data">ویرایش اظهارات</string>
+    <string name="plate_number">شماره پلاک : </string>
+    <string name="chassiss_number">شماره شاسی : </string>
+    <string name="enter_full_plate_number">شماره پلاک را کامل وارد کنید </string>
+    <string name="car_color"> رنگ خودرو : </string>
+    <string name="car_type">  نوع خودرو : </string>
 
 
 </resources>

@@ -568,7 +568,7 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_gravity="right"
-                                android:text="شماره پلاک" />
+                                android:text="@string/plate_number" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitleLight
                                 android:id="@+id/txt_chassiss"
@@ -577,7 +577,7 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_gravity="right"
-                                android:text="شماره شاسی" />
+                                android:text="@string/chassiss_number" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitleLight
                                 android:id="@+id/txt_carType"
@@ -586,7 +586,7 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_gravity="right"
-                                android:text="نوع خودرو" />
+                                android:text="@string/car_type" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitleLight
                                 android:id="@+id/txt_color"
@@ -595,7 +595,7 @@
                                 android:layout_marginTop="16dp"
                                 android:layout_gravity="right"
                                 android:layout_marginEnd="16dp"
-                                android:text="رنگ خودرو" />
+                                android:text="@string/car_color" />
 
                             <com.example.sino.utils.textwidget.CustomTextViewTitleLight
                                 android:id="@+id/txt_lice"
