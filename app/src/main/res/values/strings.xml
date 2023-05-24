@@ -48,6 +48,12 @@
     <string name="enter_full_plate_number">شماره پلاک را کامل وارد کنید </string>
     <string name="car_color"> رنگ خودرو : </string>
     <string name="car_type">  نوع خودرو : </string>
+    <string name="request_id">  درخواست با شناسه کار </string>
+    <string name="necessary_add_attach">  افزودن فایل پیوست الزامیست </string>
+    <string name="success_attach">  پیوست با موفقیت getString(R.string.registered) </string>
+    <string name="select_enter_type">  نوع ورود را مشخص کنید </string>
+    <string name="select_car_type">  نوع خودرو را مشخص کنید </string>
+    <string name="registered">  getString(R.string.registered) </string>
 
 
 </resources>

@@ -266,7 +266,7 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                     if (eventTypeEn == 16){
                                                         NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
-                                                        Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
                                                         GlobalValue.ManageEEFragment = "ManageEEFragment";
                                                         return;
                                                     }
@@ -340,20 +340,20 @@ public class EnterHandPlateFragment extends Fragment {
                                                         binding.btnSave.setVisibility(View.GONE);
                                                         binding.carEnterInfoLayout.setVisibility(View.GONE);
                                                         System.out.println("dailEvn_id=====" + dailEvn_id);
-                                                        Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
 
                                                         binding.txtId.setVisibility(View.VISIBLE);
                                                         binding.txtDateTime.setVisibility(View.VISIBLE);
 
 
-                                                        binding.txtId.setText(" درخواست با شناسه کار " + dailEvn_id + " ثبت شد ");
+                                                        binding.txtId.setText(getString(R.string.request_id) + dailEvn_id + getString(R.string.registered));
                                                         binding.txtDateTime.setText(dailyEventRespons.result.dailyEvent.entityStrForAttach);
 
 
 
 
                                                         if (false){
-                                                            Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
                                                             NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                             GlobalValue.ManageEEFragment = "ManageEEFragment";
                                                         }else {
@@ -439,17 +439,17 @@ public class EnterHandPlateFragment extends Fragment {
                                                         }else if (dailyEventRespons.result.dailyEvent.typePrcEn == 2){
                                                             binding.txtType.setText(" نوع ورود :  خودرو امانی");
                                                         }
-                                                        Toast.makeText(getActivity(), " درخواست با شناسه کار " + parentId +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), getString(R.string.request_id) + parentId +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
 
                                                     } else if (dailyEventRespons.result.dailyEvent.objActionEnFP != null && dailyEventRespons.result.dailyEvent.objActionEnFP == 9){
-                                                        Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
                                                         NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                         GlobalValue.ManageEEFragment = "ManageEEFragment";
 
                                                     }
                                                     else if (dailyEventRespons.result.dailyEvent.objActionEnFP != null && dailyEventRespons.result.dailyEvent.objActionEnFP == 10){
                                                         System.out.println("=====objActionEnFP=====" + dailyEventRespons.result.dailyEvent.objActionEnFP);
-                                                        Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
                                                         NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                         GlobalValue.ManageEEFragment = "ManageEEFragment";
                                                     }
@@ -711,7 +711,7 @@ public class EnterHandPlateFragment extends Fragment {
 
                 if (typeGetCar == 0){
                     if (filePath == null){
-                        Toast.makeText(getActivity(), "افزودن فایل پیوست الزامیست", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.necessary_add_attach), Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
@@ -1202,7 +1202,7 @@ public class EnterHandPlateFragment extends Fragment {
         protected void onPostExecute(String result) {
             System.out.println("=====onPostExecute====");
             dialog.dismiss();
-            Toast.makeText(getActivity(), "پیوست با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.success_attach), Toast.LENGTH_LONG).show();
 
             // saveDailyEvent();
             //NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.homeFragment, null, navBuilder.build());
@@ -1348,14 +1348,14 @@ public class EnterHandPlateFragment extends Fragment {
                 }
 
                 if (typePrc == -1){
-                    Toast toast = Toast.makeText(getActivity(), "نوع ورود را مشخص کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.select_enter_type), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
                 }
 
                 if (carType == -1){
-                    Toast toast = Toast.makeText(getActivity(), "نوع خودرو را مشخص کنید", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.select_car_type), Toast.LENGTH_LONG);
                     Util.showToast(toast, getActivity());
                     toast.show();
                     return;
@@ -1445,7 +1445,7 @@ public class EnterHandPlateFragment extends Fragment {
 
                                             if (eventTypeEn == 16){
                                                 NavHostFragment.findNavController(EnterHandPlateFragment.this).navigateUp();
-                                                Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
                                                 GlobalValue.ManageEEFragment = "ManageEEFragment";
                                                 return;
                                             }
@@ -1514,17 +1514,17 @@ public class EnterHandPlateFragment extends Fragment {
                                                 binding.btnSave.setVisibility(View.GONE);
                                                 binding.carEnterInfoLayout.setVisibility(View.GONE);
                                                 System.out.println("dailEvn_id=====" + dailEvn_id);
-                                                Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
 
                                                 binding.txtId.setVisibility(View.VISIBLE);
                                                 binding.txtDateTime.setVisibility(View.VISIBLE);
 
-                                                binding.txtId.setText(" درخواست با شناسه کار " + dailEvn_id + " ثبت شد ");
+                                                binding.txtId.setText(getString(R.string.request_id) + dailEvn_id + getString(R.string.registered));
                                                 binding.txtDateTime.setText(dailyEventRespons.result.dailyEvent.entityStrForAttach);
 
 
                                                 if (confirm){
-                                                    Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " ثبت شد ", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  getString(R.string.registered), Toast.LENGTH_LONG).show();
                                                     NavHostFragment.findNavController(EnterHandPlateFragment.this).navigateUp();
                                                     GlobalValue.ManageEEFragment = "ManageEEFragment";
                                                 }else {
@@ -1610,17 +1610,17 @@ public class EnterHandPlateFragment extends Fragment {
                                                 }else if (dailyEventRespons.result.dailyEvent.typePrcEn == 2){
                                                     binding.txtType.setText(" نوع ورود :  خودرو امانی");
                                                 }
-                                                Toast.makeText(getActivity(), " درخواست با شناسه کار " + parentId +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), getString(R.string.request_id) + parentId +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
 
                                             } else if (dailyEventRespons.result.dailyEvent.objActionEnFP != null && dailyEventRespons.result.dailyEvent.objActionEnFP == 9){
-                                                Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  " با موفقیت انجام شد ", Toast.LENGTH_LONG).show();
                                                 NavHostFragment.findNavController(EnterHandPlateFragment.this).navigate(R.id.manageEEFragment, null, navBuilder.build());
                                                 GlobalValue.ManageEEFragment = "ManageEEFragment";
 
                                             }
                                             else if (dailyEventRespons.result.dailyEvent.objActionEnFP != null && dailyEventRespons.result.dailyEvent.objActionEnFP == 10){
                                                 System.out.println("=====objActionEnFP=====" + dailyEventRespons.result.dailyEvent.objActionEnFP);
-                                                Toast.makeText(getActivity(), " درخواست با شناسه کار " + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), getString(R.string.request_id) + dailEvn_id +  " لغو شد ", Toast.LENGTH_LONG).show();
                                                 NavHostFragment.findNavController(EnterHandPlateFragment.this).navigateUp();
                                                 GlobalValue.ManageEEFragment = "ManageEEFragment";
                                             }
