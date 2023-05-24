@@ -14,6 +14,7 @@
     <string name="mistake_enter_data">اطلاعات وارد شده اشتباه است</string>
     <string name="www_gapcom_ir">www.gapcom.ir</string>
     <string name="my_text"><u>ویرایش شماره تلفن همراه</u></string>
+    <string name="forget_pass"><u>فراموشی رمز عبور</u></string>
     <string name="reserve_code">کد رزرو نوبت :</string>
     <string name="guide_active_pass">با استفاده از این گزینه می توانید گذرواژه خود را فعال یا غیر فعال کنید</string>
     <string name="guide_recept">برای ثبت اطلاعات پذیرش وارد این قسمت شوید</string>

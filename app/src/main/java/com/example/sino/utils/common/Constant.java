@@ -30,4 +30,5 @@ public class Constant {
     public static final String RESULT_KEY = "RESULT";
     public static final int RECORD_AUDIO_PERMISSION = 876;
     public static final String COMPANY_CODE = "companyCode";
+    public static final String FORGET_PASS = "FORGET_PASS";
 }
