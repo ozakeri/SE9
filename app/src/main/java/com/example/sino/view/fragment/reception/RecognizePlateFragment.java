@@ -158,7 +158,7 @@ public class RecognizePlateFragment extends Fragment {
         binding.btnRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         binding.btnRecyclerView.setAdapter(buttonListAdapter);
 
-        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);

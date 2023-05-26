@@ -27,6 +27,7 @@
     <string name="guide_btn_list">با استفاده از این گزینه ها می توانید اظهارات کارشناس و اظهارات مشتری را ثبت کنید</string>
     <string name="incorrect_pass">رمز عبور اشتباه است</string>
     <string name="please_wait"> لطفا منتظر بمانید... </string>
+    <string name="please_wait_for_download">در حال دانلود، لطفا منتظر بمانید... </string>
     <string name="description"> توضیحات </string>
     <string name="record_expert_voic"> رکورد صدای کارشناس </string>
     <string name="minimum_second_for_record_vois"> حداقل صدای ضبط شده 10 ثانیه می باشد </string>
@@ -54,6 +55,7 @@
     <string name="select_enter_type">  نوع ورود را مشخص کنید </string>
     <string name="select_car_type">  نوع خودرو را مشخص کنید </string>
     <string name="registered">  getString(R.string.registered) </string>
+    <string name="download_guide_one"><u>دانلود فایل راهنما</u></string>
 
 
 </resources>

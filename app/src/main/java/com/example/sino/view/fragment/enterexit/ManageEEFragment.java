@@ -5,7 +5,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,9 +40,30 @@ import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Util;
 import com.example.sino.view.activity.MainActivity;
 import com.example.sino.view.adapter.car.DailyEventListAdapter;
+import com.example.sino.view.fragment.SettingFragment;
 import com.example.sino.viewmodel.MainViewModel;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -66,6 +92,8 @@ public class ManageEEFragment extends Fragment {
     private List<DailyEvent> eventList = null;
     private DailyEventListAdapter adapter;
     private static final String SHOWCASE_ID = "sequence example";
+    private String appFileName;
+    private String updateUrl = "https://91.92.131.11:54542/guide/ورود_خروج.pdf";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +116,7 @@ public class ManageEEFragment extends Fragment {
         binding.imgEventList.setOnClickListener(getListClicked);
         getList();
 
-        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
@@ -154,6 +182,17 @@ public class ManageEEFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);*/
+
+        binding.txtGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                appFileName = GetFileNameFromUrl(updateUrl);
+
+                DownloadFile downloadFile = new DownloadFile();
+                downloadFile.execute(updateUrl);
+            }
+        });
 
         return binding.getRoot();
     }
@@ -298,5 +337,139 @@ public class ManageEEFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    class DownloadFile extends AsyncTask<String, Integer, String> {
+
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait_for_download), true);
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                progressDialog.show();
+
+                TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                }};
+
+                SSLContext sc = null;
+                try {
+                    sc = SSLContext.getInstance("SSL");
+                    sc.init(null, trustAllCerts, new SecureRandom());
+                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                    HostnameVerifier allHostsValid = new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String s, SSLSession sslSession) {
+                            return true;
+                        }
+                    };
+
+                    HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                }
+
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setUseCaches(false);
+                connection.connect();
+
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
+                }
+
+                File downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File outputFile = new File(downloadPath.getPath(), appFileName);
+                if (outputFile.exists()) {
+                    outputFile.delete();
+                }
+
+                int lenghtOfFile = connection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(), 1024);
+                OutputStream output = new FileOutputStream(downloadPath.toString() + "/" + appFileName);
+                byte data[] = new byte[1024];
+                long total = 0;
+                int count;
+
+                int prog = 0;
+
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    int percent = (int) (total / lenghtOfFile); //0~100
+                    publishProgress(percent);
+                    output.write(data, 0, count);
+
+                }
+                output.flush();
+                output.close();
+                input.close();
+            } catch (IOException e) {
+                Log.d("mark", "Download io Error:" + e.getMessage());
+            } catch (SecurityException e) {
+                Log.d("mark", "Download security Error:" + e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (result == null) {
+                progressDialog.dismiss();
+                Toast toast = Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_LONG);
+                Util.showToast(toast, getActivity());
+                toast.show();
+                //SwitchBusyIcon(false);
+               // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
+                //binding.BtnDownloadAndUpdate.setVisibility(View.GONE);
+                binding.waitProgress.setVisibility(View.GONE);
+               // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
+                // DoInstall();
+            } else {
+                Toast toast = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
+                Util.showToast(toast, getActivity());
+                toast.show();
+            }
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            // SwitchBusyIcon(false);
+            //binding.stateLabel.setText("downloadCancel");
+        }
+    }
+
+    public String GetFileNameFromUrl(String urlString) {
+        return urlString.substring(urlString.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0];
     }
 }

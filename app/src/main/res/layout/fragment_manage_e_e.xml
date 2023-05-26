@@ -146,12 +146,25 @@
                 android:id="@+id/imgEventList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right |bottom"
-                android:layout_margin="5dp"
+                android:layout_gravity="right|bottom"
+                android:layout_margin="10dp"
                 android:textColor="@color/pino_one"
                 android:textStyle="bold"
                 android:textSize="18sp"
+                android:text="ajdbfjkadfkabdas"
                 android:visibility="visible"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:text="@string/download_guide_one"
+                android:textColor="@color/royal_blue"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
 

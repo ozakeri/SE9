@@ -139,8 +139,8 @@ public class HomeFragment extends Fragment {
         //permissionList.add("Messages");
         //permissionList.add("Forms");
         //permissionList.add("CheckList");
-        //permissionList.add("ManageEnterExit");
-        //permissionList.add("Reception");
+        permissionList.add("ManageEnterExit");
+        permissionList.add("Reception");
         permissionList.add("Setting");
         permissionList.add("Exit");
 
@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment {
         //adapterRV = new HomeAdapterRV(getActivity(),permissionList, GeneralStatus.IsHomeList);
         //binding.recyclerViewPermission.setAdapter(adapterRV);
 
-        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);

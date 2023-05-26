@@ -416,7 +416,7 @@ public class Util {
 
     public static void presentShowcaseView(Context context,View view,String str) {
 
-        MaterialShowcaseView.resetSingleUse(context, SHOWCASE_ID);
+       // MaterialShowcaseView.resetSingleUse(context, SHOWCASE_ID);
 
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);

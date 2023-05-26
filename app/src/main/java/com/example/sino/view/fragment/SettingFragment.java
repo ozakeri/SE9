@@ -146,7 +146,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+       // MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
