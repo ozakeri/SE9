@@ -1,7 +1,11 @@
 package com.example.sino.view.fragment.enterexit;
 
+import static com.example.sino.view.fragment.SettingFragment.getDownloadsFile;
+import static com.example.sino.view.fragment.SettingFragment.isSamsung;
+
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -445,9 +449,10 @@ public class ManageEEFragment extends Fragment {
                 //SwitchBusyIcon(false);
                // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
                 //binding.BtnDownloadAndUpdate.setVisibility(View.GONE);
-                binding.waitProgress.setVisibility(View.GONE);
+                //binding.waitProgress.setVisibility(View.GONE);
                // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
                 // DoInstall();
+                openDownloads(getActivity());
             } else {
                 Toast toast = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
                 Util.showToast(toast, getActivity());
@@ -471,5 +476,16 @@ public class ManageEEFragment extends Fragment {
 
     public String GetFileNameFromUrl(String urlString) {
         return urlString.substring(urlString.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0];
+    }
+
+    public static void openDownloads(@io.reactivex.rxjava3.annotations.NonNull Activity activity) {
+        if (isSamsung()) {
+            Intent intent = activity.getPackageManager()
+                    .getLaunchIntentForPackage("com.sec.android.app.myfiles");
+            intent.setAction("samsung.myfiles.intent.action.LAUNCH_MY_FILES");
+            intent.putExtra("samsung.myfiles.intent.extra.START_PATH",
+                    getDownloadsFile().getPath());
+            activity.startActivity(intent);
+        } else activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
     }
 }

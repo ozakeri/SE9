@@ -2,10 +2,14 @@ package com.example.sino.view.fragment.reception;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.sino.view.fragment.SettingFragment.getDownloadsFile;
+import static com.example.sino.view.fragment.SettingFragment.isSamsung;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -1268,6 +1272,9 @@ public class DetectPlateFragment extends Fragment {
                 //binding.waitProgress.setVisibility(View.GONE);
                 // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
                 // DoInstall();
+
+                openDownloads(getActivity());
+
             } else {
                 Toast toast = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
                 Util.showToast(toast, getActivity());
@@ -1287,6 +1294,17 @@ public class DetectPlateFragment extends Fragment {
             // SwitchBusyIcon(false);
             //binding.stateLabel.setText("downloadCancel");
         }
+    }
+
+    public static void openDownloads(@io.reactivex.rxjava3.annotations.NonNull Activity activity) {
+        if (isSamsung()) {
+            Intent intent = activity.getPackageManager()
+                    .getLaunchIntentForPackage("com.sec.android.app.myfiles");
+            intent.setAction("samsung.myfiles.intent.action.LAUNCH_MY_FILES");
+            intent.putExtra("samsung.myfiles.intent.extra.START_PATH",
+                    getDownloadsFile().getPath());
+            activity.startActivity(intent);
+        } else activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
     }
 
 }
