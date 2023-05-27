@@ -455,6 +455,7 @@ public class ManageEEFragment extends Fragment {
                 openDownloads(getActivity());
             } else {
                 Toast toast = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
+
                 Util.showToast(toast, getActivity());
                 toast.show();
             }
