@@ -96,7 +96,7 @@ public class RegisterViewModel extends AndroidViewModel {
                         , throwable -> Log.e(TAG, "sendActivationCode: " + throwable.getLocalizedMessage()));
     }*/
 
-    public User getUserByMobileNo(String mobileNo) {
+    public Observable<User> getUserByMobileNo(String mobileNo) {
         return repository.getUserByMobileNo(mobileNo);
     }
 }

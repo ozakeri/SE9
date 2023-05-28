@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
     private List<UserPermission> userPermissionList;
     private List<UserPermission> userPermissionListDb;
     private FragmentHomeBinding binding;
-    private static final String SHOWCASE_ID = "sequence example";
+    private static final String SHOWCASE_ID = "SHOWCASE_ID_THREE";
 
     private MainActivity mainActivity;
 
@@ -156,7 +156,6 @@ public class HomeFragment extends Fragment {
         //adapterRV = new HomeAdapterRV(getActivity(),permissionList, GeneralStatus.IsHomeList);
         //binding.recyclerViewPermission.setAdapter(adapterRV);
 
-        //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);

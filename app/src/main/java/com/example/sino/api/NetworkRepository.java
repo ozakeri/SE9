@@ -188,6 +188,10 @@ public class NetworkRepository {
         sinoDao.insertUser(user);
     }
 
+    public void updateUser(User user) {
+        sinoDao.updateUser(user);
+    }
+
     public void insertPermission(UserPermission permission) {
         //sinoDao.insertPermission(permission);
 
@@ -220,7 +224,7 @@ public class NetworkRepository {
         sinoDao.deletePermissionByUserId(userId);
     }
 
-    public User getUserByMobileNo(String mobileNo) {
+    public Observable<User> getUserByMobileNo(String mobileNo) {
         return sinoDao.getUserByMobileNo(mobileNo);
     }
 

@@ -99,6 +99,10 @@ public class MainViewModel extends AndroidViewModel {
         repository.insertUser(user);
     }
 
+    public void updateUser(User user) {
+        repository.updateUser(user);
+    }
+
     public void insertPermission(UserPermission permission) {
         repository.insertPermission(permission);
     }

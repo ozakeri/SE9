@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
@@ -23,6 +22,8 @@ import com.example.sino.model.db.User;
 
 import com.example.sino.utils.NetworkUtils;
 import com.example.sino.viewmodel.MainViewModel;
+import com.example.sino.viewmodel.RegisterViewModel;
+import com.rejowan.cutetoast_custom.CuteToast;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,8 +31,10 @@ import java.util.concurrent.TimeUnit;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
@@ -39,6 +42,7 @@ public class SplashFragment extends Fragment {
 
     private FragmentSplashBinding binding;
     private MainViewModel viewModel;
+    private RegisterViewModel registerViewModel;
     private User user;
     private CompositeDisposable compositeDisposable;
 
@@ -50,10 +54,12 @@ public class SplashFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         compositeDisposable = new CompositeDisposable();
         //NavHostFragment.findNavController(SplashFragment.this).navigate(R.id.takePictureFragment, null, null);
 
         if (NetworkUtils.VpnConnectionCheck2()) {
+            CuteToast.ct(getActivity(), "وضعیت اینترنت خود را بررسی کنید", CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
             return null;
         }
 

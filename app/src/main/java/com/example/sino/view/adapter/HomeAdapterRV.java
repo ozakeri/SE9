@@ -23,7 +23,7 @@ public class HomeAdapterRV extends RecyclerView.Adapter<HomeAdapterRV.CustomView
     private List<String> userPermissionList;
     private static ClickListener clickListener;
     private View view;
-    private GeneralStatus generalStatus;
+    public static GeneralStatus generalStatus;
     private String permissionName;
 
     private Context context;

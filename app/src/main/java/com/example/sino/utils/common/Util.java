@@ -414,14 +414,14 @@ public class Util {
         return secondsString;
     }
 
-    public static void presentShowcaseView(Context context,View view,String str) {
+ /*   public static void presentShowcaseView(Context context,View view,String str) {
 
        // MaterialShowcaseView.resetSingleUse(context, SHOWCASE_ID);
 
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
 
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence((Activity) context, SHOWCASE_ID);
+        //MaterialShowcaseSequence sequence = new MaterialShowcaseSequence((Activity) context, SHOWCASE_ID);
 
         //sequence.setConfig(config);
 
@@ -442,5 +442,5 @@ public class Util {
         );
 
         sequence.start();
-    }
+    }*/
 }

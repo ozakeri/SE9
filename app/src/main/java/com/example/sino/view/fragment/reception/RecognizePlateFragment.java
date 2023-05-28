@@ -159,10 +159,10 @@ public class RecognizePlateFragment extends Fragment {
         binding.btnRecyclerView.setAdapter(buttonListAdapter);
 
         //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
-        ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(500);
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
-        ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
+        //ShowcaseConfig config = new ShowcaseConfig();
+        //config.setDelay(500);
+        //MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
+        /*ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
                 .text(getString(R.string.guide_btn_list));
@@ -178,7 +178,7 @@ public class RecognizePlateFragment extends Fragment {
                         .setMaskColour(getActivity().getColor(R.color.transparentBlack))
                         .build()
         );
-        sequence.start();
+        sequence.start();*/
 
         buttonListAdapter.setOnItemClickListener(new ButtonListAdapter.ClickListener() {
             @Override

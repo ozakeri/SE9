@@ -27,6 +27,8 @@ import com.example.sino.viewmodel.MainViewModel;
 import com.example.sino.viewmodel.RegisterViewModel;
 import com.rejowan.cutetoast_custom.CuteToast;
 
+import java.util.List;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observer;
@@ -55,13 +57,7 @@ public class CreatePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_password, container, false);
-        return binding.getRoot();
 
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         databaseViewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
@@ -78,7 +74,7 @@ public class CreatePasswordFragment extends Fragment {
             binding.txtEdit.setVisibility(View.GONE);
             binding.txtForgetPass.setVisibility(View.VISIBLE);
         }
-        view.findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
+        binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -120,7 +116,7 @@ public class CreatePasswordFragment extends Fragment {
                 user.setPassword(binding.password.getText().toString());
                 user.setAutoLogin(false);
                 user.setLoginIs(true);
-                mainViewModel.insertUser(user);
+                mainViewModel.updateUser(user);
                 SinoApplication.getInstance().setCurrentUser(user);
                 NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.homeFragment, null, null);
 
@@ -138,15 +134,37 @@ public class CreatePasswordFragment extends Fragment {
         binding.txtForgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendCode();
+
+                mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<User> users) {
+                        if (users != null && users.size() > 0) {
+                            user = users.get(0);
+                            sendCode(user);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
             }
         });
 
+        return binding.getRoot();
 
     }
 
-
-    private void sendCode() {
+    private void sendCode(User user) {
         System.out.println("getMobileNo====" + user.getMobileNo());
         mobileToGson = GsonGenerator.mobileNoConfirmationToGson(user.getMobileNo());
         viewModel.sendPhoneNumber(mobileToGson).subscribeOn(Schedulers.io())
@@ -160,8 +178,11 @@ public class CreatePasswordFragment extends Fragment {
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessRegisterBean successRegisterBean) {
                         if (successRegisterBean.getERROR() == null && successRegisterBean.getSUCCESS() != null) {
+                            user.setLoginIs(false);
+                            mainViewModel.updateUser(user);
+                            SinoApplication.getInstance().setCurrentUser(user);
                             Config.putSharedPreference(getActivity(), Constant.FORGET_PASS,true);
-                            NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.fragmentActivation, null, null);
+                            NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.splashFragment, null, null);
                         } else {
                             CuteToast.ct(getActivity(), successRegisterBean.getERROR(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                         }

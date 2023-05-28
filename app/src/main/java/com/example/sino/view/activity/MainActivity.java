@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.developer.kalert.KAlertDialog;
 import com.example.sino.BuildConfig;
 import com.example.sino.R;
+import com.example.sino.SinoApplication;
 import com.example.sino.databinding.ActivityMainBinding;
 import com.example.sino.enumtype.GeneralStatus;
 import com.example.sino.model.db.User;
@@ -237,6 +238,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         compositeDisposable.clear();
+        compositeDisposable.dispose();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 
     @SuppressLint("SetTextI18n")
@@ -267,8 +276,8 @@ public class MainActivity extends AppCompatActivity {
             permissionList.add(p.getPermissionName());
         }
 
-        //permissionList.add("ManageEnterExit");
-        //permissionList.add("Reception");
+        permissionList.add("ManageEnterExit");
+        permissionList.add("Reception");
 
         permissionList.add("Setting");
         permissionList.add("Exit");
@@ -277,11 +286,11 @@ public class MainActivity extends AppCompatActivity {
         HomeAdapterRV adapterRV = new HomeAdapterRV(this,permissionList, GeneralStatus.IsMenu);
         binding.recyclerViewItemMenu.setAdapter(adapterRV);
 
+        //MaterialShowcaseView.resetAll(this);
+
         adapterRV.setOnItemClickListener(new HomeAdapterRV.ClickListener() {
             @Override
             public void onItemClick(String permissionName, View v) {
-
-
 
                 switch (permissionName) {
 
@@ -331,6 +340,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if (navHostFragment.getNavController().getCurrentDestination().getLabel().equals("FragmentActivation")) {
+                if (!SinoApplication.getInstance().getCurrentUser().getLoginIs()){
+                    return;
+                }
+        }
 
         if (navHostFragment.getNavController().getCurrentDestination().getLabel().equals("AddExpertDataFragment")) {
             navController.navigateUp();

@@ -181,7 +181,7 @@ public class DetectPlateFragment extends Fragment {
     private LocationSettingsRequest mLocationSettingsRequest;
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
-    private static final String SHOWCASE_ID = "sequence example";
+    private static final String SHOWCASE_ID = "SHOWCASE_ID_ONE";
 
     private String appFileName;
     private String updateUrl = "https://91.92.131.11:54542/guide/پذیرش.pdf";
@@ -191,7 +191,7 @@ public class DetectPlateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detect_plate, container, false);
-
+        askForPermission();
         initLocation();
         startLocationButtonClick();
         navBuilder = new NavOptions.Builder();
@@ -219,7 +219,6 @@ public class DetectPlateFragment extends Fragment {
                     1);
         }
 
-       // MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
@@ -266,6 +265,23 @@ public class DetectPlateFragment extends Fragment {
                 new MaterialShowcaseView.Builder((Activity) getActivity())
                         .setTarget(view.findViewById(R.id.btn_list))
                         .setToolTip(toolTip3)
+                        .setTooltipMargin(30)
+                        .withRectangleShape()
+                        .setShapePadding(50)
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip4 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text(getString(R.string.showcase_download_guide));
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(view.findViewById(R.id.txtGuide))
+                        .setToolTip(toolTip4)
                         .setTooltipMargin(30)
                         .withRectangleShape()
                         .setShapePadding(50)
@@ -1305,6 +1321,20 @@ public class DetectPlateFragment extends Fragment {
                     getDownloadsFile().getPath());
             activity.startActivity(intent);
         } else activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+    }
+
+    private void askForPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int REQUEST_CODE = 101;
+            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+            for (String str : permissions) {
+                if (getActivity().checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(permissions, REQUEST_CODE);
+                    return;
+                }
+            }
+        }
     }
 
 }

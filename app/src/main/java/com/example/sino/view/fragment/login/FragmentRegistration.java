@@ -18,12 +18,14 @@ import com.example.sino.databinding.FragmentRegistrationBinding;
 import com.example.sino.model.SuccessRegisterBean;
 import com.example.sino.model.db.User;
 import com.example.sino.utils.GsonGenerator;
+import com.example.sino.view.fragment.SplashFragment;
 import com.example.sino.viewmodel.MainViewModel;
 import com.example.sino.viewmodel.RegisterViewModel;
 import com.rejowan.cutetoast_custom.CuteToast;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -73,6 +75,7 @@ public class FragmentRegistration extends Fragment {
                                         user.setMobileNo(binding.mobileNo.getText().toString());
                                         mainViewModel.insertUser(user);
                                         SinoApplication.getInstance().setCurrentUser(user);
+
                                         NavHostFragment.findNavController(FragmentRegistration.this).navigateUp();
                                         NavHostFragment.findNavController(FragmentRegistration.this).navigate(R.id.fragmentActivation, null, null);
 
@@ -113,8 +116,14 @@ public class FragmentRegistration extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         disposable.clear();
+        disposable.dispose();
+    }
+
+    public boolean gotoActivationFragment() {
+        NavHostFragment.findNavController(FragmentRegistration.this).navigate(R.id.fragmentActivation, null, null);
+        return true;
     }
 }

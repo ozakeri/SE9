@@ -22,9 +22,11 @@ import com.example.sino.SinoApplication;
 import com.example.sino.databinding.CopyFragmentActivationBinding;
 import com.example.sino.model.SuccessActivationBean;
 import com.example.sino.model.db.User;
+import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
 import com.example.sino.view.fragment.HomeFragment;
+import com.example.sino.view.fragment.SplashFragment;
 import com.example.sino.viewmodel.DatabaseViewModel;
 import com.example.sino.viewmodel.MainViewModel;
 import com.example.sino.viewmodel.RegisterViewModel;
@@ -34,9 +36,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -50,6 +55,9 @@ public class FragmentActivation extends Fragment {
     private CopyFragmentActivationBinding binding;
     private DatabaseViewModel databaseViewModel;
 
+    private CompositeDisposable disposable;
+    //private SuccessActivationBean successActivationBeanTemp;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,12 +68,32 @@ public class FragmentActivation extends Fragment {
         binding.activationCode.setText("");
         NavOptions.Builder navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
-
+        disposable = new CompositeDisposable();
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        user = SinoApplication.getInstance().getCurrentUser();
+        //user = SinoApplication.getInstance().getCurrentUser();
 
-        System.out.println("getMobileNo=====" + user.getMobileNo());
+
+        mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<User> users) {
+                if (users != null && users.size() > 0) {
+                    user = users.get(0);
+                }
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +101,7 @@ public class FragmentActivation extends Fragment {
                 if (binding.activationCode.getText() != null) {
 
                     if (user.getMobileNo() != null) {
+                        System.out.println("getMobileNo=====" + user.getMobileNo());
                         code = GsonGenerator.sendActivationCodeToGson(user.getMobileNo(), binding.activationCode.getText().toString());
                         if (binding.activationCode.getText() != null && !binding.activationCode.getText().toString().trim().isEmpty()) {
                             binding.lottieMain.setVisibility(View.VISIBLE);
@@ -81,29 +110,54 @@ public class FragmentActivation extends Fragment {
                                     .subscribe(new io.reactivex.rxjava3.core.Observer<SuccessActivationBean>() {
                                         @Override
                                         public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
+                                            disposable.add(d);
                                         }
 
                                         @Override
                                         public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessActivationBean successActivationBean) {
 
-                                            if (successActivationBean.getERROR() == null && successActivationBean.getSUCCESS() != null) {
-                                                user.setName(successActivationBean.getRESULT().getName());
-                                                user.setServerUserId(successActivationBean.getRESULT().getServerUserId());
-                                                user.setFamily(successActivationBean.getRESULT().getFamily());
-                                                user.setUsername(successActivationBean.getRESULT().getUsername());
-                                                user.setBisPassword(successActivationBean.getRESULT().getBisPassword());
-                                                user.setCompanyName(successActivationBean.getRESULT().getCompanyName());
-                                                user.setCompanyType(successActivationBean.getRESULT().getCompanyType());
-                                                user.setPictureBytes(successActivationBean.getRESULT().getPictureBytes());
+                                            if (successActivationBean.getSUCCESS() != null) {
+                                                if (successActivationBean.getRESULT().getName() != null){
+                                                    user.setName(successActivationBean.getRESULT().getName());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getServerUserId() != null){
+                                                    user.setServerUserId(successActivationBean.getRESULT().getServerUserId());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getFamily() != null){
+                                                    user.setFamily(successActivationBean.getRESULT().getFamily());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getUsername() != null){
+                                                    user.setUsername(successActivationBean.getRESULT().getUsername());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getBisPassword() != null){
+                                                    user.setBisPassword(successActivationBean.getRESULT().getBisPassword());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getCompanyName() != null){
+                                                    user.setCompanyName(successActivationBean.getRESULT().getCompanyName());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getCompanyType() != null){
+                                                    user.setCompanyType(successActivationBean.getRESULT().getCompanyType());
+                                                }
+
+                                                if (successActivationBean.getRESULT().getPictureBytes() != null){
+                                                    user.setPictureBytes(successActivationBean.getRESULT().getPictureBytes());
+                                                }
+
                                                 user.setLoginIs(true);
-                                                mainViewModel.insertUser(user);
+                                                mainViewModel.updateUser(user);
                                                 SinoApplication.getInstance().setCurrentUser(user);
                                                 //createImageUserPath(successActivationBean);
                                                 NavHostFragment.findNavController(FragmentActivation.this).navigateUp();
                                                 NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.createPasswordFragment, null, null);
 
-                                            } else {
+                                            }
+                                            if (successActivationBean.getERROR() != null) {
                                                 CuteToast.ct(getActivity(), successActivationBean.getERROR(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                                             }
                                         }
@@ -134,16 +188,9 @@ public class FragmentActivation extends Fragment {
                 NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.splashFragment, null, navBuilder.build());
             }
         });
-
-
         return binding.getRoot().getRootView();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
 
     public void createImageUserPath(SuccessActivationBean successActivationBean) {
         if (successActivationBean.getRESULT().getPictureBytes() != null) {
@@ -166,12 +213,24 @@ public class FragmentActivation extends Fragment {
                     outputStream.write(bytes);
                     user.setPicturePathUrl(picturePathUrl);
 
-                    mainViewModel.insertUser(user);
+                    mainViewModel.updateUser(user);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disposable.clear();
+        disposable.dispose();
+    }
+
+    public boolean gotoCreatePasswordFragment() {
+        NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.createPasswordFragment, null, null);
+        return true;
     }
 }

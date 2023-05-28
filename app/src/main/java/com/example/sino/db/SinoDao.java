@@ -33,6 +33,12 @@ public interface SinoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 
+    @Update
+    void updateUser(User user);
+
+    @Query("SELECT * FROM sino_table WHERE mobileNo=:mobileNo")
+    User getUserByParam(String mobileNo);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPermission(UserPermission permission);
 
@@ -70,7 +76,7 @@ public interface SinoDao {
     void updateAppUser(AppUser appUser);
 
     @Query("SELECT * FROM sino_table WHERE mobileNo=:mobileNo")
-    User getUserByMobileNo(String mobileNo);
+    Observable<User> getUserByMobileNo(String mobileNo);
 
     @Query("SELECT * FROM sino_table")
     Observable<List<User>> getAllUser();

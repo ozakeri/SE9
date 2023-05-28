@@ -85,7 +85,7 @@ public class SettingFragment extends Fragment {
     private int counter = 0;
     private User user;
     private MainViewModel viewModel;
-    private static final String SHOWCASE_ID = "sequence example";
+    private static final String SHOWCASE_ID = "SHOWCASE_ID_FOUR";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -142,11 +142,10 @@ public class SettingFragment extends Fragment {
                 System.out.println("====b=====" + b);
                 user = SinoApplication.getInstance().getCurrentUser();
                 user.setAutoLogin(!b);
-                viewModel.insertUser(user);
+                viewModel.updateUser(user);
             }
         });
 
-       // MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
@@ -211,7 +210,7 @@ public class SettingFragment extends Fragment {
                                                         JalaliCalendarUtil jalaliCalendarUtil = new JalaliCalendarUtil(calendar);
                                                         binding.txtNewVersionDate.setText(jalaliCalendarUtil.getIranianYear() + "/" + jalaliCalendarUtil.getIranianMonth() + "/" + jalaliCalendarUtil.getIranianDay());
                                                         binding.cardNewVersion.setVisibility(View.VISIBLE);
-                                                        Util.presentShowcaseView(getActivity(),binding.BtnDownloadAndUpdate,getString(R.string.guide_update));
+                                                        //Util.presentShowcaseView(getActivity(),binding.BtnDownloadAndUpdate,getString(R.string.guide_update));
                                                     } catch (ParseException e) {
                                                         e.printStackTrace();
                                                     }

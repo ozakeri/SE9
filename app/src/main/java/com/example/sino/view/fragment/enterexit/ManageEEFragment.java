@@ -95,7 +95,7 @@ public class ManageEEFragment extends Fragment {
     private int typeGetCar = -1;
     private List<DailyEvent> eventList = null;
     private DailyEventListAdapter adapter;
-    private static final String SHOWCASE_ID = "sequence example";
+    private static final String SHOWCASE_ID = "SHOWCASE_ID_TWO";
     private String appFileName;
     private String updateUrl = "https://91.92.131.11:54542/guide/ورود_خروج.pdf";
 
@@ -120,14 +120,13 @@ public class ManageEEFragment extends Fragment {
         binding.imgEventList.setOnClickListener(getListClicked);
         getList();
 
-        //MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         ShowcaseConfig config = new ShowcaseConfig();
         config.setDelay(500);
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), SHOWCASE_ID);
         ShowcaseTooltip toolTip1 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("پلاک خوان");
+                .text(getString(R.string.guide_detect_plate_auto));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
@@ -143,7 +142,7 @@ public class ManageEEFragment extends Fragment {
         ShowcaseTooltip toolTip2 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("دستی");
+                .text(getString(R.string.guide_detect_plate_hand));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
@@ -159,7 +158,7 @@ public class ManageEEFragment extends Fragment {
         ShowcaseTooltip toolTip3 = ShowcaseTooltip.build(getActivity())
                 .corner(30)
                 .textColor(Color.parseColor("#007686"))
-                .text("خودروهای بلاتکلیف");
+                .text(getString(R.string.showcase_event_list));
 
         sequence.addSequenceItem(
                 new MaterialShowcaseView.Builder((Activity) getActivity())
@@ -167,6 +166,24 @@ public class ManageEEFragment extends Fragment {
                         .setToolTip(toolTip3)
                         .setTooltipMargin(30)
                         .setShapePadding(50)
+                        .withRectangleShape()
+                        .setDismissOnTouch(true)
+                        .setMaskColour(getActivity().getColor(R.color.transparentBlack))
+                        .build()
+        );
+
+        ShowcaseTooltip toolTip4 = ShowcaseTooltip.build(getActivity())
+                .corner(30)
+                .textColor(Color.parseColor("#007686"))
+                .text(getString(R.string.showcase_download_guide));
+
+        sequence.addSequenceItem(
+                new MaterialShowcaseView.Builder((Activity) getActivity())
+                        .setTarget(binding.txtGuide)
+                        .setToolTip(toolTip4)
+                        .setTooltipMargin(30)
+                        .setShapePadding(50)
+                        .withRectangleShape()
                         .setDismissOnTouch(true)
                         .setMaskColour(getActivity().getColor(R.color.transparentBlack))
                         .build()

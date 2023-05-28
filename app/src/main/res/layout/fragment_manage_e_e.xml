@@ -151,7 +151,6 @@
                 android:textColor="@color/pino_one"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:text="ajdbfjkadfkabdas"
                 android:visibility="visible"/>
 
             <androidx.appcompat.widget.AppCompatTextView
