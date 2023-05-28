@@ -6,6 +6,7 @@
     <string name="confirm">تایید</string>
     <string name="closed">بستن</string>
     <string name="enter_activationcode">کد فعالسازی را وارد کنید</string>
+    <string name="send_activationcode">کد فعالسازی برای شما ارسال شد</string>
     <string name="enter_compelete_data">اطلاعات را کامل وارد کنید</string>
     <string name="enter_min_password">حداقل تعداد رمز عبور 4 می باشد</string>
     <string name="create_password">ساخت رمز عبور</string>

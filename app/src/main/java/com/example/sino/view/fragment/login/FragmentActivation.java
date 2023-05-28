@@ -77,6 +77,7 @@ public class FragmentActivation extends Fragment {
         mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                disposable.add(d);
             }
 
             @Override

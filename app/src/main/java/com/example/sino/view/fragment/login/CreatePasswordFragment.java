@@ -1,5 +1,6 @@
 package com.example.sino.view.fragment.login;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -138,6 +139,7 @@ public class CreatePasswordFragment extends Fragment {
                 mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -166,6 +168,7 @@ public class CreatePasswordFragment extends Fragment {
 
     private void sendCode(User user) {
         System.out.println("getMobileNo====" + user.getMobileNo());
+        binding.waitProgress.setVisibility(View.VISIBLE);
         mobileToGson = GsonGenerator.mobileNoConfirmationToGson(user.getMobileNo());
         viewModel.sendPhoneNumber(mobileToGson).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -178,9 +181,11 @@ public class CreatePasswordFragment extends Fragment {
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessRegisterBean successRegisterBean) {
                         if (successRegisterBean.getERROR() == null && successRegisterBean.getSUCCESS() != null) {
+                            binding.waitProgress.setVisibility(View.GONE);
                             user.setLoginIs(false);
                             mainViewModel.updateUser(user);
                             SinoApplication.getInstance().setCurrentUser(user);
+                            CuteToast.ct(getActivity(),getString(R.string.send_activationcode), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                             Config.putSharedPreference(getActivity(), Constant.FORGET_PASS,true);
                             NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.splashFragment, null, null);
                         } else {
@@ -190,12 +195,13 @@ public class CreatePasswordFragment extends Fragment {
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        binding.waitProgress.setVisibility(View.GONE);
                         CuteToast.ct(getActivity(), e.getLocalizedMessage(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        binding.waitProgress.setVisibility(View.GONE);
                     }
                 });
     }
