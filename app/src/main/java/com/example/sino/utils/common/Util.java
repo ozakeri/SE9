@@ -247,6 +247,21 @@ public class Util {
         return text;
     }
 
+    public static String latinToFarsiNumberReplacement(String text) {
+        text = text.replaceAll("0", "۰");
+        text = text.replaceAll("1", "۱");
+        text = text.replaceAll("2", "۲");
+        text = text.replaceAll("3", "۳");
+        text = text.replaceAll("4", "۴");
+        text = text.replaceAll("5", "۵");
+        text = text.replaceAll("6", "۶");
+        text = text.replaceAll("7", "۷");
+        text = text.replaceAll("8", "۸");
+        text = text.replaceAll("9", "۹");
+
+        return text;
+    }
+
     public static String farsiNumberReplacementCopy(String text) {
         text = text.replaceAll("۱۱۱۱", "کد 1111");
 

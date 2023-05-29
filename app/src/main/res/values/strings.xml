@@ -6,6 +6,7 @@
     <string name="confirm">تایید</string>
     <string name="closed">بستن</string>
     <string name="enter_activationcode">کد فعالسازی را وارد کنید</string>
+    <string name="resend_activationcode"><u>ارسال مجدد کد فعالسازی</u></string>
     <string name="send_activationcode">کد فعالسازی برای شما ارسال شد</string>
     <string name="enter_compelete_data">اطلاعات را کامل وارد کنید</string>
     <string name="enter_min_password">حداقل تعداد رمز عبور 4 می باشد</string>
@@ -60,6 +61,7 @@
     <string name="guide_detect_plate"><u>دانلود فایل راهنما</u></string>
     <string name="showcase_download_guide">با استفاده از این لینک می توانید فایل راهنمای مربوط به این قسمت را دانلود کنید</string>
     <string name="showcase_event_list">با استفاده از این گزینه می توانید لیست خودروهای بلاتکلیف را مشاهده کنید</string>
+    <string name="invalid_code">درخواست نامعتبر، مدت زمان کد فعالسازی منقضی شده است </string>
 
 
 </resources>

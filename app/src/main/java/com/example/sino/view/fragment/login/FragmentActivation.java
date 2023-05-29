@@ -1,7 +1,9 @@
 package com.example.sino.view.fragment.login;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,10 +22,13 @@ import com.example.sino.R;
 import com.example.sino.SinoApplication;
 import com.example.sino.databinding.CopyFragmentActivationBinding;
 import com.example.sino.model.SuccessActivationBean;
+import com.example.sino.model.SuccessRegisterBean;
 import com.example.sino.model.db.User;
+import com.example.sino.utils.Config;
 import com.example.sino.utils.GlobalValue;
 import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.common.Constant;
+import com.example.sino.utils.common.Util;
 import com.example.sino.view.fragment.HomeFragment;
 import com.example.sino.view.fragment.SplashFragment;
 import com.example.sino.viewmodel.DatabaseViewModel;
@@ -41,6 +45,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -58,6 +63,13 @@ public class FragmentActivation extends Fragment {
     private CompositeDisposable disposable;
     //private SuccessActivationBean successActivationBeanTemp;
 
+    private CountDownTimer countDownTimer = null;
+
+    private String mobileToGson = "";
+    private Boolean resendCode = false;
+
+    private Boolean fromRegister = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,8 +85,21 @@ public class FragmentActivation extends Fragment {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         //user = SinoApplication.getInstance().getCurrentUser();
 
+        System.out.println();
+        if (getArguments() != null) {
+            fromRegister = getArguments().getBoolean("fromRegister");
+            if (fromRegister){
+                startTimer();
+            }
+        }
 
-        mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
+
+        List<User> users = mainViewModel.getAllUser();
+        if (users != null && users.size() > 0) {
+            user = users.get(0);
+        }
+
+        /*mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                 disposable.add(d);
@@ -94,11 +119,16 @@ public class FragmentActivation extends Fragment {
             @Override
             public void onComplete() {
             }
-        });
+        });*/
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (!resendCode){
+                    CuteToast.ct(getActivity(), getString(R.string.invalid_code), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                    return;
+                }
                 if (binding.activationCode.getText() != null) {
 
                     if (user.getMobileNo() != null) {
@@ -154,6 +184,8 @@ public class FragmentActivation extends Fragment {
                                                 mainViewModel.updateUser(user);
                                                 SinoApplication.getInstance().setCurrentUser(user);
                                                 //createImageUserPath(successActivationBean);
+
+                                                cancelTimer();
                                                 NavHostFragment.findNavController(FragmentActivation.this).navigateUp();
                                                 NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.createPasswordFragment, null, null);
 
@@ -179,6 +211,13 @@ public class FragmentActivation extends Fragment {
                         }
                     }
                 }
+            }
+        });
+
+        binding.txtResendCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCode(user);
             }
         });
 
@@ -233,5 +272,67 @@ public class FragmentActivation extends Fragment {
     public boolean gotoCreatePasswordFragment() {
         NavHostFragment.findNavController(FragmentActivation.this).navigate(R.id.createPasswordFragment, null, null);
         return true;
+    }
+
+    void startTimer() {
+        binding.txtResendCode.setEnabled(false);
+        resendCode = true;
+        countDownTimer = new CountDownTimer(120000, 1000) {
+            @SuppressLint("SetTextI18n")
+            public void onTick(long millisUntilFinished) {
+                long time = millisUntilFinished / 1000;
+                long min = (time / 60);
+                long sec = (time % 60);
+                binding.txtResendCode.setText(Util.latinToFarsiNumberReplacement(String.valueOf("0")) + Util.latinToFarsiNumberReplacement(String.valueOf(min)) +":"+ Util.latinToFarsiNumberReplacement(String.valueOf(sec)));
+            }
+            public void onFinish() {
+                binding.txtResendCode.setText(getString(R.string.resend_activationcode));
+                resendCode = false;
+                binding.txtResendCode.setEnabled(true);
+            }
+        };
+        countDownTimer.start();
+    }
+
+
+    //cancel timer
+    void cancelTimer() {
+        if(countDownTimer!=null)
+            countDownTimer.cancel();
+    }
+
+    private void sendCode(User user) {
+        System.out.println("getMobileNo====" + user.getMobileNo());
+        mobileToGson = GsonGenerator.mobileNoConfirmationToGson(user.getMobileNo());
+        viewModel.sendPhoneNumber(mobileToGson).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SuccessRegisterBean>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull SuccessRegisterBean successRegisterBean) {
+                        if (successRegisterBean.getERROR() == null && successRegisterBean.getSUCCESS() != null) {
+                            user.setLoginIs(false);
+                            mainViewModel.updateUser(user);
+                            SinoApplication.getInstance().setCurrentUser(user);
+                            CuteToast.ct(getActivity(),getString(R.string.send_activationcode), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                            Config.putSharedPreference(getActivity(), Constant.FORGET_PASS,true);
+                            startTimer();
+                        } else {
+                            CuteToast.ct(getActivity(), successRegisterBean.getERROR(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        CuteToast.ct(getActivity(), e.getLocalizedMessage(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }

@@ -107,7 +107,26 @@ public class MainActivity extends AppCompatActivity {
         navBuilder = new NavOptions.Builder();
         navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
 
-        viewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
+        List<User> users = viewModel.getAllUser();
+
+        if (users != null && users.size() > 0) {
+            user = users.get(0);
+
+            txtName.setText(user.getName() + " " + user.getFamily());
+            if (user.getCompanyName() != null){
+                txtCode.setText(" ( کد )" + user.getCompanyName());
+            }else {
+                if (GlobalValue.companyCode != null){
+                    txtCode.setText(GlobalValue.companyCode + " کد "+" نمایندگی ");
+                }
+
+            }
+
+            getPermissionList(user);
+
+        }
+
+       /* viewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                 compositeDisposable.add(d);
@@ -142,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete() {
 
             }
-        });
+        });*/
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override

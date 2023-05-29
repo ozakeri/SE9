@@ -76,8 +76,11 @@ public class FragmentRegistration extends Fragment {
                                         mainViewModel.insertUser(user);
                                         SinoApplication.getInstance().setCurrentUser(user);
 
+                                        Bundle bundle = new Bundle();
+                                        bundle.putBoolean("fromRegister",true);
+
                                         NavHostFragment.findNavController(FragmentRegistration.this).navigateUp();
-                                        NavHostFragment.findNavController(FragmentRegistration.this).navigate(R.id.fragmentActivation, null, null);
+                                        NavHostFragment.findNavController(FragmentRegistration.this).navigate(R.id.fragmentActivation, bundle, null);
 
                                     } else {
 

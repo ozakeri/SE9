@@ -59,7 +59,7 @@ public class MainViewModel extends AndroidViewModel {
         return userPermissionMutableLiveData;
     }
 
-    public Observable<List<User>> getAllUser() {
+    public List<User> getAllUser() {
         return repository.getAllUser();
     }
 

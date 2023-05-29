@@ -79,7 +79,7 @@ public interface SinoDao {
     Observable<User> getUserByMobileNo(String mobileNo);
 
     @Query("SELECT * FROM sino_table")
-    Observable<List<User>> getAllUser();
+    List<User> getAllUser();
 
     @Query("SELECT * FROM attachfile")
     Observable<List<AttachFile>> getAllAttachFile();

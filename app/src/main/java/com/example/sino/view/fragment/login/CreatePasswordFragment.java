@@ -58,6 +58,12 @@ public class CreatePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_password, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         databaseViewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -136,7 +142,14 @@ public class CreatePasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
+                List<User> users = mainViewModel.getAllUser();
+
+                if (users != null && users.size() > 0) {
+                    user = users.get(0);
+                    sendCode(user);
+                }
+
+               /* mainViewModel.getAllUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.rxjava3.core.Observer<List<User>>() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                         compositeDisposable.add(d);
@@ -157,13 +170,10 @@ public class CreatePasswordFragment extends Fragment {
                     @Override
                     public void onComplete() {
                     }
-                });
+                });*/
 
             }
         });
-
-        return binding.getRoot();
-
     }
 
     private void sendCode(User user) {
@@ -187,7 +197,10 @@ public class CreatePasswordFragment extends Fragment {
                             SinoApplication.getInstance().setCurrentUser(user);
                             CuteToast.ct(getActivity(),getString(R.string.send_activationcode), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                             Config.putSharedPreference(getActivity(), Constant.FORGET_PASS,true);
-                            NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.splashFragment, null, null);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("fromRegister",true);
+                            NavHostFragment.findNavController(CreatePasswordFragment.this).navigate(R.id.fragmentActivation, bundle, null);
                         } else {
                             CuteToast.ct(getActivity(), successRegisterBean.getERROR(), CuteToast.LENGTH_SHORT, CuteToast.ERROR, R.drawable.sinoempty).show();
                         }
