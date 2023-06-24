@@ -600,7 +600,7 @@ public class TakePictureFragment extends Fragment {
             options.inSampleSize = 2; //try to decrease decoded image
             options.inPurgeable = true; //purgeable to disk
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); //compressed bitmap to file
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream); //compressed bitmap to file
             byte[] buf = new byte[1024];
             int len;
             while ((len = inputStream.read(buf)) > 0) {
@@ -654,7 +654,7 @@ public class TakePictureFragment extends Fragment {
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
 
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 
             return file;
         } catch (Exception e) {

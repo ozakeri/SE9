@@ -328,14 +328,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <TextView
+                                <com.example.sino.utils.textwidget.CustomEditText
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:hint="11"
+                                    android:hint="**"
                                     android:inputType="number"
                                     android:maxLength="2"
                                     android:textColor="@color/black"
-                                    android:textSize="20sp"
+                                    android:textSize="14sp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_above="@+id/view_line"/>
 
