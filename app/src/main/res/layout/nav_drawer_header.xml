@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:text="امید ذاکری" />
+            android:text="---" />
 
         <com.example.sino.utils.textwidget.CustomTextView
             android:id="@+id/txt_header_code"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:text="نمایندگی"/>
+            android:text="---"/>
 
     </LinearLayout>
 
