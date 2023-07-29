@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recyclerViewItemMenu.setLayoutManager(mLayoutManager);
         List<String> permissionList = new ArrayList<>();
-        userPermissionList = viewModel.getUserPermission(user.getId());
+        //userPermissionList = viewModel.getUserPermission(user.getId());
         //permissionList.add("TechnicalExpert");
         //permissionList.add("Rescuer");
         //permissionList.add("Car");
