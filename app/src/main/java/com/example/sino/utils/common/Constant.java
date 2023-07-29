@@ -2,7 +2,7 @@ package com.example.sino.utils.common;
 
 public class Constant {
 
-  //  public static final String SITE = "https://ikg.se9.ir/rfServices/";
+    //public static final String SITE = "https://ikg.se9.ir/rfServices/";
   // public static final String SITE = "http://192.168.14.193:8080/rfServices/";
    //public static final String SITE = "http://192.168.190.186:8080/rfServices/";
     public static final String SITE = "http://192.168.8.20/rfServices/";

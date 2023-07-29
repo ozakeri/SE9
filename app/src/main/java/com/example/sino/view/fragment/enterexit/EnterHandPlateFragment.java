@@ -675,7 +675,7 @@ public class EnterHandPlateFragment extends Fragment {
                 }
             }
         });
-        typePrc = 1;
+        //typePrc = 1;
 
 
         binding.imgTakePic.setOnClickListener(new View.OnClickListener() {
