@@ -89,11 +89,14 @@ public class HomeFragment extends Fragment {
             initVeiw(binding.getRoot());
             mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+            mainActivity = (MainActivity) getActivity();
+
             user = SinoApplication.getInstance().getCurrentUser();
             compositeDisposable = new CompositeDisposable();
             binding.btnTryAgain.setVisibility(View.GONE);
 
             binding.txtUserName.setText(user.getName() + " " + user.getFamily());
+            mainActivity.txtName.setText(user.getName() + " " + user.getFamily());
 
             String getSharedData = Config.getSharedPreferenceString(getActivity(), Constant.COMPANY_CODE);
 
@@ -103,6 +106,7 @@ public class HomeFragment extends Fragment {
             }else {
                 GlobalValue.companyCode = getSharedData;
                 binding.txtCompany.setText(" کد نمایندگی : " + GlobalValue.companyCode);
+                mainActivity.txtCode.setText(" کد نمایندگی : " + GlobalValue.companyCode);
             }
 
 
@@ -110,7 +114,7 @@ public class HomeFragment extends Fragment {
 
             getDataFromServer();
         }
-        mainActivity = (MainActivity) getActivity();
+
         return binding.getRoot();
     }
 
@@ -415,8 +419,10 @@ public class HomeFragment extends Fragment {
 
                 if (user.getCompanyName() != null) {
                     binding.txtCompany.setText(user.getCompanyName() + " " + " کد : " + GlobalValue.companyCode);
+                    mainActivity.txtCode.setText(user.getCompanyName() + " " + " کد : " + GlobalValue.companyCode);
                 } else {
                     binding.txtCompany.setText("نمایندگی " + " " + GlobalValue.companyCode);
+                    mainActivity.txtCode.setText("نمایندگی " + " " + GlobalValue.companyCode);
                 }
                 dialog.dismiss();
             }
@@ -458,6 +464,7 @@ public class HomeFragment extends Fragment {
                                                 getActivity().runOnUiThread(new Runnable() {
                                                     public void run() {
                                                         binding.txtCompany.setText(" کد نمایندگی : " + GlobalValue.companyCode);
+                                                        mainActivity.txtCode.setText(" کد نمایندگی : " + GlobalValue.companyCode);
                                                     }
                                                 });
                                             }

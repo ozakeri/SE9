@@ -53,7 +53,7 @@ public class ProSrv implements Parcelable {
     public LicPro licPro = null;
 
     @SerializedName("srvReq")
-    public String srvReq = null;
+    public SrvReq srvReq = null;
 
     protected ProSrv(Parcel in) {
         proSrvId = in.readString();

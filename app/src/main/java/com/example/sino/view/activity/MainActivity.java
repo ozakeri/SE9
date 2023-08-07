@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private String companyCode;
     private SharedPreferences sharedPreferences;
     private NavOptions.Builder navBuilder;
-    private TextView txtName;
-    private TextView txtCode;
+    public TextView txtName;
+    public TextView txtCode;
     private NavHostFragment navHostFragment;
     private boolean doubleBackToExitPressedOnce = false;
 

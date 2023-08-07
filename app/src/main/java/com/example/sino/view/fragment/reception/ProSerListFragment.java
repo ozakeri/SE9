@@ -133,6 +133,7 @@ public class ProSerListFragment extends Fragment {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        System.out.println("===e===" + e.getLocalizedMessage());
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
