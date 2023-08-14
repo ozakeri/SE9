@@ -17,7 +17,7 @@
     <string name="www_gapcom_ir">www.gapcom.ir</string>
     <string name="my_text"><u>ویرایش شماره تلفن همراه</u></string>
     <string name="forget_pass"><u>فراموشی رمز عبور</u></string>
-    <string name="reserve_code">کد رزرو نوبت :</string>
+    <string name="reserve_code">کد نوبت :</string>
     <string name="guide_active_pass">با استفاده از این گزینه می توانید گذرواژه خود را برای ورود به برنامه، فعال یا غیر فعال کنید</string>
     <string name="guide_recept">برای ثبت اطلاعات پذیرش وارد این قسمت شوید</string>
     <string name="guide_enter_exit">برای ثبت ورود و خروج خودرو وارد این قسمت شوید</string>
@@ -56,7 +56,7 @@
     <string name="success_attach">  پیوست با موفقیت ثبت شد </string>
     <string name="select_enter_type">  نوع ورود را مشخص کنید </string>
     <string name="select_car_type">  نوع خودرو را مشخص کنید </string>
-    <string name="registered">  getString(R.string.registered) </string>
+    <string name="registered">  ثبت شد </string>
     <string name="download_guide_one"><u>دانلود فایل راهنما</u></string>
     <string name="guide_detect_plate"><u>دانلود فایل راهنما</u></string>
     <string name="showcase_download_guide">با استفاده از این لینک می توانید فایل راهنمای مربوط به این قسمت را دانلود کنید</string>

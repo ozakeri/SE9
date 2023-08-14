@@ -320,12 +320,15 @@ public class ManageEEFragment extends Fragment {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Toast toast = Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG);
+                        Util.showToast(toast, getActivity());
+                        toast.show();
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        dialog.dismiss();
                     }
                 });
     }

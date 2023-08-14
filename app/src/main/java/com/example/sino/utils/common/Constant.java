@@ -5,8 +5,9 @@ public class Constant {
     //public static final String SITE = "https://ikg.se9.ir/rfServices/";
   // public static final String SITE = "http://192.168.14.193:8080/rfServices/";
    //public static final String SITE = "http://192.168.190.186:8080/rfServices/";
-    //public static final String SITE = "http://192.168.8.20/rfServices/";
-    public static final String SITE = "http://192.168.1.7:8080/rfServices/";
+
+    public static final String SITE = "http://192.168.8.20/rfServices/";
+    //public static final String SITE = "http://192.168.2.137:8080/rfServices/";
     public static final String SITE_NESHAN = "https://api.neshan.org";
     public static final String WS = SITE + "/rfServices/";
 

@@ -12,8 +12,8 @@ android {
         applicationId "com.example.sino"
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 50
-        versionName '4.0.1'
+        versionCode 51
+        versionName '4.0.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

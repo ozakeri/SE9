@@ -311,8 +311,8 @@ public class RecognizePlateFragment extends Fragment {
                                         }
 
                                         binding.txtSrvReqTitle.setText(getResources().getString(R.string.reserve_code));
-                                        if (proServiceResponse.result.proSrv.srvReq != null && !proServiceResponse.result.proSrv.srvReq.equals("null")){
-                                            binding.txtSrvReq.setText(proServiceResponse.result.dailyEvent.id);
+                                        if (proServiceResponse.result.proSrv.srvReq != null){
+                                            binding.txtSrvReq.setText(String.valueOf(proServiceResponse.result.proSrv.srvReq.id));
                                         }else {
                                             binding.txtSrvReq.setText(" ندارد " );
                                         }

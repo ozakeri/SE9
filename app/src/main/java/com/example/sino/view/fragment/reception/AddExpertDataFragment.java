@@ -728,7 +728,12 @@ public class AddExpertDataFragment extends Fragment {
 
                         if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
 
@@ -794,7 +799,12 @@ public class AddExpertDataFragment extends Fragment {
 
                         if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                     }
@@ -878,7 +888,12 @@ public class AddExpertDataFragment extends Fragment {
 
                         if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                     }
@@ -1062,7 +1077,12 @@ public class AddExpertDataFragment extends Fragment {
 
                         if (proServiceResponse.ERROR != null) {
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), proServiceResponse.ERROR, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
 

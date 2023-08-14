@@ -258,8 +258,8 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                     binding.txtSrvReq.setVisibility(View.VISIBLE);
                                                     binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
-                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
-                                                        binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null){
+                                                        binding.txtSrvReq.setText(String.valueOf(dailyEventRespons.result.dailyEvent.srvReq.id));
                                                     }else {
                                                         binding.txtSrvReq.setText(" ندارد ");
                                                     }
@@ -456,8 +456,8 @@ public class EnterHandPlateFragment extends Fragment {
 
                                                     binding.txtSrvReq.setVisibility(View.VISIBLE);
                                                     binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
-                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
-                                                        binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                                    if (dailyEventRespons.result.dailyEvent.srvReq != null){
+                                                        binding.txtSrvReq.setText(String.valueOf(dailyEventRespons.result.dailyEvent.srvReq.id));
                                                     }else {
                                                         binding.txtSrvReq.setText(" ندارد ");
                                                     }
@@ -1627,8 +1627,8 @@ public class EnterHandPlateFragment extends Fragment {
 
                                             binding.txtSrvReq.setVisibility(View.VISIBLE);
                                             binding.txtSrvReqTitle.setVisibility(View.VISIBLE);
-                                            if (dailyEventRespons.result.dailyEvent.srvReq != null && !dailyEventRespons.result.dailyEvent.srvReq.equals("null")){
-                                                binding.txtSrvReq.setText(dailyEventRespons.result.dailyEvent.id);
+                                            if (dailyEventRespons.result.dailyEvent.srvReq != null){
+                                                binding.txtSrvReq.setText(String.valueOf(dailyEventRespons.result.dailyEvent.srvReq.id));
                                             }else {
                                                 binding.txtSrvReq.setText(" ندارد ");
                                             }
