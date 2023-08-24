@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -25,29 +25,104 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.example.sino.utils.textwidget.CustomTextViewTitleLight
-                    android:id="@+id/txt_date"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:text="تاریخ پذیرش"/>
+                    android:orientation="horizontal"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true">
 
-                <com.example.sino.utils.textwidget.CustomTextViewTitleLight
-                    android:id="@+id/txt_car"
-                    android:layout_width="0dp"
+                    <com.example.sino.utils.textwidget.CustomTextViewTitleRed
+                        android:id="@+id/txtSysMaster1Id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:text="---"
+                        android:visibility="visible"/>
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:id="@+id/txtSysMaster1IdTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/mdtp_circle_background_dark_theme"
+                        android:text="@string/reseption_code"
+                        android:visibility="visible"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:text="خودرو"/>
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentLeft="true">
 
+                    <com.example.sino.utils.textwidget.CustomTextViewTitleRed
+                        android:id="@+id/txtSrvReq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:text="---"
+                        android:visibility="visible"/>
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:id="@+id/txtSrvReqTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:text="@string/reserve_code"
+                        android:textColor="@color/mdtp_circle_background_dark_theme"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp">
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="left"
+                        android:textSize="14sp"
+                        android:textColor="@color/mdtp_circle_background_dark_theme"
+                        android:text="تاریخ پذیرش"/>
+
+                    <com.example.sino.utils.textwidget.CustomTextView
+                        android:id="@+id/txt_car"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="right"
+                        android:textColor="@color/mdtp_circle_background_dark_theme"
+                        android:textSize="14sp"
+                        android:text="خودرو"/>
+
+
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

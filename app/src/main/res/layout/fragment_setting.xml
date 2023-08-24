@@ -327,6 +327,19 @@
                 </androidx.cardview.widget.CardView>
 
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtGuide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/download_guide_one"
+                    android:textColor="@color/royal_blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
         </ScrollView>

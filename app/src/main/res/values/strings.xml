@@ -18,6 +18,7 @@
     <string name="my_text"><u>ویرایش شماره تلفن همراه</u></string>
     <string name="forget_pass"><u>فراموشی رمز عبور</u></string>
     <string name="reserve_code">کد نوبت :</string>
+    <string name="reseption_code">کد پذیرش :</string>
     <string name="guide_active_pass">با استفاده از این گزینه می توانید گذرواژه خود را برای ورود به برنامه، فعال یا غیر فعال کنید</string>
     <string name="guide_recept">برای ثبت اطلاعات پذیرش وارد این قسمت شوید</string>
     <string name="guide_enter_exit">برای ثبت ورود و خروج خودرو وارد این قسمت شوید</string>
@@ -62,6 +63,7 @@
     <string name="showcase_download_guide">با استفاده از این لینک می توانید فایل راهنمای مربوط به این قسمت را دانلود کنید</string>
     <string name="showcase_event_list">با استفاده از این گزینه می توانید لیست خودروهای بلاتکلیف را مشاهده کنید</string>
     <string name="invalid_code">درخواست نامعتبر، مدت زمان کد فعالسازی منقضی شده است </string>
+    <string name="invalid_car">خودرو یافت نشد</string>
 
 
 </resources>

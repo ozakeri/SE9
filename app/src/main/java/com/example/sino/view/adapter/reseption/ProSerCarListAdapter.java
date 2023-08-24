@@ -57,8 +57,25 @@ public class ProSerCarListAdapter extends RecyclerView.Adapter<ProSerCarListAdap
         }
 
         public void bind(ProSrv proSrv) {
-            binding.txtCar.setText(proSrv.car.plateText + "\n" + proSrv.car.chassis );
 
+            if (proSrv.car != null){
+                if (proSrv.car.plateText != null && proSrv.car.chassis != null) {
+                    binding.txtCar.setText(proSrv.car.plateText + "\n" + proSrv.car.chassis);
+                }
+            }
+
+
+            if (proSrv.srvReq != null) {
+                binding.txtSrvReq.setText(String.valueOf(proSrv.srvReq.id));
+            } else {
+                binding.txtSrvReq.setText(" ندارد ");
+            }
+
+            if (proSrv.sysMaster1Id != null) {
+                binding.txtSysMaster1Id.setText(String.valueOf(proSrv.sysMaster1Id));
+            } else {
+                binding.txtSysMaster1Id.setText(" ندارد ");
+            }
 
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");

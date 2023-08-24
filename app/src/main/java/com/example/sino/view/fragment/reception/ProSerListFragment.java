@@ -66,14 +66,20 @@ public class ProSerListFragment extends Fragment {
         adapter.setOnItemClickListener(new ProSerCarListAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                ProSrv proSrv = proSrvList.get(position);
-                carId = proSrv.car.id;
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("proSrv", proSrv);
-                NavOptions.Builder navBuilder = new NavOptions.Builder();
-                navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
-                NavHostFragment.findNavController(ProSerListFragment.this).navigate(R.id.recognizePlateFragment, bundle, navBuilder.build());
 
+                ProSrv proSrv = proSrvList.get(position);
+                if ( proSrv.car != null){
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("proSrv", proSrv);
+                    NavOptions.Builder navBuilder = new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.slide_from_left).setExitAnim(R.anim.slide_out_right).setPopEnterAnim(R.anim.slide_from_right).setPopExitAnim(R.anim.slide_out_left);
+                    NavHostFragment.findNavController(ProSerListFragment.this).navigate(R.id.recognizePlateFragment, bundle, navBuilder.build());
+
+                }else {
+                    Toast toast = Toast.makeText(getActivity(), R.string.invalid_car, Toast.LENGTH_LONG);
+                    Util.showToast(toast, getActivity());
+                    toast.show();
+                }
             }
         });
     }

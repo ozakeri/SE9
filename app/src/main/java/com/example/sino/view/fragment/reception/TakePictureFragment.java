@@ -375,6 +375,11 @@ public class TakePictureFragment extends Fragment {
                 }
 
                 if (pathFrontIsChanged || pathRightIsChanged || pathBackIsChanged || pathLeftIsChanged || pathKmIsChanged) {
+                    GlobalValue.pathFront = "pathFront";
+                    GlobalValue.pathLeft = "pathLeft";
+                    GlobalValue.pathRight = "pathRight";
+                    GlobalValue.pathBack = "pathBack";
+                    GlobalValue.pathKm = "pathKm";
                     saveOrEdit();
                 }
                 //saveOrEdit();
@@ -1118,6 +1123,7 @@ public class TakePictureFragment extends Fragment {
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                                 }
+                                GlobalValue.pathFront = "pathFront";
 
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
@@ -1194,7 +1200,7 @@ public class TakePictureFragment extends Fragment {
                                     }
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 }
-
+                                GlobalValue.pathRight = "pathRight";
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
                             }
@@ -1269,7 +1275,7 @@ public class TakePictureFragment extends Fragment {
                                     }
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 }
-
+                                GlobalValue.pathBack = "pathBack";
 
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
@@ -1344,7 +1350,7 @@ public class TakePictureFragment extends Fragment {
                                     }
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 }
-
+                                GlobalValue.pathLeft = "pathLeft";
 
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());
@@ -1496,7 +1502,7 @@ public class TakePictureFragment extends Fragment {
                                     }
                                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 }
-
+                                GlobalValue.pathKm = "pathKm";
 
                             } catch (Exception e) {
                                 System.out.println(e.getLocalizedMessage());

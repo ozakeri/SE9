@@ -55,6 +55,9 @@ public class ProSrv implements Parcelable {
     @SerializedName("srvReq")
     public SrvReq srvReq = null;
 
+    @SerializedName("sysMaster1Id")
+    public String sysMaster1Id = null;
+
     protected ProSrv(Parcel in) {
         proSrvId = in.readString();
         entityStrForAttach = in.readString();

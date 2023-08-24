@@ -17,7 +17,7 @@ public class CustomTextViewTitleRed extends TextView {
         super(context);
         applyCustomFont(context);
         singleLine(context);
-        setTextSize(16);
+        setTextSize(12);
         setTextColor(getResources().getColor(R.color.pino_two));
     }
 
@@ -25,7 +25,7 @@ public class CustomTextViewTitleRed extends TextView {
         super(context, attrs);
         applyCustomFont(context);
         singleLine(context);
-        setTextSize(16);
+        setTextSize(12);
         setTextColor(getResources().getColor(R.color.pino_two));
     }
 
@@ -33,7 +33,7 @@ public class CustomTextViewTitleRed extends TextView {
         super(context, attrs, defStyle);
         applyCustomFont(context);
         singleLine(context);
-        setTextSize(16);
+        setTextSize(12);
         setTextColor(getResources().getColor(R.color.pino_two));
     }
 

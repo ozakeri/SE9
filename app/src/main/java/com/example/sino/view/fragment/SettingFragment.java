@@ -3,6 +3,7 @@ package com.example.sino.view.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
@@ -32,6 +34,7 @@ import com.example.sino.utils.GsonGenerator;
 import com.example.sino.utils.JalaliCalendarUtil;
 import com.example.sino.utils.common.Util;
 import com.example.sino.view.activity.MainActivity;
+import com.example.sino.view.fragment.enterexit.ManageEEFragment;
 import com.example.sino.viewmodel.MainViewModel;
 
 import java.io.BufferedInputStream;
@@ -86,6 +89,8 @@ public class SettingFragment extends Fragment {
     private User user;
     private MainViewModel viewModel;
     private static final String SHOWCASE_ID = "SHOWCASE_ID_FOUR";
+
+    private String fileLocation = "https://91.92.131.11:54542/guide/اپلیکیشن_سینو.pdf";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,6 +148,17 @@ public class SettingFragment extends Fragment {
                 user = SinoApplication.getInstance().getCurrentUser();
                 user.setAutoLogin(!b);
                 viewModel.updateUser(user);
+            }
+        });
+
+        binding.txtGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                appFileName = GetFileNameFromUrl(fileLocation);
+
+                DownloadFile downloadFile = new DownloadFile();
+                downloadFile.execute(fileLocation);
             }
         });
 
@@ -457,5 +473,137 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         compositeDisposable.clear();
+    }
+
+    class DownloadFile extends AsyncTask<String, Integer, String> {
+
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait_for_download), true);
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                progressDialog.show();
+
+                TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                    }
+
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                }};
+
+                SSLContext sc = null;
+                try {
+                    sc = SSLContext.getInstance("SSL");
+                    sc.init(null, trustAllCerts, new SecureRandom());
+                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                    HostnameVerifier allHostsValid = new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String s, SSLSession sslSession) {
+                            return true;
+                        }
+                    };
+
+                    HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                }
+
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setUseCaches(false);
+                connection.connect();
+
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
+                }
+
+                File downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File outputFile = new File(downloadPath.getPath(), appFileName);
+                if (outputFile.exists()) {
+                    outputFile.delete();
+                }
+
+                int lenghtOfFile = connection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(), 1024);
+                OutputStream output = new FileOutputStream(downloadPath.toString() + "/" + appFileName);
+                byte data[] = new byte[1024];
+                long total = 0;
+                int count;
+
+                int prog = 0;
+
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    int percent = (int) (total / lenghtOfFile); //0~100
+                    publishProgress(percent);
+                    output.write(data, 0, count);
+
+                }
+                output.flush();
+                output.close();
+                input.close();
+            } catch (IOException e) {
+                Log.d("mark", "Download io Error:" + e.getMessage());
+            } catch (SecurityException e) {
+                Log.d("mark", "Download security Error:" + e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (result == null) {
+                progressDialog.dismiss();
+                Toast toast = Toast.makeText(getActivity(), getString(R.string.success_request), Toast.LENGTH_LONG);
+                Util.showToast(toast, getActivity());
+                toast.show();
+                //SwitchBusyIcon(false);
+                // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
+                //binding.BtnDownloadAndUpdate.setVisibility(View.GONE);
+                //binding.waitProgress.setVisibility(View.GONE);
+                // binding.BtnUpdateLocal.setVisibility(View.VISIBLE);
+                // DoInstall();
+                openDownloads(getActivity());
+            } else {
+                Toast toast = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
+
+                Util.showToast(toast, getActivity());
+                toast.show();
+            }
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            // SwitchBusyIcon(false);
+            //binding.stateLabel.setText("downloadCancel");
+        }
     }
 }

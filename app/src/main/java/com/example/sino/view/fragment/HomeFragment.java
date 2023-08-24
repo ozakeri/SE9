@@ -343,6 +343,12 @@ public class HomeFragment extends Fragment {
                     public void onComplete() {
                         Log.e("TAG", "onComplete: jsoup done");
 
+                        if (successPermissionBean.getERROR() != null){
+                            Toast toast = Toast.makeText(getActivity(), successPermissionBean.getERROR(), Toast.LENGTH_LONG);
+                            Util.showToast(toast, getActivity());
+                            toast.show();
+                        }
+
                         if (successPermissionBean.getRESULT() != null) {
                             if (successPermissionBean.getRESULT().getUserPermissionList().size() > 0) {
                                 mainViewModel.deletePermissionByUserId(user.getId());

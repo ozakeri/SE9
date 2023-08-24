@@ -317,6 +317,13 @@ public class RecognizePlateFragment extends Fragment {
                                             binding.txtSrvReq.setText(" ندارد " );
                                         }
 
+                                        binding.txtSysMaster1IdTitle.setText(getResources().getString(R.string.reseption_code));
+                                        if (proServiceResponse.result.proSrv.sysMaster1Id != null){
+                                            binding.txtSysMaster1Id.setText(proServiceResponse.result.proSrv.sysMaster1Id);
+                                        }else {
+                                            binding.txtSrvReq.setText(" ندارد " );
+                                        }
+
                                         if (proServiceResponse.result.proSrv.car.gurActFV != null && proServiceResponse.result.proSrv.car.gurDateEndFV != null) {
                                             if (proServiceResponse.result.proSrv.car.gurActFV){
                                                 binding.txtPermission.setText("گارانتی : ");
